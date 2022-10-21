@@ -12,3 +12,5 @@ This will be the development environment for Group 1 to create our crime reporti
 
 3. Likewise, after pulling please run `flutter pub get` or save the pubspec.yaml file
 
+4. Please use descriptive comments when committing your code!
+
