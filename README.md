@@ -1,16 +1,14 @@
-# nightwatch
+# NightWatch
 
-A new Flutter project.
+This will be the development environment for Group 1 to create our crime reporting and monitoring application.
 
-## Getting Started
+![Our Logo - watching eye on orange background](media/Splash.png)
 
-This project is a starting point for a Flutter application.
+## Important Notes
 
-A few resources to get you started if this is your first Flutter project:
+1. This app will be developed using **flutter version 3.3.4** (Latest for October 18)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. Please run `flutter clean` before committing and pushing.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. Likewise, after pulling please run `flutter pub get` or save the pubspec.yaml file
+
