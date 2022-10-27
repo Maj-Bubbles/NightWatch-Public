@@ -2,3 +2,4 @@
 /// all the repositories from a single file
 
 export 'user_service_repo.dart';
+export 'reports_repository.dart';
