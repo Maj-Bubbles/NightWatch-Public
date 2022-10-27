@@ -1,5 +1,5 @@
 import 'package:nightwatch/models/models.dart';
-import 'package:nightwatch/repositories/apis/backendless_user_api.dart';
+import 'package:nightwatch/repositories/apis/backendless_apis.dart';
 import 'package:nightwatch/repositories/repositories.dart';
 
 class UserService extends UserServiceRepo {
