@@ -5,3 +5,4 @@
 export 'backendless_database_api.dart';
 export 'backendless_realtimeDB_api.dart';
 export 'backendless_user_api.dart';
+export 'backendless_push_notifications_api.dart';
