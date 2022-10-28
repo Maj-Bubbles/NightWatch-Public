@@ -1,4 +1,3 @@
-import 'package:uuid/uuid.dart';
 import 'models.dart';
 
 abstract class Report {
