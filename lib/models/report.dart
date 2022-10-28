@@ -47,10 +47,6 @@ abstract class Report {
   }
 
   Report() {
-    // Using a unique ID generator for unique id generation is industry
-    // standard, consider: https://www.cockroachlabs.com/blog/what-is-a-uuid/
-    var uuid = const Uuid();
-    _id = uuid.v1();
     _media = Media(_id);
     _region = Region();
     _dateTime = DateTime.now();
