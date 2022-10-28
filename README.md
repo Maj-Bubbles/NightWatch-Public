@@ -14,6 +14,8 @@ This will be the development environment for Group 1 to create our crime reporti
 
 4. Please use descriptive comments when committing your code!
 
+5. To initialise newly created branches: Run `git fetch origin <BranchName>`
+
 
 ### Writing Commits
 
