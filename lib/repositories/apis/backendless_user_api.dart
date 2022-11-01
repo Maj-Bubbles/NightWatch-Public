@@ -90,6 +90,7 @@ class BackendlessUserApi {
   }
 
   /// Code reuse: Handle API Errors and print details to the console
+  /// throws an Exception to handled by a user of the api
   _handleError(PlatformException error, StackTrace stackTrace,
       {required String apiName}) {
     _logException(error, stackTrace, apiName);
