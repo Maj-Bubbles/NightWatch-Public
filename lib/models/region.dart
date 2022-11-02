@@ -1,17 +1,10 @@
+/// This type models suburbs around the
+/// Goldfields area. For now it encapsulates
+/// a name but may have location as its developed.
 class Region {
-  String _location = "";
-  String _name = "";
+  final String name;
 
-  String get location => _location;
-  set location(value) {
-    _location = value;
-  }
-  String get name => _name;
-  set name(value) {
-    _name = value;
-  }
-
-  // Should probably change return type before use :)
-  dynamic downloadMedia() {}
-
+  Region({
+    required this.name
+  });
 }
