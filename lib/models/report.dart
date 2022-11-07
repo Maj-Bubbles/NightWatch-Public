@@ -1,61 +1,61 @@
 import 'models.dart';
 
-abstract class Report {
-  String _id = "";
-  String _title = "";
-  String _description = "";
-  late DateTime _dateTime;
-  bool _isAlerted = false;
-  bool _isAcknowledged = false;
-  late Media _media;
-  late Region _region;
+/// This class models input data from the User about
+/// an incident. Its also a token of transacting with
+/// Database. Thus, encapsulation is without use case.
+class Report {
+  final String id;
+  final String userName;
+  final String title;
+  final String description;
+  final DateTime dateTime;
+  final bool isAlerted;
+  final bool isAcknowledged;
+  final bool isImminent;
+  final List<String> media;
+  final Region region;
+  final Location locationData;
 
-  String get id => _id;
-  String get title => _title;
-  String get description => _description;
-  DateTime get dateTime => _dateTime;
-  bool get isAlerted => _isAlerted;
-  bool get isAcknowledged => _isAcknowledged;
-  Media get media => _media;
-  Region get region => _region;
+  Report(
+      {required this.id,
+      required this.userName,
+      required this.title,
+      required this.description,
+      required this.dateTime,
+      required this.isAlerted,
+      required this.isAcknowledged,
+      required this.locationData,
+      required this.media,
+      required this.region,
+      required this.isImminent});
 
-  set id(String value) {
-    _id = value;
-  }
-
-  set title(String value) {
-    _title = value;
-  }
-  set description(String value) {
-    _description= value;
-  }
-  set dateTime(DateTime value) {
-    _dateTime = value;
-  }
-  set isAlerted(bool value) {
-    _isAlerted = value;
-  }
-  set isAcknowledged(bool value) {
-    _isAcknowledged = value;
-  }
-  set media(Media value) {
-    _media = value;
-  }
-  set region(Region value) {
-    _region = value;
+  factory Report.fromJson(Map<dynamic, dynamic> json) {
+    return Report(
+        id: json['objectId'] as String,
+        userName: json['Username'] as String,
+        title: json['Title'] as String,
+        description: json['Description'] as String,
+        dateTime: DateTime.fromMillisecondsSinceEpoch(json['DateTime'].toInt()),
+        isAlerted: json['Alerted'] as bool,
+        isAcknowledged: json['Acknowledged'] as bool,
+        isImminent: json['Imminent'] as bool,
+        locationData: json['LocationData'],
+        media: json['Media'].first,
+        region: Region(name: json['Region']));
   }
 
-  Report() {
-    _media = Media(_id);
-    _region = Region();
-    _dateTime = DateTime.now();
+  Map<String, dynamic> toJson() {
+    return {
+      "Username": userName,
+      "Title": title,
+      "Description": description,
+      "DateTime": dateTime,
+      "Alerted": isAlerted,
+      "Acknowledged": isAcknowledged,
+      "Imminent": isImminent,
+      "LocationData": locationData,
+      "Region": region.name,
+      "Media": {dateTime, media},
+    };
   }
-}
-
-class ImminentReport extends Report {
-
-}
-
-class NonImminentReport extends Report {
-
 }
