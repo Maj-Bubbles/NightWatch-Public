@@ -4,7 +4,7 @@ import 'package:nightwatch/models/models.dart';
 import 'package:nightwatch/repositories/repositories.dart';
 import 'package:nightwatch/services/services.dart';
 
-class UserViewModel {
+class UserViewModel with ChangeNotifier {
   late UserServiceRepo _userService;
   late BackendlessUser _currentUser;
   // The following variables are public because they
