@@ -20,7 +20,6 @@ class NightWatchApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -31,15 +30,8 @@ class NightWatchApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         onGenerateRoute: RouteManager.onGenerateRoute,
-        initialRoute: RouteManager.loginPage,
+        initialRoute: RouteManager.loadingPage,
       ),
-=======
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      onGenerateRoute: RouteManager.onGenerateRoute,
-      initialRoute: RouteManager.loadingPage,
->>>>>>> loadingLoginPagesAndEdits
     );
   }
 }

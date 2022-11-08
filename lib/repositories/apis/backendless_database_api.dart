@@ -7,11 +7,7 @@ class BackendlessDatabaseApi {
 
   void saveSingleReport(Report report) {
     var serializedReport = {
-<<<<<<< HEAD
       "Username": report.userName,
-=======
-      // "Username": report.userName,
->>>>>>> loadingLoginPagesAndEdits
       "Title": report.title,
       "Description": report.description,
       "DateTime": report.dateTime,
