@@ -51,12 +51,12 @@ class BackendlessUserApi {
   ///
   /// Returns: BackendlessUser object
   ///
-  static Future<BackendlessUser?> login(User user) async {
+  static Future<BackendlessUser?> login({required String email, required String password}) async {
     // stayLoggedIn parameter is best set to true
     // to avoid re-logging the user after first use.
     // see: https://backendless.com/docs/flutter/users_login.html
     try {
-      return await Backendless.userService.login(user.email, user.password, true);
+      return await Backendless.userService.login(email, password, true);
     } on PlatformException catch (error, stackTrace) {
       _handleError(error, stackTrace, apiName: "Login");
     }
@@ -105,6 +105,22 @@ class BackendlessUserApi {
     }
   }
 
+  /// [getCurrentUser] retrieves a record of the current
+  /// user in session.
+  ///
+  /// Returns: BackendlessUser object of current User
+  ///
+  static Future<List<BackendlessUser?>?> findUser(String email) async {
+    try {
+
+      DataQueryBuilder query = DataQueryBuilder()
+        ..whereClause = "email = '$email'";
+      return Backendless.data.withClass<BackendlessUser>().find(query);
+
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "FindUser");
+    }
+  }
   /// [loginAsGuest] logins an anonymous user
   ///
   /// Returns: BackendlessUser object of newly created
