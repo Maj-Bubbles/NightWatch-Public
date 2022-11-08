@@ -7,14 +7,14 @@ class BackendlessDatabaseApi {
 
   void saveSingleReport(Report report) {
     var serializedReport = {
-      "Username": report.username,
+      // "Username": report.userName,
       "Title": report.title,
       "Description": report.description,
       "DateTime": report.dateTime,
       "Alerted": report.isAlerted,
       "Acknowledged": report.isAcknowledged,
-      "Imminent": report.isImminent,
-      "LocationData": report.locationData,
+      // "Imminent": report.isImminent,
+      // "LocationData": report.locationData,
       "Media": {report.dateTime: report.media},
     };
     Backendless.data.of("Report").save(serializedReport).catchError(
@@ -24,8 +24,9 @@ class BackendlessDatabaseApi {
 
   dynamic retrieveUserReports(String keyword) {
     var query = DataQueryBuilder()..whereClause = "Reports";
-    return Backendless.data.of("Users").find(query).catchError((error, stackTrace) =>
-        _handleError(error, stackTrace, apiName: "retrieveUserReports"));
+    return Backendless.data.of("Users").find(query).catchError(
+        (error, stackTrace) =>
+            _handleError(error, stackTrace, apiName: "retrieveUserReports"));
   }
 
   /// Code reuse: Handle API Errors and print details to the console
