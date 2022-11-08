@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nightwatch/views/pages/login_page.dart';
 
 class RouteManager {
-  static const String loginPage = '/loginPage';
+  static const String loginPage = '/';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
