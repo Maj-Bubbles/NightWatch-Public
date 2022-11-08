@@ -1,14 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
-import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
-import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 
 class OnBoarding extends StatefulWidget {
   const OnBoarding({super.key});

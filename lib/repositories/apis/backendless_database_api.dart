@@ -13,8 +13,8 @@ class BackendlessDatabaseApi {
       "DateTime": report.dateTime,
       "Alerted": report.isAlerted,
       "Acknowledged": report.isAcknowledged,
-      // "Imminent": report.isImminent,
-      // "LocationData": report.locationData,
+      "Imminent": report.isImminent,
+      "LocationData": report.locationData,
       "Media": {report.dateTime: report.media},
     };
     Backendless.data.of("Report").save(serializedReport).catchError(

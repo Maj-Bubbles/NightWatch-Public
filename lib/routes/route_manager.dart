@@ -21,9 +21,9 @@ class RouteManager {
         );
 
       case loginPage:
-      // return MaterialPageRoute(
-      // builder: (context) => const LoginPage(),
-      // );
+        return MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        );
 
       default:
         throw Exception('No route found!');
