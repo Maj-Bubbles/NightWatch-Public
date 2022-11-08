@@ -7,9 +7,9 @@ class RouteManager {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case loginPage:
-        return MaterialPageRoute(
-          builder: (context) => const LoginPage(),
-        );
+      // return MaterialPageRoute(
+      // builder: (context) => const LoginPage(),
+      // );
 
       default:
         throw Exception('No route found!');
