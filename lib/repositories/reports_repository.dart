@@ -5,7 +5,7 @@ abstract class ReportsRepository {
 
   dynamic storeReport(Report report);
 
-  dynamic getReport(String reportId);
+  Stream<Report> get latestReport;
 
-  dynamic getReports(List<String> reportIDs);
+  dynamic getReports();
 }
