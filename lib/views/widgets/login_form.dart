@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,6 +6,11 @@ import 'package:nightwatch/miscellaneous/configuration.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
+=======
+import 'package:flutter/material.dart';
+import 'package:nightwatch/miscellaneous/constants.dart';
+import 'package:nightwatch/miscellaneous/validators.dart';
+>>>>>>> loadingLoginPagesAndEdits
 
 class LoginScreenForm extends StatefulWidget {
   const LoginScreenForm({
@@ -15,9 +21,16 @@ class LoginScreenForm extends StatefulWidget {
   State<LoginScreenForm> createState() => _LoginScreenFormState();
 }
 
+<<<<<<< HEAD
 class _LoginScreenFormState extends State<LoginScreenForm> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
+=======
+class _LoginFormState extends State<LoginForm> {
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+>>>>>>> loadingLoginPagesAndEdits
   @override
   void initState() {
     super.initState();
@@ -34,6 +47,7 @@ class _LoginScreenFormState extends State<LoginScreenForm> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return SingleChildScrollView(
       child: Center(
         child: Padding(
@@ -98,6 +112,110 @@ class _LoginScreenFormState extends State<LoginScreenForm> {
               ],
             ),
           ),
+=======
+    return Form(
+      //key: loginFormKey,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView(
+          children: [
+            const SizedBoxH30(),
+            const Image(
+              image: AssetImage('media/Splash_GitHub_Page.png'),
+              height: 150,
+            ),
+            const SizedBoxH10(),
+            const Center(
+              child: Text(
+                'Sign in to continue',
+                style: TextStyle(
+                  color: silverSandForFormsAndOtherStuff,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 40.0,
+                right: 40.0,
+                top: 26.0,
+                bottom: 8.0,
+              ),
+              child: Container(
+                color: silverSandForFormsAndOtherStuff,
+                height: 63,
+                child: Center(
+                  child: TextFormField(
+                    validator: validateEmail,
+                    controller: emailController,
+                    cursorColor: scaffoldBackgroundColor,
+                    decoration: formDecoration('Email Address'),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 40.0,
+                right: 40.0,
+                top: 12.0,
+                bottom: 8.0,
+              ),
+              child: Container(
+                color: silverSandForFormsAndOtherStuff,
+                height: 63,
+                child: Center(
+                  child: TextFormField(
+                    validator: validatePassword,
+                    controller: passwordController,
+                    cursorColor: scaffoldBackgroundColor,
+                    decoration: formDecoration('Password'),
+                  ),
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Forgot Password?',
+                style: TextStyle(
+                  color: silverSandForFormsAndOtherStuff,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 100.0,
+                right: 100.0,
+                top: 12.0,
+                bottom: 8.0,
+              ),
+              child: MaterialButton(
+                onPressed: () {},
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                color: orangePeelForIconsAndButtons,
+                textColor: Colors.white,
+                child: const Text(
+                  'Sign In',
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Don\'t have an account?',
+                style: TextStyle(
+                  color: silverSandForFormsAndOtherStuff,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ],
+>>>>>>> loadingLoginPagesAndEdits
         ),
       ),
     );

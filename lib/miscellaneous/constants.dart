@@ -17,13 +17,8 @@ const Color jeansBlueForIcons = Color.fromRGBO(58, 164, 255, 1.0);
 const Color silverSandForFormsAndOtherStuff =
     Color.fromRGBO(183, 193, 192, 1.0);
 
+const Color appBarTitle = Colors.white;
 //cOLORS FOR iCONS AND TEXTS
-
-const TextStyle appBarTitle = TextStyle(
-  fontSize: 22,
-  color: Colors.white,
-  fontWeight: FontWeight.bold,
-);
 
 const TextStyle headingsOne = TextStyle(
   fontSize: 18,
@@ -46,6 +41,8 @@ const TextStyle normalTextTwo = TextStyle(
   fontSize: 14,
   color: Color.fromARGB(255, 22, 22, 22),
 );
+
+//Sized Boxes
 
 class SizedBoxH10 extends StatelessWidget {
   const SizedBoxH10({
@@ -84,4 +81,50 @@ class SizedBoxH30 extends StatelessWidget {
       height: 30,
     );
   }
+}
+
+//Forms Stuff
+const focusedBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.all(
+    Radius.circular(0),
+  ),
+  borderSide: BorderSide(
+    width: 2,
+    color: scaffoldBackgroundColor,
+  ),
+);
+
+const enabledBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.all(
+    Radius.circular(5),
+  ),
+  borderSide: BorderSide(
+    width: 2,
+    color: silverSandForFormsAndOtherStuff,
+  ),
+);
+
+const errorBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.all(
+    Radius.circular(0),
+  ),
+  borderSide: BorderSide(
+    width: 2,
+    color: redButtonColor,
+  ),
+);
+
+InputDecoration formDecoration(String labelText) {
+  return InputDecoration(
+    errorMaxLines: 3,
+    labelText: labelText,
+    labelStyle: const TextStyle(
+      color: scaffoldBackgroundColor,
+      fontWeight: FontWeight.bold,
+    ),
+    focusedBorder: focusedBorder,
+    enabledBorder: enabledBorder,
+    errorBorder: errorBorder,
+    focusedErrorBorder: errorBorder,
+  );
 }
