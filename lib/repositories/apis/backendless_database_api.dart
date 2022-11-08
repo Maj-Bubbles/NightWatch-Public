@@ -16,7 +16,7 @@ class BackendlessDatabaseApi {
     try {
       return await Backendless.data.of("Reports").find();
     } on PlatformException catch (error, stackTrace) {
-      _handleError(error, stackTrace, apiName: "saveSingleReport");
+      _handleError(error, stackTrace, apiName: "retrieveReports");
     }
   }
 
@@ -26,7 +26,7 @@ class BackendlessDatabaseApi {
       query.properties = ["Reports"];
       return await Backendless.data.of("Users").find(query);
     } on PlatformException catch (error, stackTrace) {
-      _handleError(error, stackTrace, apiName: "saveSingleReport");
+      _handleError(error, stackTrace, apiName: "retrieveUserReports");
     }
   }
 
