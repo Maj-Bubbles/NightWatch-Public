@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//File created by Mr Solomon for use in his parts in the UI
 //cOLORS FOR iCONS'S bACKGROUND, cONTAINERS, BUTTONS, SCAFFOLD'S bACKGROUND
 
 const Color redButtonColor = Color.fromRGBO(252, 33, 8, 1.0);
