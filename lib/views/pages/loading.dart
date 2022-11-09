@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
-import 'package:nightwatch/services/navigation_and_dialog_service.dart';
+import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/views/widgets/app_progress_indicator.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -60,7 +59,7 @@ class _LoadingPageState extends State<LoadingPage> {
             const SizedBoxH30(),
             IconButton(
               onPressed: () {
-                locator
+                serviceLocator
                     .get<NavigationAndDialogService>()
                     .navigateTo(RouteManager.onBoardingPage);
               },
