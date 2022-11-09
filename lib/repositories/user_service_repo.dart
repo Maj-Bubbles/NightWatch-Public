@@ -9,11 +9,11 @@ abstract class UserServiceRepo {
 
   void logoutUser(User user);
 
-  Future<void> resetPassword(String email);
+  Future<void> resetPassword({required String email});
 
   void checkIfUserLogged(User user);
 
-  Future<bool> checkIfUserExists(String email);
+  Future<bool> checkIfUserExists({required String email});
 
   void checkIfUserIsAdmin(User user);
 }
