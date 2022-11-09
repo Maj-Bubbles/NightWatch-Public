@@ -2,20 +2,21 @@
 /// of interest from an admin user.
 /// It inherits from the generic User abstract interface.
 
-
 import 'models.dart';
 
-class AdminUser  extends User {
-  String _tellNum = "";
-  String _adminCellNum = "";
+class AdminUser extends User {
+  final String tellNum;
+  final String adminCellNum;
 
-  String get tellNum => _tellNum;
-  set tellNum(String value) {
-    _tellNum = value;
-  }
-
-  String get adminCellNum => _adminCellNum;
-  set adminCellNum(String value) {
-    _adminCellNum = value;
-  }
+  AdminUser({
+    required this.tellNum,
+    required this.adminCellNum,
+    required super.name,
+    required super.userName,
+    required super.isAdmin,
+    required super.emailAdd,
+    required super.password,
+    required super.primaryNumber,
+    required super.secondaryNumber
+  });
 }

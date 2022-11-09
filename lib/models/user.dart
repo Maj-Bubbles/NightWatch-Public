@@ -1,34 +1,23 @@
+/// This class is a Data Class that
+/// models user data from the Views. The
+/// BackendlessUser object is used as
+/// Data transfer Object.
 abstract class User {
-  String _name = "";
-  String _id = "";
-  String _userName = "";
-  String _emailAdd = "";
-  String _password = "";
-  bool _isAdmin = false;
+  final String name;
+  final String userName;
+  final String emailAdd;
+  final String password;
+  final bool isAdmin;
+  final String primaryNumber;
+  final String secondaryNumber;
 
-  String get name => _name;
-  set name(String value) {
-    _name = value;
-  }
-  String get id => _id;
-  set id(String value) {
-    _id = value;
-  }
-  String get userName => _userName;
-  set userName(String value) {
-    _userName = value;
-  }
-  String get email => _emailAdd;
-  set email(String value) {
-    _emailAdd = value;
-  }
-  String get password => _password;
-  set password(String value) {
-    _password = value;
-  }
-
-  bool get isAdmin => _isAdmin;
-  set isAdmin(bool value) {
-    isAdmin = value;
-  }
+  User({
+    required this.name,
+    required this.userName,
+    required this.emailAdd,
+    required this.password,
+    required this.isAdmin,
+    required this.primaryNumber,
+    required this.secondaryNumber
+});
 }
