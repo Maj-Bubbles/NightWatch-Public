@@ -86,7 +86,7 @@ class BackendlessUserApi {
   ///
   static Future<void> resetPassword(User user) async {
     try {
-      return Backendless.userService.restorePassword(user.email);
+      return Backendless.userService.restorePassword(user.emailAdd);
     } on PlatformException catch (error, stackTrace) {
       _handleError(error, stackTrace, apiName: "ResetPassword");
     }

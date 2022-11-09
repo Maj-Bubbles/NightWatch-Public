@@ -66,7 +66,7 @@ class UserService extends UserServiceRepo {
   Future<BackendlessUser> registerUser(User user) async {
     try {
       var backendlessUser = BackendlessUser()
-        ..email = user.email
+        ..email = user.emailAdd
         ..password = user.password
         ..properties["admin"] = user.isAdmin
         ..properties["username"] = user.userName
