@@ -2,76 +2,147 @@ import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/services.dart';
 import 'package:nightwatch/models/models.dart';
 
+/// [BackendlessUserApi] exposes all necessary apis for user
+/// management
+///
 /// The following api implementation is inspired by Backendless'
 /// documentation of the UserService API
 /// found here: https://backendless.com/docs/flutter/users_overview.html
 class BackendlessUserApi {
-  final backendlessApi = Backendless();
 
-  Future<BackendlessUser?> register(BackendlessUser user) {
-    return Backendless.userService.register(user).catchError(
-        (error, stackTrace) =>
-            _handleError(error, stackTrace, apiName: "Register"),
-        test: (e) => e is PlatformException);
+  /// [register] registers a user
+  ///
+  /// Argument(s):
+  ///
+  /// User - Contains state to login the user
+  ///
+  /// Returns: BackendlessUser object
+  ///
+  static Future<BackendlessUser?> register(BackendlessUser user) async {
+    try {
+      return await Backendless.userService.register(user);
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "Register");
+    }
   }
 
-  Future<bool?> isValidLogin() {
-    return Backendless.userService.isValidLogin().catchError(
-        (error, stackTrace) =>
-            _handleError(error, stackTrace, apiName: "isValidLogin"),
-    test: (e) => e is PlatformException);
+  /// [isValidLogin] The login operation provides a way to persist the
+  /// user-token on the client side so it can be used when the application is
+  /// restarted. This helps in streamlining the user experience since the user
+  /// of the application does not need to login again.
+  ///
+  ///
+  /// Returns: True or False
+  ///
+  static Future<bool?> isValidLogin() async {
+    try {
+      return await Backendless.userService.isValidLogin();
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "isValidLogin");
+    }
+    return null;
   }
 
-  Future<BackendlessUser?> login(User user) {
+  /// [login]logins a user
+  ///
+  /// Argument(s):
+  ///
+  /// User - Contains state to login the user
+  ///
+  /// Returns: BackendlessUser object
+  ///
+  static Future<BackendlessUser?> login({required String email, required String password}) async {
     // stayLoggedIn parameter is best set to true
     // to avoid re-logging the user after first use.
     // see: https://backendless.com/docs/flutter/users_login.html
-    return Backendless.userService
-        .login(user.email, user.password, true)
-        .catchError(
-            (error, stackTrace) =>
-                _handleError(error, stackTrace, apiName: "Login"),
-            test: (e) => e is PlatformException);
+    try {
+      return await Backendless.userService.login(email, password, true);
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "Login");
+    }
   }
 
-  Future<void> logout() {
-    return Backendless.userService.logout().catchError(
-        (error, stackTrace) =>
-            _handleError(error, stackTrace, apiName: "Logout"),
-        test: (e) => e is PlatformException);
-  }
-
-  Future<void> resetPassword(User user) {
-    return Backendless.userService.restorePassword(user.email).catchError(
-        (error, stackTrace) =>
-            _handleError(error, stackTrace, apiName: "ResetPassword"),
-        test: (e) => e is PlatformException);
-  }
-
-  Future<BackendlessUser?> getCurrentUser() {
-    return Backendless.userService.getCurrentUser().catchError(
-        (error, stackTrace) =>
-            _handleError(error, stackTrace, apiName: "GetCurrentUser"),
-        test: (e) => e is PlatformException);
-  }
-
-  /// According to Backendless, the process of using anonymous login
-  /// consists of the following steps:
+  /// [logout] logs out a user currently
+  /// in the session
   ///
-  /// 1. Login the user anonymously using the API documented below;
-  /// 2. Perform any application specific logic, such as establishing data object
-  /// relationships with the user data record;
-  /// 3. Convert the guest user account to a registered user by using
-  /// the user registration API[https://backendless.com/docs/flutter/users_user_registration.html].
+  /// Argument(s):
   ///
-  Future<BackendlessUser?> loginAsGuest() {
-    return Backendless.userService.loginAsGuest(false).catchError(
-        (error, stackTrace) =>
-            _handleError(error, stackTrace, apiName: "LoginAsGuest"),
-        test: (e) => e is PlatformException);
+  /// Returns: void
+  ///
+  static Future<void> logout() async {
+    try {
+      Backendless.userService.logout();
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "Logout");
+    }
   }
 
-  /// Updates a User's attributes such as UserName,region, primary and secondary numbers.
+  /// [resetPassword] resets a user's password
+  ///
+  /// Argument(s):
+  /// User - User object
+  ///
+  /// Returns: void
+  ///
+  static Future<void> resetPassword(User user) async {
+    try {
+      return Backendless.userService.restorePassword(user.email);
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "ResetPassword");
+    }
+  }
+
+  /// [getCurrentUser] retrieves a record of the current
+  /// user in session.
+  ///
+  /// Returns: BackendlessUser object of current User
+  ///
+  static Future<BackendlessUser?> getCurrentUser() async {
+    try {
+      return Backendless.userService.getCurrentUser();
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "GetCurrentUser");
+    }
+  }
+
+  /// [getCurrentUser] retrieves a record of the current
+  /// user in session.
+  ///
+  /// Returns: BackendlessUser object of current User
+  ///
+  static Future<List<BackendlessUser?>?> findUser(String email) async {
+    try {
+
+      DataQueryBuilder query = DataQueryBuilder()
+        ..whereClause = "email = '$email'";
+      return Backendless.data.withClass<BackendlessUser>().find(query);
+
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "FindUser");
+    }
+  }
+  /// [loginAsGuest] logins an anonymous user
+  ///
+  /// Returns: BackendlessUser object of newly created
+  /// anonymous user.
+  ///
+  /// for more: https://backendless.com/docs/flutter/users_user_registration.html].
+  ///
+  static Future<BackendlessUser?> loginAsGuest() async {
+    try {
+      return Backendless.userService.loginAsGuest(false);
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "Logout");
+    }
+  }
+
+  /// [updateProperty] Updates a User's attributes such as UserName
+  /// region, primary and secondary numbers.
+  ///
+  /// Argument(s):
+  /// user - A Backendless based user object to update.
+  ///
+  /// Returns: A Future with the Updated Record
   ///
   /// For more see: https://backendless.com/docs/flutter/users_update_user_properties.html
   ///
@@ -82,24 +153,50 @@ class BackendlessUserApi {
   ///               user.setProperty("Primary_Number", 123456789);
   ///               backendlessUserApi.updateProperty(user);
   ///               ```
-  Future<BackendlessUser?> updateProperty(BackendlessUser user) {
-    return Backendless.userService.update(user).catchError(
-        (error, stackTrace) =>
-            _handleError(error, stackTrace, apiName: "UpdateProperty"),
-        test: (e) => e is PlatformException);
+  static Future<BackendlessUser?> updateProperty(BackendlessUser user) async {
+    try {
+      return Backendless.userService.update(user);
+    } on PlatformException catch (error, stackTrace) {
+      _handleError(error, stackTrace, apiName: "UpdateProperty");
+    }
   }
 
-  /// Code reuse: Handle API Errors and print details to the console
-  /// throws an Exception to handled by a user of the api
-  _handleError(PlatformException error, StackTrace stackTrace,
+  /// [_handleError] logs an error to the console and throws
+  /// an exception to be handled by the API user
+  ///
+  /// Argument(s):
+  /// error - The Api returns a PlatformException that
+  ///         signifies an error status from a
+  ///         Backendless API operation
+  ///
+  /// stackTrack - Technical details of the stack when
+  ///              the error occurred
+  ///
+  /// Returns: dynamic, (derived Future's return type)
+  ///
+  static _handleError(PlatformException error, StackTrace stackTrace,
       {required String apiName}) {
     _logException(error, stackTrace, apiName);
     throw BackendlessException(error.details, error.code as int);
   }
 
-  /// Prints error information of a Backendless API error
-  /// to the console for ease of debugging
-  void _logException(
+  /// [_logException] prints debug details of the API call
+  ///
+  /// Argument(s):
+  ///
+  /// error - The Api returns a PlatformException that
+  ///         is signifies an error status from a
+  ///         Backendless API operation
+  ///
+  /// stackTrace - Technical details of the stack when
+  ///         the error occurred
+  ///
+  /// apiName - The name of the calling Function, for ease
+  ///           of debugging.
+  ///
+  /// Returns: void
+  ///
+  static void _logException(
       PlatformException error, StackTrace stackTrace, String apiName) {
     print("Backendless API Error: $apiName");
     print("exception code: ${error.code}");

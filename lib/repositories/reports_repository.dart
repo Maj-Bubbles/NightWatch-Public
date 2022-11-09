@@ -1,11 +1,11 @@
 import 'package:nightwatch/models/models.dart';
 
 abstract class ReportsRepository {
-  List<Report> getUserReports(User user);
+  dynamic getUserReports();
 
-  String storeReport(User user);
+  dynamic storeReport(Report report);
 
-  Report getReport(String reportId);
+  Stream<Report> get latestReport;
 
-  List<Report> getReports(List<String> reportIDs);
+  dynamic getReports();
 }
