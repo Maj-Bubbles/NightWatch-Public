@@ -6,7 +6,7 @@ import 'package:nightwatch/repositories/repositories.dart';
 class UserService extends UserServiceRepo {
 
   @override
-  Future<bool> checkIfUserExists(String email) async {
+  Future<bool> checkIfUserExists({required String email}) async {
     try {
       List<BackendlessUser?>? existingUsers = await BackendlessUserApi.findUser(email);
 
@@ -44,10 +44,9 @@ class UserService extends UserServiceRepo {
   }
 
   @override
-  Future<void> resetPassword(String email) async {
+  Future<void> resetPassword({required String email}) async {
     try {
-      var backendlessUser = BackendlessUser()..email = email;
-      BackendlessUserApi.register(backendlessUser);
+      BackendlessUserApi.resetPassword(email);
     } on BackendlessException catch (_) {
       rethrow;
     }
