@@ -1,3 +1,5 @@
+import 'package:nightwatch/models/region.dart';
+
 /// This class is a Data Class that
 /// models user data from the Views. The
 /// BackendlessUser object is used as
@@ -10,6 +12,7 @@ abstract class User {
   final bool isAdmin;
   final String primaryNumber;
   final String secondaryNumber;
+  final Region region;
 
   User({
     required this.name,
@@ -18,6 +21,7 @@ abstract class User {
     required this.password,
     required this.isAdmin,
     required this.primaryNumber,
-    required this.secondaryNumber
+    required this.secondaryNumber,
+    required this.region
 });
 }
