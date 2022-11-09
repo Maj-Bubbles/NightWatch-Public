@@ -4,17 +4,18 @@
 
 import 'models.dart';
 
-class PublicUser  extends User {
-  String _cellNum = "";
-  String _emergencyNum = "";
+class PublicUser extends User {
+  final String cellNum;
+  final String emergencyNum;
 
-  String get cellNum => _cellNum;
-  set cellNum(String value) {
-    _cellNum = value;
-  }
-
-  String get emergencyNum => _emergencyNum;
-  set emergencyNum(String value) {
-    _emergencyNum = value;
-  }
+  PublicUser(
+      {required this.cellNum,
+      required this.emergencyNum,
+      required super.name,
+      required super.userName,
+      required super.isAdmin,
+      required super.emailAdd,
+      required super.password,
+      required super.primaryNumber,
+      required super.secondaryNumber});
 }
