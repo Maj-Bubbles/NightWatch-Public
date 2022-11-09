@@ -16,6 +16,7 @@ class PublicUser extends User {
       required super.isAdmin,
       required super.emailAdd,
       required super.password,
+      required super.region,
       required super.primaryNumber,
       required super.secondaryNumber});
 }

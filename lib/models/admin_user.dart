@@ -15,6 +15,7 @@ class AdminUser extends User {
     required super.userName,
     required super.isAdmin,
     required super.emailAdd,
+    required super.region,
     required super.password,
     required super.primaryNumber,
     required super.secondaryNumber
