@@ -2,6 +2,7 @@ import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:nightwatch/models/models.dart';
 import 'package:nightwatch/repositories/apis/backendless_apis.dart';
 import 'package:nightwatch/repositories/repositories.dart';
+import 'package:nightwatch/view_models/error_handling.dart';
 
 class UserService extends UserServiceRepo {
 
@@ -14,13 +15,13 @@ class UserService extends UserServiceRepo {
         return false;
       }
       return true;
-    } on BackendlessException catch (_) {
+    } on UserAPIException catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<bool> checkIfUserIsAdmin(User user) async {
+  Future<bool> checkIfUserIsAdmin() async {
     try {
       var currentUser = await BackendlessUserApi.getCurrentUser();
 
@@ -29,16 +30,16 @@ class UserService extends UserServiceRepo {
       }
       return currentUser.getProperty("Admin") as bool;
 
-    } on BackendlessException catch (_) {
+    } on UserAPIException catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<bool> checkIfUserLogged(User user) async {
+  Future<bool> checkIfUserLogged() async {
     try {
       return await BackendlessUserApi.isValidLogin() ?? false;
-    } on BackendlessException catch (_) {
+    } on UserAPIException catch (_) {
       rethrow;
     }
   }
@@ -47,16 +48,16 @@ class UserService extends UserServiceRepo {
   Future<void> resetPassword({required String email}) async {
     try {
       BackendlessUserApi.resetPassword(email);
-    } on BackendlessException catch (_) {
+    } on UserAPIException catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<void> logoutUser(User user) async {
+  Future<void> logoutUser() async {
     try {
       return await BackendlessUserApi.logout();
-    } on BackendlessException catch (_) {
+    } on UserAPIException catch (_) {
       rethrow;
     }
   }
@@ -78,7 +79,7 @@ class UserService extends UserServiceRepo {
       // in the catch block below.
       return await BackendlessUserApi.register(backendlessUser) ??
           BackendlessUser();
-    } on BackendlessException catch (_) {
+    } on UserAPIException catch (_) {
       rethrow;
     }
   }
@@ -89,7 +90,7 @@ class UserService extends UserServiceRepo {
   Future<BackendlessUser> signInUser({required String email, required String password}) async {
     try {
       return await BackendlessUserApi.login(email: email, password: password) ?? BackendlessUser();
-    } on BackendlessException catch (_) {
+    } on UserAPIException catch (_) {
       rethrow;
     }
   }
