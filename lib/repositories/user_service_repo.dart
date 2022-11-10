@@ -5,15 +5,15 @@ abstract class UserServiceRepo {
 
   Future<BackendlessUser> registerUser(User user);
 
-  void signInUser({required String email, required String password});
+  Future<BackendlessUser> signInUser({required String email, required String password});
 
-  void logoutUser(User user);
+  Future<void> logoutUser();
 
   Future<void> resetPassword({required String email});
 
-  void checkIfUserLogged(User user);
+  Future<bool> checkIfUserLogged();
 
   Future<bool> checkIfUserExists({required String email});
 
-  void checkIfUserIsAdmin(User user);
+  Future<bool> checkIfUserIsAdmin();
 }
