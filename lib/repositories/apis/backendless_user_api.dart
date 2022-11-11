@@ -1,6 +1,7 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/services.dart';
 import 'package:nightwatch/models/models.dart';
+import 'package:nightwatch/view_models/error_handling.dart';
 
 /// [BackendlessUserApi] exposes all necessary apis for user
 /// management
@@ -177,7 +178,7 @@ class BackendlessUserApi {
   static _handleError(PlatformException error, StackTrace stackTrace,
       {required String apiName}) {
     _logException(error, stackTrace, apiName);
-    throw BackendlessException(error.details, error.code as int);
+    throw UserAPIException.fromPlatformException(error);
   }
 
   /// [_logException] prints debug details of the API call
