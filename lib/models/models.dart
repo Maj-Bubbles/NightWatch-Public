@@ -7,3 +7,4 @@ export 'report.dart';
 export 'media.dart';
 export 'region.dart';
 export 'location.dart';
+export 'view_state.dart';
