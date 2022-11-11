@@ -65,6 +65,7 @@ class UserViewModel extends BaseViewModel {
     } on UserAPIException catch (error) {
       setErrorDialog(error);
     }
+    return false;
   }
 
   Future<bool> checkIfUserExists(String email) async {
@@ -73,6 +74,7 @@ class UserViewModel extends BaseViewModel {
     } on UserAPIException catch (error) {
       setErrorDialog(error);
     }
+    return false;
   }
 
   Future<bool> checkIfUserIsAdmin() async {
@@ -81,5 +83,6 @@ class UserViewModel extends BaseViewModel {
     } on UserAPIException catch (error) {
       setErrorDialog(error);
     }
+    return false;
   }
 }
