@@ -12,15 +12,7 @@ class ReportsService extends ReportsRepository {
   Stream<Report> get latestReport => _realTimeReports.stream;
 
 
-  late List<Report> _reports;
-  late List<Report> _userReports;
-
-  List<Report> get reports => _reports;
-  List<Report> get userReports => _userReports;
-
   ReportsService() {
-    _reports = [];
-    _userReports = [];
     // Asynchronous data structure to channel streamed
     // latest reports
     _realTimeReports = StreamController<Report>();
@@ -32,12 +24,12 @@ class ReportsService extends ReportsRepository {
 
   // Unconditional retrieval of reports
   @override
-  Future<void> getReports() async {
+  Future<List<Report>> getReports() async {
     try {
       // TODO: Paginate retrieved reports
       // in order to be memory efficient
       List<Map<dynamic, dynamic>> retrievedReports = await BackendlessDatabaseApi.retrieveReports();
-      retrievedReports.map((json) => Report.fromJson(json)).toList();
+      return retrievedReports.map((json) => Report.fromJson(json)).toList();
     } on BackendlessException catch (_) {
       // To be handled by the ViewModel
         rethrow;
@@ -45,13 +37,13 @@ class ReportsService extends ReportsRepository {
   }
 
   @override
-  Future<void> getUserReports() async {
+  Future<List<Report>> getUserReports() async {
     try {
 
      List<Map<dynamic, dynamic>> retrievedUserReports = await BackendlessDatabaseApi.retrieveUserReports();
      //Convert JSON formatted reports to Report objects
      // store to local user reports variable.
-     _userReports = retrievedUserReports.map((json) => Report.fromJson(json)).toList();
+     return retrievedUserReports.map((json) => Report.fromJson(json)).toList();
 
     } on BackendlessException catch (_) {
       // To be handled by the ViewModel
