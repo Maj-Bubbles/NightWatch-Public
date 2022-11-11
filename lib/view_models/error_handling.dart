@@ -12,7 +12,7 @@ class UserAPIException extends NighWatchException {
   UserAPIException({required super.title, required super.message});
 
   factory UserAPIException.fromPlatformException(PlatformException error) {
-    var mapToBackendLessError = BackendlessErrorCodes[error];
+    var mapToBackendLessError = BackendlessErrorCodes[error.code];
     return AuthenticationErrorDialogs[mapToBackendLessError] ??
         error as UserAPIException;
   }
