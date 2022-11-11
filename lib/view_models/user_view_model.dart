@@ -20,20 +20,19 @@ class UserViewModel extends BaseViewModel {
   Future<void> registerUser(User user) async {
     try {
       setState(ViewState.Busy);
-      _currentUser =
-          await _userService.registerUser(user);
+      _currentUser = await _userService.registerUser(user);
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
       setErrorDialog(error);
     }
   }
 
-  Future<void> signInUser({required String email, required String password}) async {
+  Future<void> signInUser(
+      {required String email, required String password}) async {
     try {
-      checkIfUserIsLoggedIn();
       setState(ViewState.Busy);
       _currentUser =
-      await _userService.signInUser(email: email, password: password);
+          await _userService.signInUser(email: email, password: password);
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
       setErrorDialog(error);
@@ -49,6 +48,7 @@ class UserViewModel extends BaseViewModel {
       setErrorDialog(error);
     }
   }
+
   Future<void> forgotPassword(String email) async {
     try {
       setState(ViewState.Busy);
@@ -58,14 +58,28 @@ class UserViewModel extends BaseViewModel {
       setErrorDialog(error);
     }
   }
+
   Future<bool> checkIfUserIsLoggedIn() async {
+    try {
       return await _userService.checkIfUserLogged();
-  }
-  Future<bool> checkIfUserExists(String email) async {
-   return await _userService.checkIfUserExists(email: email);
-  }
-  Future<bool> checkIfUserIsAdmin() async {
-    return await _userService.checkIfUserIsAdmin();
+    } on UserAPIException catch (error) {
+      setErrorDialog(error);
+    }
   }
 
+  Future<bool> checkIfUserExists(String email) async {
+    try {
+      return await _userService.checkIfUserExists(email: email);
+    } on UserAPIException catch (error) {
+      setErrorDialog(error);
+    }
+  }
+
+  Future<bool> checkIfUserIsAdmin() async {
+    try {
+      return await _userService.checkIfUserIsAdmin();
+    } on UserAPIException catch (error) {
+      setErrorDialog(error);
+    }
+  }
 }
