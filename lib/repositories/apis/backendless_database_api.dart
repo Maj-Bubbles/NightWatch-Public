@@ -22,9 +22,10 @@ class BackendlessDatabaseApi {
 
   static Future<dynamic> retrieveUserReports() async {
     try {
+      var userId = await Backendless.userService.getCurrentUser().then((value) =>  value?.getUserId());
       var query = DataQueryBuilder();
       query.properties = ["Reports"];
-      return await Backendless.data.of("Users").find(query);
+      return await Backendless.data.of("Users").findById(userId!, relations:["Reports"], queryBuilder: query);
     } on PlatformException catch (error, stackTrace) {
       _handleError(error, stackTrace, apiName: "retrieveUserReports");
     }

@@ -1,6 +1,10 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
+import 'package:nightwatch/services/services.dart';
+import 'package:nightwatch/view_models/base_view_model.dart';
+import 'package:nightwatch/view_models/error_handling.dart';
+import 'package:nightwatch/view_models/user_view_model.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -17,12 +21,12 @@ class NavigationAndDialogService {
     return navigatorKey.currentState!.pop();
   }
 
-  void showSnackBar({required String message, required String title}) {
+  void showSnackBar(StatusDialog dialog) {
     Flushbar(
       borderRadius: BorderRadius.circular(10),
       backgroundColor: orangePeelForIconsAndButtons,
-      title: title,
-      message: message,
+      title: dialog.title,
+      message: dialog.message,
       titleColor: scaffoldBackgroundColor,
       messageColor: scaffoldBackgroundColor,
       duration: const Duration(milliseconds: 3500),
