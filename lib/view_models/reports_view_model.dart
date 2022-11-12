@@ -33,7 +33,6 @@ class ReportsViewModel extends BaseViewModel {
       setState(ViewState.DataFetched);
     } on BackendlessException catch (_) {
      // Error Dialog
-      setErrorDialog(error)
     }
   }
 
