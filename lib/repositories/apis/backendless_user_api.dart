@@ -1,6 +1,5 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/services.dart';
-import 'package:nightwatch/models/models.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
 
 /// [BackendlessUserApi] exposes all necessary apis for user
@@ -10,7 +9,6 @@ import 'package:nightwatch/view_models/error_handling.dart';
 /// documentation of the UserService API
 /// found here: https://backendless.com/docs/flutter/users_overview.html
 class BackendlessUserApi {
-
   /// [register] registers a user
   ///
   /// Argument(s):
@@ -19,7 +17,7 @@ class BackendlessUserApi {
   ///
   /// Returns: BackendlessUser object
   ///
-  static Future<BackendlessUser?> register(BackendlessUser user) async {
+  Future<BackendlessUser?> register(BackendlessUser user) async {
     try {
       return await Backendless.userService.register(user);
     } on PlatformException catch (error, stackTrace) {
@@ -35,7 +33,7 @@ class BackendlessUserApi {
   ///
   /// Returns: True or False
   ///
-  static Future<bool?> isValidLogin() async {
+  Future<bool?> isValidLogin() async {
     try {
       return await Backendless.userService.isValidLogin();
     } on PlatformException catch (error, stackTrace) {
@@ -52,7 +50,8 @@ class BackendlessUserApi {
   ///
   /// Returns: BackendlessUser object
   ///
-  static Future<BackendlessUser?> login({required String email, required String password}) async {
+  Future<BackendlessUser?> login(
+      {required String email, required String password}) async {
     // stayLoggedIn parameter is best set to true
     // to avoid re-logging the user after first use.
     // see: https://backendless.com/docs/flutter/users_login.html
@@ -70,7 +69,7 @@ class BackendlessUserApi {
   ///
   /// Returns: void
   ///
-  static Future<void> logout() async {
+  Future<void> logout() async {
     try {
       Backendless.userService.logout();
     } on PlatformException catch (error, stackTrace) {
@@ -85,7 +84,7 @@ class BackendlessUserApi {
   ///
   /// Returns: void
   ///
-  static Future<void> resetPassword(String email) async {
+  Future<void> resetPassword(String email) async {
     try {
       return Backendless.userService.restorePassword(email);
     } on PlatformException catch (error, stackTrace) {
@@ -98,7 +97,7 @@ class BackendlessUserApi {
   ///
   /// Returns: BackendlessUser object of current User
   ///
-  static Future<BackendlessUser?> getCurrentUser() async {
+  Future<BackendlessUser?> getCurrentUser() async {
     try {
       return Backendless.userService.getCurrentUser();
     } on PlatformException catch (error, stackTrace) {
@@ -111,17 +110,16 @@ class BackendlessUserApi {
   ///
   /// Returns: BackendlessUser object of current User
   ///
-  static Future<List<BackendlessUser?>?> findUser(String email) async {
+  Future<List<BackendlessUser?>?> findUser(String email) async {
     try {
-
       DataQueryBuilder query = DataQueryBuilder()
         ..whereClause = "email = '$email'";
       return Backendless.data.withClass<BackendlessUser>().find(query);
-
     } on PlatformException catch (error, stackTrace) {
       _handleError(error, stackTrace, apiName: "FindUser");
     }
   }
+
   /// [loginAsGuest] logins an anonymous user
   ///
   /// Returns: BackendlessUser object of newly created
@@ -129,7 +127,7 @@ class BackendlessUserApi {
   ///
   /// for more: https://backendless.com/docs/flutter/users_user_registration.html].
   ///
-  static Future<BackendlessUser?> loginAsGuest() async {
+  Future<BackendlessUser?> loginAsGuest() async {
     try {
       return Backendless.userService.loginAsGuest(false);
     } on PlatformException catch (error, stackTrace) {
@@ -154,7 +152,7 @@ class BackendlessUserApi {
   ///               user.setProperty("Primary_Number", 123456789);
   ///               backendlessUserApi.updateProperty(user);
   ///               ```
-  static Future<BackendlessUser?> updateProperty(BackendlessUser user) async {
+  Future<BackendlessUser?> updateProperty(BackendlessUser user) async {
     try {
       return Backendless.userService.update(user);
     } on PlatformException catch (error, stackTrace) {
@@ -175,7 +173,7 @@ class BackendlessUserApi {
   ///
   /// Returns: dynamic, (derived Future's return type)
   ///
-  static _handleError(PlatformException error, StackTrace stackTrace,
+  _handleError(PlatformException error, StackTrace stackTrace,
       {required String apiName}) {
     _logException(error, stackTrace, apiName);
     throw UserAPIException.fromPlatformException(error);
@@ -197,7 +195,7 @@ class BackendlessUserApi {
   ///
   /// Returns: void
   ///
-  static void _logException(
+  void _logException(
       PlatformException error, StackTrace stackTrace, String apiName) {
     print("Backendless API Error: $apiName");
     print("exception code: ${error.code}");

@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:nightwatch/models/models.dart';
 
 class BackendlessDatabaseApi {
-  static Future<void> saveSingleReport(Report report) async {
+
+  Future<void> saveSingleReport(Report report) async {
     try {
       var serializedReport = report.toJson();
       await Backendless.data.of("Report").save(serializedReport);
@@ -12,7 +13,7 @@ class BackendlessDatabaseApi {
     }
   }
 
-  static Future<dynamic> retrieveReports() async {
+  Future<dynamic> retrieveReports() async {
     try {
       return await Backendless.data.of("Reports").find();
     } on PlatformException catch (error, stackTrace) {
@@ -20,7 +21,7 @@ class BackendlessDatabaseApi {
     }
   }
 
-  static Future<dynamic> retrieveUserReports() async {
+  Future<dynamic> retrieveUserReports() async {
     try {
       var userId = await Backendless.userService.getCurrentUser().then((value) =>  value?.getUserId());
       var query = DataQueryBuilder();
@@ -33,7 +34,7 @@ class BackendlessDatabaseApi {
 
   /// Code reuse: Handle API Errors and print details to the console
   /// throws an Exception to handled by a user of the api
-  static dynamic _handleError(PlatformException error, StackTrace stackTrace,
+  dynamic _handleError(PlatformException error, StackTrace stackTrace,
       {required String apiName}) {
     _logException(error, stackTrace, apiName);
     throw BackendlessException(error.details, error.code as int);
@@ -41,7 +42,7 @@ class BackendlessDatabaseApi {
 
   /// Prints error information of a Backendless API error
   /// to the console for ease of debugging
-  static void _logException(
+ void _logException(
       PlatformException error, StackTrace stackTrace, String apiName) {
     print("Backendless API Error: $apiName");
     print("exception code: ${error.code}");
