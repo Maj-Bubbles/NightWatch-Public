@@ -1,15 +1,20 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:nightwatch/models/models.dart';
-import 'package:nightwatch/repositories/apis/backendless_apis.dart';
 import 'package:nightwatch/repositories/repositories.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
+import '../repositories/apis/backendless_apis.dart';
 
 class UserService extends UserServiceRepo {
+  late final BackendlessUserApi _userApi;
+
+  // The api should be injected to allow
+  // testability of the service.
+  UserService(BackendlessUserApi api): _userApi = api;
 
   @override
   Future<bool> checkIfUserExists({required String email}) async {
     try {
-      List<BackendlessUser?>? existingUsers = await BackendlessUserApi.findUser(email);
+      List<BackendlessUser?>? existingUsers = await _userApi.findUser(email);
 
       if (existingUsers == null || existingUsers.isEmpty) {
         return false;
@@ -23,13 +28,13 @@ class UserService extends UserServiceRepo {
   @override
   Future<bool> checkIfUserIsAdmin() async {
     try {
-      var currentUser = await BackendlessUserApi.getCurrentUser();
+      var currentUser = await _userApi.getCurrentUser();
 
-      if (currentUser == null) {
+      if (currentUser == null || currentUser.getProperty("Admin") == null) {
         return false;
       }
-      return currentUser.getProperty("Admin") as bool;
 
+      return currentUser.getProperty("Admin") as bool;
     } on UserAPIException catch (_) {
       rethrow;
     }
@@ -38,25 +43,27 @@ class UserService extends UserServiceRepo {
   @override
   Future<bool> checkIfUserLogged() async {
     try {
-      return await BackendlessUserApi.isValidLogin() ?? false;
+      return await _userApi.isValidLogin() ?? false;
     } on UserAPIException catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<void> resetPassword({required String email}) async {
+  Future<bool> resetPassword({required String email}) async {
     try {
-      BackendlessUserApi.resetPassword(email);
+      await _userApi.resetPassword(email);
+      return true;
     } on UserAPIException catch (_) {
       rethrow;
     }
   }
 
   @override
-  Future<void> logoutUser() async {
+  Future<bool> logoutUser() async {
     try {
-      return await BackendlessUserApi.logout();
+      await _userApi.logout();
+      return true;
     } on UserAPIException catch (_) {
       rethrow;
     }
@@ -77,7 +84,7 @@ class UserService extends UserServiceRepo {
 
       // Nullability is not a concern. API Errors are caught
       // in the catch block below.
-      return await BackendlessUserApi.register(backendlessUser) ??
+      return await _userApi.register(backendlessUser) ??
           BackendlessUser();
     } on UserAPIException catch (_) {
       rethrow;
@@ -89,7 +96,7 @@ class UserService extends UserServiceRepo {
   @override
   Future<BackendlessUser> signInUser({required String email, required String password}) async {
     try {
-      return await BackendlessUserApi.login(email: email, password: password) ?? BackendlessUser();
+      return await _userApi.login(email: email, password: password) ?? BackendlessUser();
     } on UserAPIException catch (_) {
       rethrow;
     }
