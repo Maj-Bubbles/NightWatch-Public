@@ -7,9 +7,9 @@ abstract class UserServiceRepo {
 
   Future<BackendlessUser> signInUser({required String email, required String password});
 
-  Future<void> logoutUser();
+  Future<bool> logoutUser();
 
-  Future<void> resetPassword({required String email});
+  Future<bool> resetPassword({required String email});
 
   Future<bool> checkIfUserLogged();
 
