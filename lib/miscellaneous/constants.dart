@@ -89,8 +89,8 @@ const focusedBorder = OutlineInputBorder(
     Radius.circular(0),
   ),
   borderSide: BorderSide(
-    width: 2,
-    color: scaffoldBackgroundColor,
+    width: 0,
+    color: Colors.transparent,
   ),
 );
 

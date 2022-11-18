@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
         title: const Text(
           'Login',
           style: TextStyle(
@@ -30,13 +30,7 @@ class LoginPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Stack(
-        children: const [
-          SingleChildScrollView(
-            child: LoginForm(),
-          ),
-        ],
-      ),
+      body: const LoginForm(),
     );
   }
 }

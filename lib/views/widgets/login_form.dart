@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
+import 'package:nightwatch/routes/route_manager.dart';
+import 'package:nightwatch/view_models/register_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -30,7 +33,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      //key: loginFormKey,
+      key: context.read<RegisterViewModel>().loginFormKey,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
@@ -121,7 +124,9 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(RouteManager.signUpPage);
+              },
               child: const Text(
                 'Don\'t have an account?',
                 style: TextStyle(
