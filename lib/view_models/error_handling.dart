@@ -14,7 +14,7 @@ class UserAPIException extends NighWatchException {
   factory UserAPIException.fromPlatformException(PlatformException error) {
     var mapToBackendLessError = BackendlessErrorCodes[error.code];
     return AuthenticationErrorDialogs[mapToBackendLessError] ??
-        error as UserAPIException;
+         UserAPIException(title: error.message!, message: error.details!);
   }
 
   // https://backendless.com/docs/rest/backendless_error_codes.html
@@ -76,3 +76,16 @@ class StatusDialog {
   StatusDialog({required this.title, required this.message});
 
 }
+
+/// All possible errors that might be triggered
+/// through the use of the `data` api are
+/// handled by this class.
+class DataBaseAPIException extends NighWatchException {
+  DataBaseAPIException({required super.title, required super.message});
+
+  factory DataBaseAPIException.fromPlatformException(PlatformException error) {
+    return DataBaseAPIException(title: error.message ?? error.code, message: error.details);
+  }
+
+}
+

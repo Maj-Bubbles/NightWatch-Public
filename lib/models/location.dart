@@ -2,6 +2,8 @@ class Location {
   String _location = "";
   String _providedLoc = "";
 
+  Location([String location = ""]) : _location = location;
+
   String get location => _location;
   set location(String value) {
     _location = value;

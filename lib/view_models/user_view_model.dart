@@ -12,8 +12,8 @@ class UserViewModel extends BaseViewModel {
   UserServiceRepo get userService => _userService;
   BackendlessUser get currentUser => _currentUser;
 
-  UserViewModel() {
-    _userService = UserService();
+  UserViewModel(UserService userService) {
+    _userService = userService;
     _currentUser = BackendlessUser();
   }
 
