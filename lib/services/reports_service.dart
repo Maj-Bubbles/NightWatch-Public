@@ -1,36 +1,40 @@
 import 'dart:async';
 
-import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:nightwatch/models/report.dart';
 import 'package:nightwatch/repositories/apis/backendless_apis.dart';
 import 'package:nightwatch/repositories/reports_repository.dart';
+import 'package:nightwatch/view_models/error_handling.dart';
 
 class ReportsService extends ReportsRepository {
   late final StreamController<Report> _realTimeReports;
+  late final BackendlessDatabaseApi _dataBaseApi;
+  late final BackendlessRealTimeAPI _realTimeApi;
 
   @override
   Stream<Report> get latestReport => _realTimeReports.stream;
 
 
-  ReportsService() {
+  ReportsService({required BackendlessDatabaseApi databaseApi, required BackendlessRealTimeAPI realTimeAPI}) {
+    _dataBaseApi = databaseApi;
+    _realTimeApi = realTimeAPI;
     // Asynchronous data structure to channel streamed
     // latest reports
     _realTimeReports = StreamController<Report>();
     // start listening for a New report
-    BackendlessRealTimeAPI().reportsEventHandler.addCreateListener((newReport) {
-      _realTimeReports.add(Report.fromJson(newReport));
-  });
+    _realTimeApi.reportsEventHandler.addCreateListener(_addLatestReportToController);
   }
+
+  void _addLatestReportToController(Map newReport) =>
+      _realTimeReports.add(Report.fromJson(newReport));
 
   // Unconditional retrieval of reports
   @override
   Future<List<Report>> getReports() async {
     try {
-      // TODO: Paginate retrieved reports
-      // in order to be memory efficient
-      List<Map<dynamic, dynamic>> retrievedReports = await BackendlessDatabaseApi.retrieveReports();
+      List<Map<dynamic, dynamic>> retrievedReports = await _dataBaseApi.retrieveReports();
+
       return retrievedReports.map((json) => Report.fromJson(json)).toList();
-    } on BackendlessException catch (_) {
+    } on DataBaseAPIException catch (_) {
       // To be handled by the ViewModel
         rethrow;
     }
@@ -40,22 +44,22 @@ class ReportsService extends ReportsRepository {
   Future<List<Report>> getUserReports() async {
     try {
 
-     List<Map<dynamic, dynamic>> retrievedUserReports = await BackendlessDatabaseApi.retrieveUserReports();
+     List<Map<dynamic, dynamic>> retrievedUserReports = await _dataBaseApi.retrieveUserReports();
      //Convert JSON formatted reports to Report objects
      // store to local user reports variable.
      return retrievedUserReports.map((json) => Report.fromJson(json)).toList();
 
-    } on BackendlessException catch (_) {
+    } on DataBaseAPIException catch (_) {
       // To be handled by the ViewModel
       rethrow;
     }
   }
 
   @override
-  Future<void> storeReport(Report report) async {
+  Future<bool> storeReport(Report report) async {
     try {
-      await BackendlessDatabaseApi.saveSingleReport(report);
-    } on BackendlessException catch(_) {
+     return await _dataBaseApi.saveSingleReport(report);
+    } on DataBaseAPIException catch (_) {
       // To be handled by the ViewModel
       rethrow;
     }
