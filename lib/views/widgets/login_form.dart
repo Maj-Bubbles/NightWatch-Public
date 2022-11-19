@@ -4,6 +4,8 @@ import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/view_models/register_viewmodel.dart';
 import 'package:provider/provider.dart';
+import 'package:nightwatch/services/locator_service.dart';
+import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -68,6 +70,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: TextFormField(
                     validator: validateEmail,
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     cursorColor: scaffoldBackgroundColor,
                     decoration: formDecoration('Email Address'),
                   ),
@@ -87,6 +90,7 @@ class _LoginFormState extends State<LoginForm> {
                 child: Center(
                   child: TextFormField(
                     validator: validatePassword,
+                    keyboardType: TextInputType.visiblePassword,
                     controller: passwordController,
                     cursorColor: scaffoldBackgroundColor,
                     decoration: formDecoration('Password'),
@@ -95,7 +99,11 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                locator
+                    .get<NavigationAndDialogService>()
+                    .navigateTo(RouteManager.forgotPasswordPage);
+              },
               child: const Text(
                 'Forgot Password?',
                 style: TextStyle(
@@ -112,7 +120,11 @@ class _LoginFormState extends State<LoginForm> {
                 bottom: 8.0,
               ),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  locator
+                      .get<NavigationAndDialogService>()
+                      .navigateTo(RouteManager.userRepotsFeedPage);
+                },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -125,7 +137,10 @@ class _LoginFormState extends State<LoginForm> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(RouteManager.signUpPage);
+                Navigator.of(context).pushNamed(RouteManager.signUpPageBub);
+                // locator
+                //     .get<NavigationAndDialogService>()
+                //     .navigateTo(RouteManager.signUpPage); commit screens
               },
               child: const Text(
                 'Don\'t have an account?',

@@ -22,7 +22,7 @@ class _LoadingPageState extends State<LoadingPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Image(
-              image: AssetImage('media/Splash_original.png'),
+              image: AssetImage('media/Splash_GitHub_Page.png'),
               height: 200,
             ),
             const Text.rich(

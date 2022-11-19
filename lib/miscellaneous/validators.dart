@@ -52,6 +52,13 @@ String? validateEmptyTitle(String? value) {
   return null;
 }
 
+String? validateEmptyName(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'please enter your name';
+  }
+  return null;
+}
+
 String? validateEmptyMessage(String? value) {
   if (value == null || value.isEmpty) {
     return 'please enter your message';

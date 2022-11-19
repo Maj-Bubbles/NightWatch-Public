@@ -3,6 +3,9 @@
 // import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
+import 'package:nightwatch/routes/route_manager.dart';
+import 'package:nightwatch/services/locator_service.dart';
+import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/views/widgets/login_form.dart';
 
 class LoginPage extends StatelessWidget {
@@ -12,7 +15,11 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          locator
+              .get<NavigationAndDialogService>()
+              .navigateTo(RouteManager.emergencyPage);
+        },
         backgroundColor: orangePeelForIconsAndButtons,
         child: const Icon(
           Icons.emergency_outlined,
