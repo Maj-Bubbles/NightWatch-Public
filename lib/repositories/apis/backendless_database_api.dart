@@ -4,13 +4,15 @@ import 'package:nightwatch/models/models.dart';
 
 class BackendlessDatabaseApi {
 
-  Future<void> saveSingleReport(Report report) async {
+  Future<bool> saveSingleReport(Report report) async {
     try {
       var serializedReport = report.toJson();
       await Backendless.data.of("Report").save(serializedReport);
+      return true;
     } on PlatformException catch (error, stackTrace) {
       _handleError(error, stackTrace, apiName: "saveSingleReport");
     }
+    return false;
   }
 
   Future<dynamic> retrieveReports() async {
