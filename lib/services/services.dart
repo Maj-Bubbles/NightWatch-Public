@@ -16,8 +16,12 @@ GetIt serviceLocator = GetIt.instance;
 
 void setUpServiceLocator() {
   // Register the Services to as a lazy singleton object.
-  serviceLocator.registerLazySingleton<ReportsService>(() => ReportsService(databaseApi: BackendlessDatabaseApi(), realTimeAPI: BackendlessRealTimeAPI(reportsHandler: Backendless.data.of("Reports").rt())));
-  serviceLocator.registerLazySingleton<UserService>(() => UserService(BackendlessUserApi()));
+  serviceLocator.registerLazySingleton<ReportsService>(() => ReportsService(
+      databaseApi: BackendlessDatabaseApi(),
+      realTimeAPI: BackendlessRealTimeAPI(
+          reportsHandler: Backendless.data.of("Reports").rt())));
+  serviceLocator.registerLazySingleton<UserService>(
+      () => UserService(BackendlessUserApi()));
   serviceLocator.registerLazySingleton<NavigationAndDialogService>(
       () => NavigationAndDialogService());
 }

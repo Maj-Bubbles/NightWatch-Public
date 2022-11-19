@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nightwatch/miscellaneous/constants.dart';
 //File created by Mr Botes for use in his parts in widget and UI creation
 
 const Map<String, Color> appColors = {
@@ -54,7 +55,8 @@ InputDecoration formDecoration(String labelText) {
     focusedErrorBorder: focussedErrorBorder,
     labelText: labelText,
     labelStyle: const TextStyle(
-      color: Colors.white,
+      color: scaffoldBackgroundColor,
+      fontWeight: FontWeight.bold,
       // color: Color(0xFF030303),
     ),
     errorStyle: TextStyle(
@@ -68,7 +70,6 @@ InputDecoration formDecoration(String labelText) {
 InputDecoration formDropdownDecoration(String labelText) {
   return InputDecoration(
     enabledBorder: enabledBorder,
-    focusedBorder: focussedBorder,
     errorBorder: errorBorder,
     focusedErrorBorder: focussedErrorBorder,
     labelText: labelText,

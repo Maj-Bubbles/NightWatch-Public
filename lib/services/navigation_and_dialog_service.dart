@@ -29,6 +29,11 @@ class NavigationAndDialogService {
       message: dialog.message,
       titleColor: scaffoldBackgroundColor,
       messageColor: scaffoldBackgroundColor,
+      // title: title,
+//       message: message,
+//       titleColor: Colors.white,
+//       messageColor: Colors.white,
+// >>>>>>> origin/screens TODO: Check conflict
       duration: const Duration(milliseconds: 3500),
       flushbarPosition: FlushbarPosition.BOTTOM,
       maxWidth: double.infinity,
