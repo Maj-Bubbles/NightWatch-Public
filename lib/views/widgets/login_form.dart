@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 
+import '../../view_models/user_view_model.dart';
+
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
 
@@ -35,7 +37,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<RegisterViewModel>().loginFormKey,
+      key: context.read<UserViewModel>().loginFormKey,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(

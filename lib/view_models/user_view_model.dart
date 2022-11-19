@@ -1,4 +1,7 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:nightwatch/models/admin_user.dart';
 import 'package:nightwatch/models/models.dart';
 import 'package:nightwatch/repositories/repositories.dart';
 import 'package:nightwatch/services/services.dart';
@@ -8,13 +11,103 @@ import 'package:nightwatch/view_models/error_handling.dart';
 class UserViewModel extends BaseViewModel {
   late UserServiceRepo _userService;
   late BackendlessUser _currentUser;
+  bool createAdmin = false;
+  bool confirmTcsCs = false;
+  // String primaryNumAlloc = 'Cellphone Number';
+  // String secondaryNumberAlloc = 'Emergency Number';
+  final registerFormKey = GlobalKey<FormState>();
+  final loginFormKey = GlobalKey<FormState>();
+  final List<DropdownMenuItem<String>> items = [
+    'Welkom',
+    'Riebeeckstad',
+    'Naudeville',
+    'St Helena',
+    'Bedelia',
+    'Reitzpark',
+    'Doorn',
+    'Flamingo Park',
+    'Dagbreek',
+    'Virginia',
+    'Harmony',
+    'Saaiplaas',
+    'Merriespruit',
+    'Panorama',
+    'Kitty',
+    'Meloding',
+    'Thabong'
+  ].map<DropdownMenuItem<String>>((item) {
+    return DropdownMenuItem<String>(
+        value: item,
+        child: Text(
+          item,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ));
+  }).toList();
+
+/*
+Jan Cilliers Park
+Seemeeu Park
+Koppie Alleen
+*/
 
   UserServiceRepo get userService => _userService;
   BackendlessUser get currentUser => _currentUser;
+  String _selectedValue = '';
+  String get selectedValue => _selectedValue;
+  set selectedValue(String param) {
+    _selectedValue = param;
+    notifyListeners();
+  }
 
   UserViewModel(UserService userService) {
     _userService = userService;
     _currentUser = BackendlessUser();
+  }
+
+  registerUserHelper({
+    required String email,
+    required String name,
+    required String userName,
+    required String emailAdd,
+    required String password,
+    required bool isAdmin,
+    required String primaryNumber,
+    required String secondaryNumber,
+    required String region,
+    required String cellNum,
+    required String emergencyNum,
+    String tellNum = "",
+    String adminCellNum = "",
+  }) async {
+    if (registerFormKey.currentState?.validate() ?? false) {
+      var user;
+      if (!createAdmin) {
+        user = PublicUser(
+          emailAdd: email,
+          isAdmin: isAdmin,
+          name: name,
+          password: password,
+          primaryNumber: primaryNumber,
+          region: Region(name: region),
+          secondaryNumber: secondaryNumber,
+          userName: userName,
+          cellNum: cellNum,
+          emergencyNum: emergencyNum,
+        );
+      }
+      user = AdminUser(
+          tellNum: tellNum,
+          adminCellNum: adminCellNum,
+          name: name,
+          userName: userName,
+          isAdmin: isAdmin,
+          emailAdd: emailAdd,
+          region: Region(name: region),
+          password: password,
+          primaryNumber: primaryNumber,
+          secondaryNumber: secondaryNumber);
+      await registerUser(user);
+    }
   }
 
   Future<void> registerUser(User user) async {
@@ -84,5 +177,25 @@ class UserViewModel extends BaseViewModel {
       setErrorDialog(error);
     }
     return false;
+  }
+
+  void checkCreateAdmin() {
+    // if (primaryNumAlloc.contains('Cellphone Number')) {
+    //   primaryNumAlloc = 'Company Telephone';
+    // } else {
+    //   primaryNumAlloc = 'Cellphone Number';
+    // }
+    // if (secondaryNumberAlloc.contains('Emergency Number')) {
+    //   primaryNumAlloc = 'Admin Cellphone Number';
+    // } else {
+    //   primaryNumAlloc = 'Emergency Number';
+    // }
+    createAdmin = !createAdmin;
+    notifyListeners();
+  }
+
+  void checkConfirmedTcsAndCs() {
+    confirmTcsCs = !confirmTcsCs;
+    notifyListeners();
   }
 }

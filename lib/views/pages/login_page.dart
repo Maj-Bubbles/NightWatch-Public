@@ -29,6 +29,13 @@ class LoginPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(RouteManager.onBoardingPage);
+              },
+              icon: Icon(Icons.help))
+        ],
         title: const Text(
           'Login',
           style: TextStyle(

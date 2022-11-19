@@ -4,10 +4,13 @@ import 'package:nightwatch/miscellaneous/configuration.dart' as configuration;
 import 'package:nightwatch/miscellaneous/constants.dart' as constants;
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
+import 'package:nightwatch/view_models/base_view_model.dart';
 import 'package:nightwatch/view_models/register_viewmodel.dart';
+import 'package:nightwatch/view_models/user_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../miscellaneous/constants.dart';
+import '../../models/view_state.dart';
 
 class SignUpFormBub extends StatefulWidget {
   const SignUpFormBub({super.key});
@@ -18,6 +21,7 @@ class SignUpFormBub extends StatefulWidget {
 
 class _SignUpFormBubState extends State<SignUpFormBub> {
   late TextEditingController firstAndLastNameController;
+  late TextEditingController userNameController;
   late TextEditingController primaryNumController;
   late TextEditingController secondaryNumController;
   late TextEditingController regionController;
@@ -29,6 +33,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
     super.initState();
     firstAndLastNameController = TextEditingController();
     primaryNumController = TextEditingController();
+    userNameController = TextEditingController();
     secondaryNumController = TextEditingController();
     regionController = TextEditingController();
     emailController = TextEditingController();
@@ -38,6 +43,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
   @override
   void dispose() {
     firstAndLastNameController.dispose();
+    userNameController.dispose();
     primaryNumController.dispose();
     secondaryNumController.dispose();
     regionController.dispose();
@@ -49,7 +55,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: context.read<RegisterViewModel>().registerFormKey,
+      key: context.read<UserViewModel>().registerFormKey,
       child: Padding(
         padding: const EdgeInsets.only(top: 8, left: 48, right: 48, bottom: 8),
         child: ListView(
@@ -70,10 +76,21 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
               color: silverSandForFormsAndOtherStuff,
               height: 63,
               child: Center(
-                child: TextFormField(
-                  controller: firstAndLastNameController,
-                  cursorColor: scaffoldBackgroundColor,
-                  decoration: formDecoration('First and Last Name'),
+                child: Selector<UserViewModel, bool>(
+                  selector: (context, value) => value.createAdmin,
+                  builder: (context, value, child) {
+                    return value
+                        ? TextFormField(
+                            controller: firstAndLastNameController,
+                            cursorColor: scaffoldBackgroundColor,
+                            decoration: formDecoration('Company Name'),
+                          )
+                        : TextFormField(
+                            controller: firstAndLastNameController,
+                            cursorColor: scaffoldBackgroundColor,
+                            decoration: formDecoration('First and Last Name'),
+                          );
+                  },
                 ),
               ),
             ),
@@ -82,7 +99,19 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
               color: silverSandForFormsAndOtherStuff,
               height: 63,
               child: Center(
-                child: Selector<RegisterViewModel, bool>(
+                child: TextFormField(
+                  controller: userNameController,
+                  cursorColor: scaffoldBackgroundColor,
+                  decoration: formDecoration('Username'),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            Container(
+              color: silverSandForFormsAndOtherStuff,
+              height: 63,
+              child: Center(
+                child: Selector<UserViewModel, bool>(
                   selector: (context, value) => value.createAdmin,
                   builder: (context, value, child) {
                     return value
@@ -105,7 +134,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
               color: silverSandForFormsAndOtherStuff,
               height: 63,
               child: Center(
-                child: Selector<RegisterViewModel, bool>(
+                child: Selector<UserViewModel, bool>(
                   selector: (context, value) => value.createAdmin,
                   builder: (context, value, child) {
                     return value
@@ -128,7 +157,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
             Container(
               color: silverSandForFormsAndOtherStuff,
               height: 63,
-              child: Consumer<RegisterViewModel>(
+              child: Consumer<UserViewModel>(
                 builder: (context, viewModel, child) {
                   return RegionDropdown(
                     items: viewModel.items,
@@ -179,9 +208,9 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                     }
                     return Colors.orange;
                   }),
-                  value: context.watch<RegisterViewModel>().createAdmin,
+                  value: context.watch<UserViewModel>().createAdmin,
                   onChanged: ((value) {
-                    context.read<RegisterViewModel>().checkCreateAdmin();
+                    context.read<UserViewModel>().checkCreateAdmin();
                   }),
                 ),
                 const Text(
@@ -203,9 +232,9 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                     }
                     return Colors.orange;
                   }),
-                  value: context.watch<RegisterViewModel>().confirmTcsCs,
+                  value: context.watch<UserViewModel>().confirmTcsCs,
                   onChanged: ((value) {
-                    context.read<RegisterViewModel>().checkConfirmedTcsAndCs();
+                    context.read<UserViewModel>().checkConfirmedTcsAndCs();
                   }),
                 ),
                 Expanded(
@@ -275,7 +304,24 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                 bottom: 8.0,
               ),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<UserViewModel>().registerUserHelper(
+                      email: emailController.text.trim(),
+                      name: firstAndLastNameController.text.trim(),
+                      userName: userNameController.text.trim(),
+                      emailAdd: emailController.text.trim(),
+                      password: passwordController.text.trim(),
+                      isAdmin: context.read<UserViewModel>().createAdmin,
+                      primaryNumber: primaryNumController.text.trim(),
+                      secondaryNumber: secondaryNumController.text.trim(),
+                      region: regionController.text.trim(),
+                      cellNum: primaryNumController.text.trim(),
+                      emergencyNum: secondaryNumController.text.trim());
+                  if (context.watch<BaseViewModel>().state ==
+                      ViewState.Success) {
+                    Navigator.of(context).pop();
+                  }
+                },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),

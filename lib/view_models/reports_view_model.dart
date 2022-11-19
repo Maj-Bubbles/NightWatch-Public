@@ -32,26 +32,23 @@ class ReportsViewModel extends BaseViewModel {
       _userReports = await _reportsService.getReports();
       setState(ViewState.DataFetched);
     } on BackendlessException catch (_) {
-     // Error Dialog
+      // Error Dialog
     }
   }
 
   Future<void> postReport(Report report) async {
     try {
-       await _reportsService.storeReport(report);
-       setState(ViewState.Success);
-    } catch (_) {
-
-    }
+      await _reportsService.storeReport(report);
+      setState(ViewState.Success);
+    } catch (_) {}
   }
+
   Future<void> getUserReports() async {
     try {
       setState(ViewState.Busy);
       _userReports = await _reportsService.getUserReports();
       setState(ViewState.Success);
-    } on BackendlessException catch(_) {
-
-    }
+    } on BackendlessException catch (_) {}
   }
 
   //TODO: Implement Notification View Model
