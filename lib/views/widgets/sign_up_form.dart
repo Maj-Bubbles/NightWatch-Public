@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/configuration.dart' as configuration;
 import 'package:nightwatch/miscellaneous/constants.dart' as constants;
 import 'package:nightwatch/miscellaneous/validators.dart';
+import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/view_models/register_viewmodel.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +65,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
             Container(
               color: silverSandForFormsAndOtherStuff,
               height: 63,
@@ -75,31 +77,54 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
             Container(
               color: silverSandForFormsAndOtherStuff,
               height: 63,
               child: Center(
-                child: TextFormField(
-                  controller: primaryNumController,
-                  cursorColor: scaffoldBackgroundColor,
-                  decoration: formDecoration('Primary Number'),
+                child: Selector<RegisterViewModel, bool>(
+                  selector: (context, value) => value.createAdmin,
+                  builder: (context, value, child) {
+                    return value
+                        ? TextFormField(
+                            controller: primaryNumController,
+                            cursorColor: scaffoldBackgroundColor,
+                            decoration: formDecoration('Company Telephone'),
+                          )
+                        : TextFormField(
+                            controller: primaryNumController,
+                            cursorColor: scaffoldBackgroundColor,
+                            decoration: formDecoration('Cellphone Number'),
+                          );
+                  },
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
             Container(
               color: silverSandForFormsAndOtherStuff,
               height: 63,
               child: Center(
-                child: TextFormField(
-                  controller: secondaryNumController,
-                  cursorColor: scaffoldBackgroundColor,
-                  decoration: formDecoration('Secondary Number'),
+                child: Selector<RegisterViewModel, bool>(
+                  selector: (context, value) => value.createAdmin,
+                  builder: (context, value, child) {
+                    return value
+                        ? TextFormField(
+                            controller: secondaryNumController,
+                            cursorColor: scaffoldBackgroundColor,
+                            decoration:
+                                formDecoration('Admin Cellphone (Personal)'),
+                          )
+                        : TextFormField(
+                            controller: secondaryNumController,
+                            cursorColor: scaffoldBackgroundColor,
+                            decoration: formDecoration('Emergency Contact'),
+                          );
+                  },
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
             Container(
               color: silverSandForFormsAndOtherStuff,
               height: 63,
@@ -116,7 +141,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 },
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
             Container(
               color: silverSandForFormsAndOtherStuff,
               height: 63,
@@ -129,7 +154,7 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 20),
             Container(
               color: silverSandForFormsAndOtherStuff,
               height: 63,
@@ -161,6 +186,105 @@ class _SignUpFormState extends State<SignUpForm> {
                 ),
               ),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.disabled)) {
+                      return Colors.orange.withOpacity(.32);
+                    }
+                    return Colors.orange;
+                  }),
+                  value: context.watch<RegisterViewModel>().createAdmin,
+                  onChanged: ((value) {
+                    context.read<RegisterViewModel>().checkCreateAdmin();
+                  }),
+                ),
+                const Text(
+                  'Apply For Admin Account',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Checkbox(
+                  checkColor: Colors.white,
+                  fillColor: MaterialStateProperty.resolveWith<Color>(
+                      (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.disabled)) {
+                      return Colors.orange.withOpacity(.32);
+                    }
+                    return Colors.orange;
+                  }),
+                  value: context.watch<RegisterViewModel>().confirmTcsCs,
+                  onChanged: ((value) {
+                    context.read<RegisterViewModel>().checkConfirmedTcsAndCs();
+                  }),
+                ),
+                Expanded(
+                  child: Text.rich(
+                    TextSpan(
+                      text: 'By checking this box, you are accepting our ',
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Terms and Conditions',
+                          style: const TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.white,
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.of(context).pop();
+                            },
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  /*Text(
+                    'By checking this box, you are accepting our $TermsAndConsButton()',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),*/
+
+                  /*Text.rich(
+                    TextSpan(
+                      text:
+                          'By checking this box, you are accepting our',
+                      style:  TextStyle(
+                        color: silverSandForFormsAndOtherStuff,
+                        fontSize: 22,
+                        letterSpacing: 5,
+                      ),
+                      children: [
+                        TextSpan(
+                          text: 'Terms and Conditions',
+                          style: TextStyle(
+                            color: redButtonColor,
+                            fontSize: 22,
+                          ),
+                          recognizer: TapGestureRecognizer().onTap =() {
+                            
+                          }
+                        ),
+                      ],
+                    ),
+                  ), */
+                )
+              ],
+            ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -175,6 +299,28 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TermsAndConsButton extends StatelessWidget {
+  const TermsAndConsButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialButton(
+      onPressed: () {
+        Navigator.of(context).popAndPushNamed(RouteManager.loginPage);
+      },
+      child: const Text(
+        'terms and conditions',
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            overflow: TextOverflow.visible,
+            fontSize: 8),
       ),
     );
   }
