@@ -51,9 +51,7 @@ class _OnBoardingState extends State<OnBoarding> {
           )
         ],
         onDonePress: () {
-          locator
-              .get<NavigationAndDialogService>()
-              .navigateTo(RouteManager.loginPage);
+          Navigator.of(context).pop();
         },
       ),
     );

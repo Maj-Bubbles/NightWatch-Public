@@ -167,25 +167,6 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 100.0,
-                right: 100.0,
-                top: 12.0,
-                bottom: 8.0,
-              ),
-              child: MaterialButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: orangePeelForIconsAndButtons,
-                textColor: Colors.white,
-                child: const Text(
-                  'Sign Up',
-                ),
-              ),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -243,7 +224,8 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.of(context).pop();
+                              Navigator.of(context).pushNamed(
+                                  RouteManager.termsAndConditionsPage);
                             },
                         ),
                       ],
@@ -284,6 +266,25 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                   ), */
                 )
               ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 100.0,
+                right: 100.0,
+                top: 12.0,
+                bottom: 8.0,
+              ),
+              child: MaterialButton(
+                onPressed: () {},
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                color: orangePeelForIconsAndButtons,
+                textColor: Colors.white,
+                child: const Text(
+                  'Sign Up',
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {

@@ -138,6 +138,7 @@ class _LoginFormState extends State<LoginForm> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(RouteManager.signUpPageBub);
+                // Navigator.of(context).pushNamed(RouteManager.onBoardingPage);
                 // locator
                 //     .get<NavigationAndDialogService>()
                 //     .navigateTo(RouteManager.signUpPage); commit screens

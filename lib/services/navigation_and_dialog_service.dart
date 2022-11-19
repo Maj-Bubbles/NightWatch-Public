@@ -33,7 +33,7 @@ class NavigationAndDialogService {
 //       message: message,
 //       titleColor: Colors.white,
 //       messageColor: Colors.white,
-// >>>>>>> origin/screens
+// >>>>>>> origin/screens TODO: Check conflict
       duration: const Duration(milliseconds: 3500),
       flushbarPosition: FlushbarPosition.BOTTOM,
       maxWidth: double.infinity,
