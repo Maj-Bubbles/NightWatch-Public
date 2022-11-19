@@ -35,12 +35,12 @@ class Report {
         userName: json['Username'] as String,
         title: json['Title'] as String,
         description: json['Description'] as String,
-        dateTime: DateTime.fromMillisecondsSinceEpoch(json['DateTime'].toInt()),
+        dateTime: json['DateTime'],
         isAlerted: json['Alerted'] as bool,
         isAcknowledged: json['Acknowledged'] as bool,
         isImminent: json['Imminent'] as bool,
-        locationData: json['LocationData'],
-        media: json['Media'].first,
+        locationData: Location(json['LocationData']),
+        media: json['Media'] as List<String>,
         region: Region(name: json['Region']));
   }
 
@@ -55,7 +55,7 @@ class Report {
       "Imminent": isImminent,
       "LocationData": locationData,
       "Region": region.name,
-      "Media": {dateTime, media},
+      "Media": media,
     };
   }
 }
