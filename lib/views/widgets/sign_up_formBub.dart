@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 
 import '../../miscellaneous/constants.dart';
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({super.key});
+class SignUpFormBub extends StatefulWidget {
+  const SignUpFormBub({super.key});
 
   @override
-  State<SignUpForm> createState() => _SignUpFormState();
+  State<SignUpFormBub> createState() => _SignUpFormBubState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormBubState extends State<SignUpFormBub> {
   late TextEditingController firstAndLastNameController;
   late TextEditingController primaryNumController;
   late TextEditingController secondaryNumController;

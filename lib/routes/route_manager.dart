@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nightwatch/views/pages/sign_up.dart';
+import 'package:nightwatch/views/pages/sign_upBub.dart';
 import 'package:nightwatch/views/pages/splash_screen.dart';
 import 'package:nightwatch/views/pages/login_page.dart';
 import 'package:nightwatch/views/pages/onboarding.dart';
@@ -29,7 +29,7 @@ class RouteManager {
 
       case signUpPage:
         return MaterialPageRoute(
-          builder: (context) => const SignUpPage(),
+          builder: (context) => const SignUpPageBub(),
         );
 
       default:

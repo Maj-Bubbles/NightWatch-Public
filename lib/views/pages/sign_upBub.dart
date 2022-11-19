@@ -4,10 +4,10 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/views/widgets/login_form.dart';
-import 'package:nightwatch/views/widgets/sign_up_form.dart';
+import 'package:nightwatch/views/widgets/sign_up_formBub.dart';
 
-class SignUpPage extends StatelessWidget {
-  const SignUpPage({super.key});
+class SignUpPageBub extends StatelessWidget {
+  const SignUpPageBub({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +24,7 @@ class SignUpPage extends StatelessWidget {
           ),
         ),
       ),
-      body: const SignUpForm(),
+      body: const SignUpFormBub(),
     );
   }
 }
