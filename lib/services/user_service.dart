@@ -72,16 +72,17 @@ class UserService extends UserServiceRepo {
   @override
   Future<BackendlessUser> registerUser(User user) async {
     try {
-      var backendlessUser = BackendlessUser()
-        ..email = user.emailAdd
-        ..password = user.password
-        ..properties["admin"] = user.isAdmin
-        ..properties["username"] = user.userName
-        ..properties["real_name"] = user.name
-        ..properties["region"] = user.region
-        ..properties["primary_number"] = user.primaryNumber
-        ..properties["secondary_number"] = user.secondaryNumber;
-
+      var backendlessUser = BackendlessUser();
+      backendlessUser.setProperties({
+        "email": user.emailAdd,
+        "password": user.password,
+        "Admin": user.isAdmin,
+        "Username": user.userName,
+        "Real_Name": user.name,
+        "Region": user.region.name,
+        "Primary_Number": user.primaryNumber,
+        "Secondary_Number": user.secondaryNumber
+      });
       // Nullability is not a concern. API Errors are caught
       // in the catch block below.
       return await _userApi.register(backendlessUser) ??
