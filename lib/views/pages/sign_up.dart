@@ -3,10 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/views/widgets/sign_up_form.dart';
 import 'package:nightwatch/views/widgets/sign_up_form_two.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -34,6 +34,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
@@ -91,9 +92,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                       elevation: 5,
                       onPressed: () {
-                        locator
-                            .get<NavigationAndDialogService>()
-                            .navigateTo(RouteManager.termsAndConditionsPage);
+                        navigatorService.navigateTo(RouteManager.termsAndConditionsPage);
                       },
                       child: Row(
                         children: const [

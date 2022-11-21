@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
+import 'package:provider/provider.dart';
 
 class SignUpFormTwo extends StatefulWidget {
   const SignUpFormTwo({super.key});
@@ -48,6 +48,7 @@ class _SignUpFormTwoState extends State<SignUpFormTwo> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Form(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -229,10 +230,7 @@ class _SignUpFormTwoState extends State<SignUpFormTwo> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  locator.get<NavigationAndDialogService>().showSnackBar(
-                      StatusDialog(
-                          title: 'Sign Up',
-                          message: 'Profile Created Successfully'));
+                  navigatorService.showSnackBar(StatusDialog(message: 'Profile created Successfuly', title: 'Sign Up'));
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -246,9 +244,7 @@ class _SignUpFormTwoState extends State<SignUpFormTwo> {
             ),
             TextButton(
               onPressed: () {
-                locator
-                    .get<NavigationAndDialogService>()
-                    .navigateTo(RouteManager.loginPage);
+               navigatorService.navigateTo(RouteManager.loginPage);
               },
               child: const Text(
                 'Already have an account?',

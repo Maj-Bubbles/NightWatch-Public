@@ -3,6 +3,7 @@ import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/views/widgets/app_progress_indicator.dart';
+import 'package:provider/provider.dart';
 
 class LoadingPage extends StatefulWidget {
   const LoadingPage({super.key});
@@ -14,6 +15,7 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       body: Padding(
@@ -59,9 +61,7 @@ class _LoadingPageState extends State<LoadingPage> {
             const SizedBoxH30(),
             IconButton(
               onPressed: () {
-                serviceLocator
-                    .get<NavigationAndDialogService>()
-                    .navigateTo(RouteManager.onBoardingPage);
+                navigatorService.navigateTo(RouteManager.onBoardingPage);
               },
               icon: const Icon(
                 Icons.arrow_forward_ios,

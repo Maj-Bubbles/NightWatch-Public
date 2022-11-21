@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
-import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
+import 'package:provider/provider.dart';
 
 class ImminentReportUser extends StatefulWidget {
   const ImminentReportUser({super.key});
@@ -94,6 +91,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
@@ -881,13 +879,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               ),
               elevation: 5,
               onPressed: () {
-                locator.get<NavigationAndDialogService>().showSnackBar(
-                      StatusDialog(
-                        title: 'Imminent Report',
-                        message:
-                            'The report has been filed succesfully. Please wait for the security or SAPS to help.',
-                      ),
-                    );
+                navigatorService.showSnackBar(StatusDialog(
+                    message:
+                        'The report has been filed successfully.'
+                        'Please wait for the security or SAPS to help.',
+                    title: 'Imminent Report'));
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

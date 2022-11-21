@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
+import 'package:provider/provider.dart';
 
 class ReportsByUser extends StatefulWidget {
   const ReportsByUser({super.key});
@@ -31,6 +31,7 @@ class _ReportsByUserState extends State<ReportsByUser> {
       'Below the snowline, Caradhras is described as having dull red slopes, "as if stained with blood"...';
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
@@ -180,9 +181,7 @@ class _ReportsByUserState extends State<ReportsByUser> {
                           ),
                           elevation: 5,
                           onPressed: () {
-                            locator
-                                .get<NavigationAndDialogService>()
-                                .navigateTo(RouteManager.mapPage);
+                            navigatorService.navigateTo(RouteManager.mapPage);
                           },
                           child: Row(
                             children: const [
@@ -318,9 +317,7 @@ class _ReportsByUserState extends State<ReportsByUser> {
                           ),
                           elevation: 5,
                           onPressed: () {
-                            locator
-                                .get<NavigationAndDialogService>()
-                                .navigateTo(RouteManager.moreDetailsNonImmPage);
+                            navigatorService.navigateTo(RouteManager.moreDetailsNonImmPage);
                           },
                           child: Row(
                             children: const [

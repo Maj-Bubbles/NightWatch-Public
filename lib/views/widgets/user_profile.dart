@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
+import 'package:provider/provider.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -14,6 +14,7 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return ListView(
       children: [
         Card(
@@ -82,9 +83,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       TextButton(
                         onPressed: () {
-                          locator
-                              .get<NavigationAndDialogService>()
-                              .navigateTo(RouteManager.userEditNamePage);
+                          navigatorService.navigateTo(RouteManager.userEditNamePage);
                         },
                         child: const Text(
                           'Edit',
@@ -129,8 +128,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       TextButton(
                         onPressed: () {
-                          locator.get<NavigationAndDialogService>().navigateTo(
-                              RouteManager.userEditEmergencyNumberPage);
+                          navigatorService.navigateTo(RouteManager.userEditEmergencyNumberPage);
                         },
                         child: const Text(
                           'Edit',
@@ -175,9 +173,7 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       TextButton(
                         onPressed: () {
-                          locator
-                              .get<NavigationAndDialogService>()
-                              .navigateTo(RouteManager.userEditCellNumberPage);
+                          navigatorService.navigateTo(RouteManager.userEditCellNumberPage);
                         },
                         child: const Text(
                           'Edit',
@@ -197,9 +193,7 @@ class _UserProfileState extends State<UserProfile> {
           padding: const EdgeInsets.all(5.0),
           child: ListTile(
             onTap: () {
-              locator
-                  .get<NavigationAndDialogService>()
-                  .navigateTo(RouteManager.repotsByUserPage);
+              navigatorService.navigateTo(RouteManager.repotsByUserPage);
             },
             title: const Text(
               'My Reports',
@@ -256,9 +250,7 @@ class _UserProfileState extends State<UserProfile> {
               color: orangePeelForIconsAndButtons,
             ),
             onTap: () {
-              locator
-                  .get<NavigationAndDialogService>()
-                  .navigateTo(RouteManager.termsAndConditionsPage);
+              navigatorService.navigateTo(RouteManager.termsAndConditionsPage);
             },
             title: const Text(
               'Terms and Conditions',

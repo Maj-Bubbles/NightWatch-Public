@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/view_models/register_viewmodel.dart';
 import 'package:provider/provider.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 
 import '../../view_models/user_view_model.dart';
@@ -36,6 +34,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Form(
       key: context.read<UserViewModel>().loginFormKey,
       child: Padding(
@@ -102,9 +101,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             TextButton(
               onPressed: () {
-                locator
-                    .get<NavigationAndDialogService>()
-                    .navigateTo(RouteManager.forgotPasswordPage);
+                navigatorService.navigateTo(RouteManager.forgotPasswordPage);
               },
               child: const Text(
                 'Forgot Password?',
@@ -112,7 +109,7 @@ class _LoginFormState extends State<LoginForm> {
                   color: silverSandForFormsAndOtherStuff,
                   fontSize: 14,
                 ),
-              ),
+              )
             ),
             Padding(
               padding: const EdgeInsets.only(
@@ -123,9 +120,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  locator
-                      .get<NavigationAndDialogService>()
-                      .navigateTo(RouteManager.userRepotsFeedPage);
+                  navigatorService.navigateTo(RouteManager.userRepotsFeedPage);
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -135,15 +130,11 @@ class _LoginFormState extends State<LoginForm> {
                 child: const Text(
                   'Sign In',
                 ),
-              ),
+              )
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(RouteManager.signUpPageBub);
-                // Navigator.of(context).pushNamed(RouteManager.onBoardingPage);
-                // locator
-                //     .get<NavigationAndDialogService>()
-                //     .navigateTo(RouteManager.signUpPage); commit screens
               },
               child: const Text(
                 'Don\'t have an account?',
