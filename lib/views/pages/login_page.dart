@@ -4,21 +4,20 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/views/widgets/login_form.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          locator
-              .get<NavigationAndDialogService>()
-              .navigateTo(RouteManager.emergencyPage);
+         navigatorService.navigateTo(RouteManager.emergencyPage);
         },
         backgroundColor: orangePeelForIconsAndButtons,
         child: const Icon(
@@ -34,7 +33,7 @@ class LoginPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushNamed(RouteManager.onBoardingPage);
               },
-              icon: Icon(Icons.help))
+              icon: const Icon(Icons.help))
         ],
         title: const Text(
           'Login',

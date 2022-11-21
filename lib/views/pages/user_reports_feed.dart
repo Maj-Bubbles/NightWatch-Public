@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
-import 'package:nightwatch/views/pages/emergency_numbers.dart';
 import 'package:nightwatch/views/pages/user_news_feed.dart';
 import 'package:nightwatch/views/widgets/numbers_emerg.dart';
 import 'package:nightwatch/views/widgets/user_profile.dart';
+import 'package:provider/provider.dart';
 
 class UserReportsFeed extends StatefulWidget {
   const UserReportsFeed({super.key});
@@ -25,6 +24,7 @@ class _UserReportsFeedState extends State<UserReportsFeed> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
@@ -55,9 +55,7 @@ class _UserReportsFeedState extends State<UserReportsFeed> {
               ),
               elevation: 5,
               onPressed: () {
-                locator
-                    .get<NavigationAndDialogService>()
-                    .navigateTo(RouteManager.userReportingPage);
+                navigatorService.navigateTo(RouteManager.userReportingPage);
               },
               child: Row(
                 children: const [

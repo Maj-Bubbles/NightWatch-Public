@@ -16,8 +16,8 @@ class ReportsViewModel extends BaseViewModel {
   Report get newReport => _newReport!;
   List<Report> get userReports => _userReports;
 
-  ReportsViewModel() {
-    _reportsService = serviceLocator<ReportsService>();
+  ReportsViewModel(ReportsService reportsService) {
+    _reportsService = _reportsService;
     _reportsService.latestReport.listen(_latestUpdate);
   }
 

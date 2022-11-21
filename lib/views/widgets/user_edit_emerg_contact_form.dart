@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
-import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
+import 'package:provider/provider.dart';
 
 class UserEmergencyContactForm extends StatefulWidget {
   const UserEmergencyContactForm({super.key});
@@ -31,6 +30,7 @@ class _UserEmergencyContactFormState extends State<UserEmergencyContactForm> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Form(
       //key: loginFormKey,
       child: Padding(
@@ -84,11 +84,10 @@ class _UserEmergencyContactFormState extends State<UserEmergencyContactForm> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  locator.get<NavigationAndDialogService>().showSnackBar(
-                        StatusDialog(
-                            message: 'Your number was succesfully updated.',
-                            title: 'Edit Emergency Number'),
-                      );
+                 navigatorService.showSnackBar(StatusDialog(
+                     message: 'Your number was succesfully updated.',
+                     title: 'Edit Emergency Number')
+                 );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),

@@ -9,7 +9,7 @@ class BaseViewModel with ChangeNotifier {
   /// This dialog field is set alert the user of any failures
   /// or operation success.
   StatusDialog _dialog = StatusDialog(title: "", message: "");
-  StatusDialog get dialog => _dialog;
+  StatusDialog get errorDialog => _dialog;
 
   void setState(ViewState newState) {
     _state = newState;
@@ -17,6 +17,8 @@ class BaseViewModel with ChangeNotifier {
     // Notify listeners will only update listeners of state.
     notifyListeners();
   }
+
+  void setViewStateToIdle() => _state = ViewState.Idle;
 
   void setErrorDialog(NighWatchException error) {
     _dialog = StatusDialog(title: error.title, message: error.message);

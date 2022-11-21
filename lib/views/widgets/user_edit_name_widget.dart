@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
-import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
+import 'package:provider/provider.dart';
 
 class UserEditNameForm extends StatefulWidget {
   const UserEditNameForm({super.key});
@@ -30,6 +29,7 @@ class _UserEditNameFormState extends State<UserEditNameForm> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Form(
       //key: loginFormKey,
       child: Padding(
@@ -83,11 +83,10 @@ class _UserEditNameFormState extends State<UserEditNameForm> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  locator.get<NavigationAndDialogService>().showSnackBar(
-                        StatusDialog(
-                            message: 'Your name was succesfully edited.',
-                            title: 'Edit Name'),
-                      );
+                 navigatorService.showSnackBar(StatusDialog(
+                     message: 'Your name was successfully edited.',
+                     title: 'Edit Name')
+                 );
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),

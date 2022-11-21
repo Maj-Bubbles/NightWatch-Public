@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
-import 'package:nightwatch/views/pages/sign_up.dart';
-import 'package:nightwatch/views/widgets/login_form.dart';
-import 'package:nightwatch/views/widgets/sign_up_form_two.dart';
+import 'package:provider/provider.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -23,6 +20,7 @@ class _SignUpFormState extends State<SignUpForm> {
   late TextEditingController emergencyContactController;
   late TextEditingController regionController;
   late TextEditingController passwordController;
+
 
   List<String> regions = <String>['Thabong', 'Welkom'];
   String? dropdownValue;
@@ -67,6 +65,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Form(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -248,10 +247,7 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  locator.get<NavigationAndDialogService>().showSnackBar(
-                      StatusDialog(
-                          message: 'Profile created Successfuly',
-                          title: 'Sign Up'));
+                  navigatorService.showSnackBar(StatusDialog(message: 'Profile created Successfuly', title: 'Sign Up'));
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
@@ -265,9 +261,7 @@ class _SignUpFormState extends State<SignUpForm> {
             ),
             TextButton(
               onPressed: () {
-                locator
-                    .get<NavigationAndDialogService>()
-                    .navigateTo(RouteManager.loginPage);
+                navigatorService.navigateTo(RouteManager.loginPage);
               },
               child: const Text(
                 'Already have an account?',

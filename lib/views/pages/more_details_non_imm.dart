@@ -1,12 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
+import 'package:provider/provider.dart';
 
 class MoreDetailsNonImm extends StatefulWidget {
   const MoreDetailsNonImm({super.key});
@@ -37,6 +35,7 @@ class _MoreDetailsNonImmState extends State<MoreDetailsNonImm> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
@@ -74,9 +73,7 @@ class _MoreDetailsNonImmState extends State<MoreDetailsNonImm> {
               ),
               elevation: 5,
               onPressed: () {
-                locator
-                    .get<NavigationAndDialogService>()
-                    .navigateTo(RouteManager.mapPage);
+               navigatorService.navigateTo(RouteManager.mapPage);
               },
               child: Row(
                 children: const [

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
+import 'package:provider/provider.dart';
 
 class Reporting extends StatefulWidget {
   const Reporting({super.key});
@@ -16,6 +14,7 @@ class Reporting extends StatefulWidget {
 class _ReportingState extends State<Reporting> {
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Scaffold(
       backgroundColor: scaffoldBackgroundColor,
       appBar: AppBar(
@@ -51,9 +50,7 @@ class _ReportingState extends State<Reporting> {
                 ),
                 elevation: 5,
                 onPressed: () {
-                  locator
-                      .get<NavigationAndDialogService>()
-                      .navigateTo(RouteManager.userReportImminentPage);
+                  navigatorService.navigateTo(RouteManager.userReportImminentPage);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -82,9 +79,7 @@ class _ReportingState extends State<Reporting> {
                 ),
                 elevation: 5,
                 onPressed: () {
-                  locator
-                      .get<NavigationAndDialogService>()
-                      .navigateTo(RouteManager.userReportiNonImminentPage);
+                  navigatorService.navigateTo(RouteManager.userReportImminentPage);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

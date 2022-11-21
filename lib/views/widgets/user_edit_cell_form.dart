@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
-import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/services/locator_service.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
+import 'package:provider/provider.dart';
 
 class UserEditCellNumberForm extends StatefulWidget {
   const UserEditCellNumberForm({super.key});
@@ -30,6 +29,7 @@ class _UserEditCellNumberFormState extends State<UserEditCellNumberForm> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Form(
       //key: loginFormKey,
       child: Padding(
@@ -83,12 +83,9 @@ class _UserEditCellNumberFormState extends State<UserEditCellNumberForm> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                  locator.get<NavigationAndDialogService>().showSnackBar(
-                        StatusDialog(
-                            message:
-                                'Your cellphone number was succesfully updated.',
-                            title: 'Edit Cellphone Number'),
-                      );
+                  navigatorService.showSnackBar(StatusDialog(
+                      message: 'Your cellphone number was succesfully updated.',
+                      title: 'Edit Cellphone Number'));
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),

@@ -1,5 +1,4 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/models/admin_user.dart';
 import 'package:nightwatch/models/models.dart';
@@ -13,8 +12,6 @@ class UserViewModel extends BaseViewModel {
   late BackendlessUser _currentUser;
   bool createAdmin = false;
   bool confirmTcsCs = false;
-  // String primaryNumAlloc = 'Cellphone Number';
-  // String secondaryNumberAlloc = 'Emergency Number';
   final registerFormKey = GlobalKey<FormState>();
   final loginFormKey = GlobalKey<FormState>();
   final List<DropdownMenuItem<String>> items = [
@@ -35,6 +32,9 @@ class UserViewModel extends BaseViewModel {
     'Kitty',
     'Meloding',
     'Thabong'
+    'Jan Cilliers Park',
+    'Seemeeu Park',
+    'Koppie Alleen',
   ].map<DropdownMenuItem<String>>((item) {
     return DropdownMenuItem<String>(
         value: item,
@@ -43,12 +43,6 @@ class UserViewModel extends BaseViewModel {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ));
   }).toList();
-
-/*
-Jan Cilliers Park
-Seemeeu Park
-Koppie Alleen
-*/
 
   UserServiceRepo get userService => _userService;
   BackendlessUser get currentUser => _currentUser;
@@ -117,6 +111,7 @@ Koppie Alleen
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
       setErrorDialog(error);
+      setState(ViewState.Error);
     }
   }
 
@@ -128,6 +123,7 @@ Koppie Alleen
           await _userService.signInUser(email: email, password: password);
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
+      setState(ViewState.Error);
       setErrorDialog(error);
     }
   }
@@ -148,6 +144,7 @@ Koppie Alleen
       await _userService.resetPassword(email: email);
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
+      setState(ViewState.Error);
       setErrorDialog(error);
     }
   }
@@ -156,6 +153,7 @@ Koppie Alleen
     try {
       return await _userService.checkIfUserLogged();
     } on UserAPIException catch (error) {
+      setState(ViewState.Error);
       setErrorDialog(error);
     }
     return false;
@@ -165,6 +163,7 @@ Koppie Alleen
     try {
       return await _userService.checkIfUserExists(email: email);
     } on UserAPIException catch (error) {
+      setState(ViewState.Error);
       setErrorDialog(error);
     }
     return false;
@@ -174,10 +173,12 @@ Koppie Alleen
     try {
       return await _userService.checkIfUserIsAdmin();
     } on UserAPIException catch (error) {
+      setState(ViewState.Error);
       setErrorDialog(error);
     }
     return false;
   }
+
 
   void checkCreateAdmin() {
     // if (primaryNumAlloc.contains('Cellphone Number')) {

@@ -3,7 +3,7 @@ import 'package:email_validator/email_validator.dart';
 String? validateEmail(String? address) {
   if (address == null || address.isEmpty) {
     return 'Please enter your email address.';
-  } else if (EmailValidator.validate(address)) {
+  } else if (!EmailValidator.validate(address)) {
     return 'Please enter a valid email address!';
   }
   return null;
@@ -30,7 +30,7 @@ String? validatePassword(String? password) {
 String? validateNumber(String? number) {
   if (number == null || number.isEmpty) {
     return 'Please enter your contact number.';
-  } else if ((!RegExp(r'^.{8,}$').hasMatch(number))) {
+  } else if ((!RegExp(r'^.{10,}$').hasMatch(number))) {
     //tests if the contact number has 10 digits
     return 'Please enter a valid contact number!';
   }

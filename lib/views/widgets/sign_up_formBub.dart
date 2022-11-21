@@ -1,16 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/configuration.dart' as configuration;
-import 'package:nightwatch/miscellaneous/constants.dart' as constants;
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
-import 'package:nightwatch/view_models/base_view_model.dart';
-import 'package:nightwatch/view_models/register_viewmodel.dart';
-import 'package:nightwatch/view_models/user_view_model.dart';
+import 'package:nightwatch/services/services.dart';
+import 'package:nightwatch/view_models/view_models.dart';
+import 'package:nightwatch/models/models.dart';
 import 'package:provider/provider.dart';
 
 import '../../miscellaneous/constants.dart';
-import '../../models/view_state.dart';
 
 class SignUpFormBub extends StatefulWidget {
   const SignUpFormBub({super.key});
@@ -54,6 +52,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
 
   @override
   Widget build(BuildContext context) {
+    var navigatorService = context.read<NavigationAndDialogService>();
     return Form(
       key: context.read<UserViewModel>().registerFormKey,
       child: Padding(
@@ -116,12 +115,14 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                   builder: (context, value, child) {
                     return value
                         ? TextFormField(
-                            controller: primaryNumController,
+                      validator: validateNumber,
+                      controller: primaryNumController,
                             cursorColor: scaffoldBackgroundColor,
                             decoration: formDecoration('Company Telephone'),
                           )
                         : TextFormField(
-                            controller: primaryNumController,
+                      validator: validateNumber,
+                      controller: primaryNumController,
                             cursorColor: scaffoldBackgroundColor,
                             decoration: formDecoration('Cellphone Number'),
                           );
@@ -139,12 +140,14 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                   builder: (context, value, child) {
                     return value
                         ? TextFormField(
+                            validator: validateNumber,
                             controller: secondaryNumController,
                             cursorColor: scaffoldBackgroundColor,
                             decoration:
                                 formDecoration('Admin Cellphone (Personal)'),
                           )
                         : TextFormField(
+                            validator: validateNumber,
                             controller: secondaryNumController,
                             cursorColor: scaffoldBackgroundColor,
                             decoration: formDecoration('Emergency Contact'),
@@ -287,7 +290,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                             fontSize: 22,
                           ),
                           recognizer: TapGestureRecognizer().onTap =() {
-                            
+
                           }
                         ),
                       ],
@@ -297,41 +300,60 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                left: 100.0,
-                right: 100.0,
-                top: 12.0,
-                bottom: 8.0,
-              ),
-              child: MaterialButton(
-                onPressed: () {
-                  context.read<UserViewModel>().registerUserHelper(
-                      email: emailController.text.trim(),
-                      name: firstAndLastNameController.text.trim(),
-                      userName: userNameController.text.trim(),
-                      emailAdd: emailController.text.trim(),
-                      password: passwordController.text.trim(),
-                      isAdmin: context.read<UserViewModel>().createAdmin,
-                      primaryNumber: primaryNumController.text.trim(),
-                      secondaryNumber: secondaryNumController.text.trim(),
-                      region: regionController.text.trim(),
-                      cellNum: primaryNumController.text.trim(),
-                      emergencyNum: secondaryNumController.text.trim());
-                  if (context.watch<BaseViewModel>().state ==
-                      ViewState.Success) {
-                    Navigator.of(context).pop();
+                padding: const EdgeInsets.only(
+                  left: 100.0,
+                  right: 100.0,
+                  top: 12.0,
+                  bottom: 8.0,
+                ),
+                child:
+                    Consumer<UserViewModel>(builder: (context, viewModel, _) {
+                  switch (viewModel.state) {
+                    case ViewState.Idle:
+                      return MaterialButton(
+                        onPressed: () {
+                          context.read<UserViewModel>().registerUserHelper(
+                              email: emailController.text.trim(),
+                              name: firstAndLastNameController.text.trim(),
+                              userName: userNameController.text.trim(),
+                              emailAdd: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              isAdmin:
+                                  context.read<UserViewModel>().createAdmin,
+                              primaryNumber: primaryNumController.text.trim(),
+                              secondaryNumber:
+                                  secondaryNumController.text.trim(),
+                              region: regionController.text.trim(),
+                              cellNum: primaryNumController.text.trim(),
+                              emergencyNum: secondaryNumController.text.trim());
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        color: orangePeelForIconsAndButtons,
+                        textColor: Colors.white,
+                        child: const Text(
+                          'Sign Up',
+                        ),
+                      );
+                    case ViewState.Busy:
+                      return const CircularProgressIndicator(
+                        semanticsLabel: "Signing You Up",
+                      );
+                    case ViewState.Success:
+                      viewModel.setViewStateToIdle();
+                      navigatorService.popAndNavigateTo(RouteManager.loginPage);
+                      return const Text('Should Navigate to Login Page');
+                    case ViewState.Error:
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        navigatorService.showSnackBar(viewModel.errorDialog);
+                        viewModel.setState(ViewState.Idle);
+                      });
+                      return Container();
+                    default:
+                      return const Text("Something Should Have happend");
                   }
-                },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: orangePeelForIconsAndButtons,
-                textColor: Colors.white,
-                child: const Text(
-                  'Sign Up',
-                ),
-              ),
-            ),
+                })),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
