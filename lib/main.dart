@@ -30,7 +30,7 @@ class NightWatchApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         onGenerateRoute: RouteManager.onGenerateRoute,
-        initialRoute: RouteManager.loadingPage,
+        initialRoute: RouteManager.profilePage,
       ),
     );
   }

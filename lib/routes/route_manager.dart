@@ -3,10 +3,13 @@ import 'package:nightwatch/views/pages/loading.dart';
 import 'package:nightwatch/views/pages/login_page.dart';
 import 'package:nightwatch/views/pages/onboarding.dart';
 
+import '../views/pages/profile_page.dart';
+
 class RouteManager {
   static const String loadingPage = '/';
   static const String onBoardingPage = '/onBoardingPage';
   static const String loginPage = '/loginPage';
+  static const String profilePage = '/profilePage';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -23,6 +26,11 @@ class RouteManager {
       case loginPage:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),
+        );
+
+      case profilePage:
+        return MaterialPageRoute(
+          builder: (context) => const ProfilePage(),
         );
 
       default:
