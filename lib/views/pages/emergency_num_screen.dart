@@ -10,6 +10,19 @@ class EmergencyNumScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          actions: [
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateColor.resolveWith((states) => redButtonColor),
+              ),
+              onPressed: () {},
+              child: const Text(
+                'REPORT',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
           elevation: 0,
           backgroundColor: scaffoldBackgroundColor,
           shadowColor: Colors.transparent,
@@ -26,7 +39,6 @@ class EmergencyNumScreen extends StatelessWidget {
           decoration: const BoxDecoration(color: scaffoldBackgroundColor),
           child: ListView(
             children: const [
-/////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.local_hospital,
@@ -41,7 +53,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-///////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.local_hospital,
@@ -56,7 +67,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-///////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.local_hospital,
@@ -71,7 +81,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-/////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.local_police,
@@ -86,7 +95,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-///////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.fire_extinguisher,
@@ -101,9 +109,7 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-/////////////////////////////DIVIDER/////////////////////////
               Divider(),
-///////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.coronavirus_outlined,
@@ -118,7 +124,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-///////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.child_care,
@@ -133,7 +138,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-///////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.female,
@@ -148,7 +152,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-///////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.money,
@@ -163,7 +166,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-///////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.masks,
@@ -178,7 +180,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-//////////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.local_taxi,
@@ -193,7 +194,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-//////////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.water,
@@ -208,7 +208,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-//////////////////////////////////////////////////////////
               ListTile(
                 leading: Icon(
                   Icons.electric_bolt_sharp,
@@ -223,22 +222,6 @@ class EmergencyNumScreen extends StatelessWidget {
                   style: headingsTwo,
                 ),
               ),
-//////////////////////////////////////////////////////////
-              ListTile(
-                leading: Icon(
-                  Icons.emergency,
-                  color: orangePeelForIconsAndButtons,
-                ),
-                title: Text(
-                  "Electricity Outages",
-                  style: headingsTwo,
-                ),
-                trailing: Text(
-                  "051 409 2345",
-                  style: headingsTwo,
-                ),
-              ),
-////////////////////////////////////////////// ////////////
             ],
           ),
         ));
