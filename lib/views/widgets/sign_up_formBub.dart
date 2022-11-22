@@ -357,14 +357,11 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                         //     semanticsLabel: "Signing You Up",
                         //   );
                         case ViewState.Success:
+                          viewModel.setViewStateToIdle();
                           WidgetsBinding.instance.addPostFrameCallback(
-                            (timeStamp) {
-                              context.read<UserViewModel>().confirmTcsCs =
-                                  false;
-                              // viewModel.setViewStateToIdle();
-                              // Future.delayed(const Duration(seconds: 3));
-                              //TODO: viewState.Success being picked up by popped page (login), thus advancing it to home page
-                              Navigator.pop(context);
+                            (_) {
+                              context.read<UserViewModel>().confirmTcsCs = false;
+                              navigatorService.goBack();
                             },
                           );
                           return const Text('Should Navigate to Login Page');

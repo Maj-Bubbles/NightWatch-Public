@@ -139,7 +139,7 @@ class _LoginFormState extends State<LoginForm> {
                     )),
                 TextButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(RouteManager.signUpPageBub);
+                    navigatorService.navigateTo(RouteManager.signUpPageBub);
                   },
                   child: const Text(
                     'Don\'t have an account?',
