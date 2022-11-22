@@ -115,14 +115,14 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                   builder: (context, value, child) {
                     return value
                         ? TextFormField(
-                      validator: validateNumber,
-                      controller: primaryNumController,
+                            validator: validateNumber,
+                            controller: primaryNumController,
                             cursorColor: scaffoldBackgroundColor,
                             decoration: formDecoration('Company Telephone'),
                           )
                         : TextFormField(
-                      validator: validateNumber,
-                      controller: primaryNumController,
+                            validator: validateNumber,
+                            controller: primaryNumController,
                             cursorColor: scaffoldBackgroundColor,
                             decoration: formDecoration('Cellphone Number'),
                           );
@@ -323,7 +323,8 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                               primaryNumber: primaryNumController.text.trim(),
                               secondaryNumber:
                                   secondaryNumController.text.trim(),
-                              region: regionController.text.trim(),
+                              region:
+                                  context.read<UserViewModel>().selectedValue,
                               cellNum: primaryNumController.text.trim(),
                               emergencyNum: secondaryNumController.text.trim());
                         },

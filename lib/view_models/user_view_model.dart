@@ -32,7 +32,7 @@ class UserViewModel extends BaseViewModel {
     'Kitty',
     'Meloding',
     'Thabong'
-    'Jan Cilliers Park',
+        'Jan Cilliers Park',
     'Seemeeu Park',
     'Koppie Alleen',
   ].map<DropdownMenuItem<String>>((item) {
@@ -123,8 +123,8 @@ class UserViewModel extends BaseViewModel {
           await _userService.signInUser(email: email, password: password);
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
-      setState(ViewState.Error);
       setErrorDialog(error);
+      setState(ViewState.Error);
     }
   }
 
@@ -178,7 +178,6 @@ class UserViewModel extends BaseViewModel {
     }
     return false;
   }
-
 
   void checkCreateAdmin() {
     // if (primaryNumAlloc.contains('Cellphone Number')) {
