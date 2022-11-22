@@ -95,6 +95,7 @@ class _LoginFormState extends State<LoginForm> {
                       child: TextFormField(
                         validator: validatePassword,
                         keyboardType: TextInputType.visiblePassword,
+                        obscureText: true,
                         controller: passwordController,
                         cursorColor: scaffoldBackgroundColor,
                         decoration: formDecoration('Password'),
@@ -189,7 +190,7 @@ class _LoginFormState extends State<LoginForm> {
                   viewModel.setViewStateToIdle();
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     navigatorService
-                        .popAndNavigateTo(RouteManager.userRepotsFeedPage);
+                        .navigateTo(RouteManager.userRepotsFeedPage);
                   });
                   return Container();
                 case ViewState.Error:
@@ -203,7 +204,7 @@ class _LoginFormState extends State<LoginForm> {
               }
             },
           ),
-        ], //hier
+        ],
       ),
     );
   }

@@ -73,7 +73,7 @@ class UserViewModel extends BaseViewModel {
     String tellNum = "",
     String adminCellNum = "",
   }) async {
-    if (registerFormKey.currentState?.validate() ?? false) {
+    if ((registerFormKey.currentState?.validate() ?? false) && confirmTcsCs) {
       var user;
       if (!createAdmin) {
         user = PublicUser(
@@ -101,6 +101,12 @@ class UserViewModel extends BaseViewModel {
           primaryNumber: primaryNumber,
           secondaryNumber: secondaryNumber);
       await registerUser(user);
+    } else if (!confirmTcsCs) {
+      setCustomDialog(
+          title: "Confirm Tc's and C's",
+          message:
+              'Please confirm our Terms and Conditions before signing up.');
+      setState(ViewState.Error);
     }
   }
 
@@ -118,10 +124,24 @@ class UserViewModel extends BaseViewModel {
   Future<void> signInUser(
       {required String email, required String password}) async {
     try {
-      setState(ViewState.Busy);
-      _currentUser =
-          await _userService.signInUser(email: email, password: password);
-      setState(ViewState.Success);
+      if (loginFormKey.currentState?.validate() ?? false) {
+        setState(ViewState.Busy);
+        _currentUser =
+            await _userService.signInUser(email: email, password: password);
+        setState(ViewState.Success);
+      }
+
+      // if (email.isEmpty || password.isEmpty) {
+      //   setCustomDialog(
+      //       title: 'Blank fields not allowed.',
+      //       message: 'Please fill in both fields!');
+      //   setState(ViewState.Error);
+      // } else {
+      //   setState(ViewState.Busy);
+      //   _currentUser =
+      //       await _userService.signInUser(email: email, password: password);
+      //   setState(ViewState.Success);
+      // }
     } on UserAPIException catch (error) {
       setErrorDialog(error);
       setState(ViewState.Error);
