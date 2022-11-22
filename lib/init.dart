@@ -1,4 +1,8 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
+import 'package:flutter/material.dart';
+import 'package:nightwatch/routes/route_manager.dart';
+import 'package:nightwatch/view_models/user_view_model.dart';
+import 'package:provider/provider.dart';
 
 class InitApp {
   static const String apiKeyAndroid =
@@ -8,10 +12,18 @@ class InitApp {
   static const String appID =
       '991667C2-4F37-9C61-FF34-ADD80E54ED00'; //AppID Api Key
 
-  static void initializeApp() async {
+  static void initializeApp(BuildContext context) async {
     await Backendless.initApp(
         androidApiKey: apiKeyAndroid,
         iosApiKey: apiKeyIOS,
         applicationId: appID);
+
+    bool userLoggedIn =
+        await context.read<UserViewModel>().checkIfUserIsLoggedIn();
+    if (userLoggedIn) {
+      Navigator.popAndPushNamed(context, RouteManager.repotsByUserPage);
+    } else {
+      Navigator.popAndPushNamed(context, RouteManager.loginPage);
+    }
   }
 }

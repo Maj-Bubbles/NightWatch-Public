@@ -9,7 +9,7 @@ class UserService extends UserServiceRepo {
 
   // The api should be injected to allow
   // testability of the service.
-  UserService(BackendlessUserApi api): _userApi = api;
+  UserService(BackendlessUserApi api) : _userApi = api;
 
   @override
   Future<bool> checkIfUserExists({required String email}) async {
@@ -41,9 +41,47 @@ class UserService extends UserServiceRepo {
   }
 
   @override
-  Future<bool> checkIfUserLogged() async {
+  Future<BackendlessUser?> checkIfUserLogged() async {
     try {
-      return await _userApi.isValidLogin() ?? false;
+      late String result;
+      late bool ifError;
+      BackendlessUser? loggedInUser;
+      // result = await _userApi.isValidLogin() ?? result;
+      bool? validUser = await Backendless.userService.isValidLogin().onError(
+        (error, stackTrace) {
+          ifError = true;
+          result = error.toString();
+        },
+      );
+      if (validUser != null && validUser) {
+        String? userObjectId =
+            await Backendless.userService.loggedInUser().onError(
+          (error, stackTrace) {
+            ifError = true;
+            result = error.toString();
+          },
+        );
+        if (userObjectId != null) {
+          Map<dynamic, dynamic>? mapOfUser =
+              await Backendless.data.of('Users').findById(userObjectId).onError(
+            (error, stackTrace) {
+              ifError = true;
+              result = error.toString();
+            },
+          );
+          if (mapOfUser != null) {
+            loggedInUser = BackendlessUser.fromJson(mapOfUser);
+          } else if (ifError) {
+            throw UserAPIException(
+                title: 'Log In Check Failed', message: result);
+          }
+        } else if (ifError) {
+          throw UserAPIException(title: 'Log In Check Failed', message: result);
+        }
+      } else if (ifError) {
+        throw UserAPIException(title: 'Log In Check Failed', message: result);
+      }
+      return loggedInUser;
     } on UserAPIException catch (_) {
       rethrow;
     }
@@ -85,8 +123,7 @@ class UserService extends UserServiceRepo {
       });
       // Nullability is not a concern. API Errors are caught
       // in the catch block below.
-      return await _userApi.register(backendlessUser) ??
-          BackendlessUser();
+      return await _userApi.register(backendlessUser) ?? BackendlessUser();
     } on UserAPIException catch (_) {
       rethrow;
     }
@@ -95,9 +132,11 @@ class UserService extends UserServiceRepo {
   /// Side Note: Its best to avoid Primitives without context
   /// But its left for simplicity. Antidote is a Data Class
   @override
-  Future<BackendlessUser> signInUser({required String email, required String password}) async {
+  Future<BackendlessUser> signInUser(
+      {required String email, required String password}) async {
     try {
-      return await _userApi.login(email: email, password: password) ?? BackendlessUser();
+      return await _userApi.login(email: email, password: password) ??
+          BackendlessUser();
     } on UserAPIException catch (_) {
       rethrow;
     }

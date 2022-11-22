@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  InitApp.initializeApp();
   runApp(
     const NightWatchApp(),
   );
@@ -26,13 +25,14 @@ class NightWatchApp extends StatelessWidget {
         ),
         Provider(
           create: (context) => NavigationAndDialogService(),
-        )
+        ),
+        Provider(create: (context) => InitApp.initializeApp(context))
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         onGenerateRoute: RouteManager.onGenerateRoute,
-        initialRoute: RouteManager.loginPage,
+        initialRoute: RouteManager.splashScreen,
       ),
     );
   }

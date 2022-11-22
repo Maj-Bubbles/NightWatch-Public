@@ -171,7 +171,15 @@ class UserViewModel extends BaseViewModel {
 
   Future<bool> checkIfUserIsLoggedIn() async {
     try {
-      return await _userService.checkIfUserLogged();
+      bool check = false;
+      BackendlessUser? userParam = await _userService.checkIfUserLogged();
+      if (userParam != null) {
+        _currentUser = userParam;
+        check = true;
+        return check;
+      } else {
+        return check;
+      }
     } on UserAPIException catch (error) {
       setState(ViewState.Error);
       setErrorDialog(error);

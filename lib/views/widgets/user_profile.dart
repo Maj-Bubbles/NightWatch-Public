@@ -83,7 +83,8 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       TextButton(
                         onPressed: () {
-                          navigatorService.navigateTo(RouteManager.userEditNamePage);
+                          navigatorService
+                              .navigateTo(RouteManager.userEditNamePage);
                         },
                         child: const Text(
                           'Edit',
@@ -128,7 +129,8 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       TextButton(
                         onPressed: () {
-                          navigatorService.navigateTo(RouteManager.userEditEmergencyNumberPage);
+                          navigatorService.navigateTo(
+                              RouteManager.userEditEmergencyNumberPage);
                         },
                         child: const Text(
                           'Edit',
@@ -173,7 +175,8 @@ class _UserProfileState extends State<UserProfile> {
                       ),
                       TextButton(
                         onPressed: () {
-                          navigatorService.navigateTo(RouteManager.userEditCellNumberPage);
+                          navigatorService
+                              .navigateTo(RouteManager.userEditCellNumberPage);
                         },
                         child: const Text(
                           'Edit',
