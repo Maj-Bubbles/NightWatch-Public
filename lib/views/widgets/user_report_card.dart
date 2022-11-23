@@ -95,6 +95,7 @@ class UserReportCard extends StatelessWidget {
                     if (loadingProgress == null) {
                       return child;
                     } else {
+                      // return Image.asset('media/Splash_GitHub_Page.png');
                       return Center(
                         child: CircularProgressIndicator(
                           value: loadingProgress.expectedTotalBytes != null
