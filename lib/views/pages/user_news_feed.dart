@@ -170,7 +170,7 @@ class _NewsFeedState extends State<NewsFeed> {
                         ),
                         elevation: 5,
                         onPressed: () {
-                         navigatorService.navigateTo(RouteManager.mapPage);
+                          navigatorService.navigateTo(RouteManager.mapPage);
                         },
                         child: Row(
                           children: const [
@@ -307,7 +307,8 @@ class _NewsFeedState extends State<NewsFeed> {
                         ),
                         elevation: 5,
                         onPressed: () {
-                          navigatorService.navigateTo(RouteManager.moreDetailsNonImmPage);
+                          navigatorService
+                              .navigateTo(RouteManager.moreDetailsNonImmPage);
                         },
                         child: Row(
                           children: const [
