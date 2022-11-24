@@ -10,6 +10,18 @@ class ReportsViewModel extends BaseViewModel {
   late UserViewModel userViewModel;
   late List<Report> _userReports;
   Report? _newReport;
+  Report clickedReport = Report(
+      id: '',
+      userName: '',
+      title: '',
+      description: '',
+      dateTime: DateTime.now(),
+      isAlerted: false,
+      isAcknowledged: false,
+      locationData: Location(),
+      media: [],
+      region: Region(name: 'Welkom'),
+      isImminent: false);
 
   // Usage of this value is through a database
   // event thus its null should not occur.
@@ -17,7 +29,7 @@ class ReportsViewModel extends BaseViewModel {
   List<Report> get userReports => _userReports;
 
   ReportsViewModel(ReportsService reportsService) {
-    _reportsService = _reportsService;
+    _reportsService = reportsService;
     _reportsService.latestReport.listen(_latestUpdate);
   }
 

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nightwatch/models/location.dart';
+import 'package:nightwatch/models/region.dart';
+import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/view_models.dart';
 import 'package:nightwatch/views/widgets/test_data_class.dart';
@@ -16,13 +19,14 @@ class NewsFeed extends StatefulWidget {
 class _NewsFeedState extends State<NewsFeed> {
   List<Report> reports = [];
   late bool isAdmin;
+
   // late ReportsViewModel viewModel;
   // late bool isAdminUser;
   @override
   void initState() {
     reports.add(TestData().testReport1);
     reports.add(TestData().testReport2);
-    isAdmin = true;
+    isAdmin = context.read<UserViewModel>().isCurrentUserAdmin;
     // viewModel = context.read<ReportsViewModel>();
     // reports = viewModel.userReports;
     // isAdminUser =
@@ -49,10 +53,18 @@ class _NewsFeedState extends State<NewsFeed> {
           : ListView.builder(
               itemCount: reports.length,
               itemBuilder: (context, index) {
-                return UserReportCard(
-                  reports: reports,
-                  index: index,
-                  isAdmin: isAdmin,
+                return GestureDetector(
+                  child: UserReportCard(
+                    reports: reports,
+                    index: index,
+                    isAdmin: isAdmin,
+                  ),
+                  onTap: () {
+                    context.read<ReportsViewModel>().clickedReport =
+                        reports[index];
+                    navigatorService
+                        .navigateTo(RouteManager.moreDetailsNonImmPage);
+                  },
                 );
               },
             ),

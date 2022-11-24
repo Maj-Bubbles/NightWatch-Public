@@ -10,6 +10,7 @@ import 'package:nightwatch/view_models/error_handling.dart';
 class UserViewModel extends BaseViewModel {
   late UserServiceRepo _userService;
   late BackendlessUser _currentUser;
+  bool isCurrentUserAdmin = true;
   bool createAdmin = false;
   bool confirmTcsCs = false;
   final registerFormKey = GlobalKey<FormState>();

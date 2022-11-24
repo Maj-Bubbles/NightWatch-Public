@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 // import 'package:cached_network_image/cached_network_image.dart';
 import '../../miscellaneous/constants.dart';
 import '../../models/report.dart';
 
 class UserReportCard extends StatelessWidget {
-  const UserReportCard({
+  UserReportCard({
     Key? key,
     required this.reports,
     required this.index,
@@ -75,7 +76,7 @@ class UserReportCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${reports[index].dateTime.hour}:${reports[index].dateTime.minute}',
+                    DateFormat.Hm().format(reports[index].dateTime),
                     textAlign: TextAlign.center,
                   )
                 ],

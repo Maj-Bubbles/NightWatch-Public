@@ -98,16 +98,21 @@ class _UserReportsFeedState extends State<UserReportsFeed> {
             label: 'Emergency',
           ),
           BottomNavigationBarItem(
-            icon: CircleAvatar(
-              foregroundColor: orangePeelForIconsAndButtons,
-              backgroundColor: scaffoldBackgroundColor,
-              radius: 14,
-              child: Icon(
-                Icons.person,
-              ),
+            icon: Icon(
+              Icons.person,
             ),
             label: 'Profile',
           ),
+          //   CircleAvatar(
+          //     foregroundColor: silverSandForFormsAndOtherStuff,
+          //     backgroundColor: scaffoldBackgroundColor,
+          //     radius: 14,
+          //     child: Icon(
+          //       Icons.person,
+          //     ),
+          //   ),
+          //   label: 'Profile',
+          // ),
         ],
       ),
     );
