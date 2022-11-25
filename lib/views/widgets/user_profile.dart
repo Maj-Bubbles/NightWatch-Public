@@ -15,302 +15,250 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     var navigatorService = context.read<NavigationAndDialogService>();
-    return ListView(
-      children: [
-        Card(
-          color: silverSandForFormsAndOtherStuff,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 5,
-                    bottom: 5,
-                  ),
-                  child: Text(
-                    'Username',
-                    style: TextStyle(
-                      color: scaffoldBackgroundColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 8,
-                  ),
-                  child: Text(
-                    'severe_hive_234',
-                    style: TextStyle(
-                      color: scaffoldBackgroundColor,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 15,
-                    bottom: 5,
-                  ),
-                  child: Text(
-                    'Names',
-                    style: TextStyle(
-                      color: scaffoldBackgroundColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 5,
-                    bottom: 5,
-                  ),
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Isabella Bordeux',
-                        style: TextStyle(
-                          color: scaffoldBackgroundColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 170,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          navigatorService.navigateTo(RouteManager.userEditNamePage);
-                        },
-                        child: const Text(
-                          'Edit',
-                          style: TextStyle(
-                            color: scaffoldBackgroundColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 15,
-                    bottom: 5,
-                  ),
-                  child: Text(
-                    'Emergency Number',
-                    style: TextStyle(
-                      color: scaffoldBackgroundColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 5,
-                    bottom: 5,
-                  ),
-                  child: Row(
-                    children: [
-                      const Text(
-                        '000 325 8756',
-                        style: TextStyle(
-                          color: scaffoldBackgroundColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 183,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          navigatorService.navigateTo(RouteManager.userEditEmergencyNumberPage);
-                        },
-                        child: const Text(
-                          'Edit',
-                          style: TextStyle(
-                            color: scaffoldBackgroundColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(
-                    top: 15,
-                    bottom: 5,
-                  ),
-                  child: Text(
-                    'Cellphone Number',
-                    style: TextStyle(
-                      color: scaffoldBackgroundColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 5,
-                    bottom: 5,
-                  ),
-                  child: Row(
-                    children: [
-                      const Text(
-                        '000 325 8756',
-                        style: TextStyle(
-                          color: scaffoldBackgroundColor,
-                          fontSize: 14,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 183,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          navigatorService.navigateTo(RouteManager.userEditCellNumberPage);
-                        },
-                        child: const Text(
-                          'Edit',
-                          style: TextStyle(
-                            color: scaffoldBackgroundColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ListTile(
-            onTap: () {
-              navigatorService.navigateTo(RouteManager.repotsByUserPage);
-            },
-            title: const Text(
-              'My Reports',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            tileColor: redButtonColor,
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-            ),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text(
-            'Settings',
+    return Container(
+      margin: const EdgeInsets.all(14.0),
+      child: ListView(
+        children: [
+          const Text(
+            'Profile',
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 24,
               color: appBarTitle,
               fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ListTile(
-            leading: const Icon(
-              Icons.notifications,
-              color: orangePeelForIconsAndButtons,
+          Card(
+            color: Colors.blueGrey[200],
+            margin: const EdgeInsets.all(8.0),
+            shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(24.0),
             ),
-            onTap: () {},
-            title: const Text(
-              'Notifications',
-              style: TextStyle(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 8,
+                ),
+                ProfileCard(
+                    title: "Username",
+                    subtitle: "Sever_User",
+                    onTap: () {
+                      navigatorService
+                          .navigateTo(RouteManager.userEditNamePage);
+                    }),
+                ProfileCard(
+                    title: "Names",
+                    subtitle: "Isabella Bordeux",
+                    onTap: () {
+                      navigatorService
+                          .navigateTo(RouteManager.userEditNamePage);
+                    }),
+                ProfileCard(
+                    title: "Emergency Number",
+                    subtitle: "089953845",
+                    onTap: () {
+                      navigatorService
+                          .navigateTo(RouteManager.userEditEmergencyNumberPage);
+                    }),
+                ProfileCard(
+                    title: "Cellphone Number",
+                    subtitle: "87459347349",
+                    onTap: () {
+                      navigatorService
+                          .navigateTo(RouteManager.userEditCellNumberPage);
+                    }),
+                const SizedBox(
+                  height: 8,
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 5.0, right: 5.0, bottom: 5.0, top: 17.0),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(40),
+              ),
+              onTap: () {
+                navigatorService.navigateTo(RouteManager.repotsByUserPage);
+              },
+              title: const Text(
+                'My Reports',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+              tileColor: orangePeelForIconsAndButtons,
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
                 color: Colors.white,
+              ),
+            ),
+          ),
+          const Divider(
+            color: orangePeelForIconsAndButtons,
+          ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Settings',
+              style: TextStyle(
+                fontSize: 24,
+                color: appBarTitle,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            tileColor: tropicalForContainerAndButtonColor,
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ListTile(
-            leading: const Icon(
-              Icons.policy,
-              color: orangePeelForIconsAndButtons,
-            ),
-            onTap: () {
-              navigatorService.navigateTo(RouteManager.termsAndConditionsPage);
-            },
-            title: const Text(
-              'Terms and Conditions',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          const Divider(
+            color: orangePeelForIconsAndButtons,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(
+                    color: orangePeelForIconsAndButtons,
+                  )),
+              leading: const Icon(
+                Icons.notifications,
+                color: orangePeelForIconsAndButtons,
+              ),
+              onTap: () {},
+              title: const Text(
+                'Notifications',
+                style: TextStyle(
+                  color: orangePeelForIconsAndButtons,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              tileColor: Colors.black,
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                color: orangePeelForIconsAndButtons,
               ),
             ),
-            tileColor: tropicalForContainerAndButtonColor,
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ListTile(
-            leading: const Icon(
-              Icons.language,
-              color: orangePeelForIconsAndButtons,
-            ),
-            onTap: () {},
-            title: const Text(
-              'Language Options',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(
+                    color: orangePeelForIconsAndButtons,
+                  )),
+              leading: const Icon(
+                Icons.policy,
+                color: orangePeelForIconsAndButtons,
+              ),
+              onTap: () {
+                navigatorService
+                    .navigateTo(RouteManager.termsAndConditionsPage);
+              },
+              title: const Text(
+                'Terms and Conditions',
+                style: TextStyle(
+                  color: orangePeelForIconsAndButtons,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              tileColor: Colors.black,
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                color: orangePeelForIconsAndButtons,
               ),
             ),
-            tileColor: tropicalForContainerAndButtonColor,
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
-            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: ListTile(
-            leading: const Icon(
-              Icons.logout,
-              color: orangePeelForIconsAndButtons,
-            ),
-            onTap: () {},
-            title: const Text(
-              'Logout',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(
+                    color: orangePeelForIconsAndButtons,
+                  )),
+              leading: const Icon(
+                Icons.language,
+                color: orangePeelForIconsAndButtons,
+              ),
+              onTap: () {},
+              title: const Text(
+                'Language Options',
+                style: TextStyle(
+                  color: orangePeelForIconsAndButtons,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              tileColor: Colors.black,
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                color: orangePeelForIconsAndButtons,
               ),
             ),
-            tileColor: tropicalForContainerAndButtonColor,
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.white,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(
+                    color: orangePeelForIconsAndButtons,
+                  )),
+              leading: const Icon(
+                Icons.logout,
+                color: orangePeelForIconsAndButtons,
+              ),
+              onTap: () {},
+              title: const Text(
+                'Logout',
+                style: TextStyle(
+                  color: orangePeelForIconsAndButtons,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              tileColor: Colors.black,
+              trailing: const Icon(
+                Icons.arrow_forward_ios,
+                color: orangePeelForIconsAndButtons,
+              ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProfileCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final void Function() onTap;
+  const ProfileCard(
+      {Key? key,
+      required this.title,
+      required this.subtitle,
+      required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.all(8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(17),
+      ),
+      elevation: 16,
+      shadowColor: Colors.black,
+      child: ListTile(
+        title: Text(title),
+        subtitle: Text(subtitle),
+        trailing: GestureDetector(
+          child: const Text('Edit'),
+          onTap: onTap,
         ),
-      ],
+      ),
     );
   }
 }
