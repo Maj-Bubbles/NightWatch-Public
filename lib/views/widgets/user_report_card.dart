@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:cached_network_image/cached_network_image.dart';
 import '../../miscellaneous/constants.dart';
 import '../../models/report.dart';
 
@@ -192,7 +190,6 @@ class UserReportCard extends StatelessWidget {
                               } else {
                                 return redButtonColor;
                               }
-                              ;
                             }),
                             foregroundColor:
                                 MaterialStateProperty.resolveWith<Color>(

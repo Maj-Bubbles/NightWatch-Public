@@ -28,7 +28,7 @@ class AdminUser extends User {
       name: user.properties['Real_Name'].toString(),
       userName: user.properties['Username'].toString(),
       emailAdd: user.properties['email'].toString(),
-      password: user.password,
+      password: user.properties['password'] ?? "",
       isAdmin: user.properties['Admin'] as bool,
       primaryNumber: user.properties['Primary_Number'].toString(),
       secondaryNumber: user.properties['Secondary_Number'].toString(),

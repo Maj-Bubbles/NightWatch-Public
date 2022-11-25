@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/repositories/reports_repository.dart';
 import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/view_models/base_view_model.dart';
+import 'package:nightwatch/view_models/error_handling.dart';
 import 'package:nightwatch/view_models/user_view_model.dart';
 import 'package:nightwatch/models/models.dart';
 
@@ -13,7 +16,6 @@ class ReportsViewModel extends BaseViewModel {
   List<Report> reports = [];
   late StreamSubscription<List<Report>> newReport;
   final nonImReportFormKey = GlobalKey<FormState>();
-  Report? _newReport;
 
   // Usage of this value is through a database
   // event thus its null should not occur.
@@ -230,7 +232,7 @@ class ReportsViewModel extends BaseViewModel {
       setState(ViewState.Busy);
       await _reportsService.storeReport(report);
       setState(ViewState.Success);
-    } on UserAPIException catch (error) {
+    } on DataBaseAPIException catch (error) {
       setErrorDialog(error);
       setState(ViewState.Error);
     }

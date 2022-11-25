@@ -92,7 +92,7 @@ class _MoreDetailsNonImmState extends State<MoreDetailsNonImm> {
               DetailedReportCard(
                   report: context.read<ReportsViewModel>().clickedReport,
                   index: 0,
-                  isAdmin: context.read<UserViewModel>().isCurrentUserAdmin)
+                  isAdmin: context.read<UserViewModel>().currentUser.isAdmin)
             ],
           ),
         ),

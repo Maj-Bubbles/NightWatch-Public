@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nightwatch/models/location.dart';
-import 'package:nightwatch/models/region.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/view_models.dart';
@@ -26,12 +24,7 @@ class _NewsFeedState extends State<NewsFeed> {
   void initState() {
     reports.add(TestData().testReport1);
     reports.add(TestData().testReport2);
-    isAdmin = context.read<UserViewModel>().isCurrentUserAdmin;
-    // viewModel = context.read<ReportsViewModel>();
-    // reports = viewModel.userReports;
-    // isAdminUser =
-    //     context.read<UserViewModel>().currentUser.properties['isAdmin'] as bool;
-    // isAdminUser = getIsAdmin() as bool;
+    isAdmin = context.read<UserViewModel>().currentUser.isAdmin;
     super.initState();
   }
 
