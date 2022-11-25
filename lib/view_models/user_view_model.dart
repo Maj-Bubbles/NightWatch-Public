@@ -9,7 +9,7 @@ import 'package:nightwatch/view_models/error_handling.dart';
 
 class UserViewModel extends BaseViewModel {
   late UserServiceRepo _userService;
-  late BackendlessUser _currentUser;
+  late User _currentUser;
   bool createAdmin = false;
   bool confirmTcsCs = false;
   final registerFormKey = GlobalKey<FormState>();
@@ -32,7 +32,7 @@ class UserViewModel extends BaseViewModel {
     'Kitty',
     'Meloding',
     'Thabong'
-    'Jan Cilliers Park',
+        'Jan Cilliers Park',
     'Seemeeu Park',
     'Koppie Alleen',
   ].map<DropdownMenuItem<String>>((item) {
@@ -45,7 +45,7 @@ class UserViewModel extends BaseViewModel {
   }).toList();
 
   UserServiceRepo get userService => _userService;
-  BackendlessUser get currentUser => _currentUser;
+  User get currentUser => _currentUser;
   String _selectedValue = '';
   String get selectedValue => _selectedValue;
   set selectedValue(String param) {
@@ -55,7 +55,7 @@ class UserViewModel extends BaseViewModel {
 
   UserViewModel(UserService userService) {
     _userService = userService;
-    _currentUser = BackendlessUser();
+    _currentUser = PublicUser.defaultUser();
   }
 
   registerUserHelper({
@@ -107,7 +107,12 @@ class UserViewModel extends BaseViewModel {
   Future<void> registerUser(User user) async {
     try {
       setState(ViewState.Busy);
-      _currentUser = await _userService.registerUser(user);
+      var backendlessUser = await _userService.registerUser(user);
+      if (backendlessUser.properties["Admin"] as bool) {
+        _currentUser = AdminUser.fromBackendlessUser(backendlessUser);
+      } else {
+        _currentUser = PublicUser.fromBackendlessUser(backendlessUser);
+      }
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
       setErrorDialog(error);
@@ -119,8 +124,16 @@ class UserViewModel extends BaseViewModel {
       {required String email, required String password}) async {
     try {
       setState(ViewState.Busy);
-      _currentUser =
+
+      var backendlessUser =
           await _userService.signInUser(email: email, password: password);
+
+      if (backendlessUser.properties["Admin"] as bool) {
+        _currentUser = AdminUser.fromBackendlessUser(backendlessUser);
+      } else {
+        _currentUser = PublicUser.fromBackendlessUser(backendlessUser);
+      }
+
       setState(ViewState.Success);
     } on UserAPIException catch (error) {
       setState(ViewState.Error);
@@ -178,7 +191,6 @@ class UserViewModel extends BaseViewModel {
     }
     return false;
   }
-
 
   void checkCreateAdmin() {
     // if (primaryNumAlloc.contains('Cellphone Number')) {

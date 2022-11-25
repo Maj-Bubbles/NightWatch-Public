@@ -14,14 +14,13 @@ abstract class User {
   final String secondaryNumber;
   final Region region;
 
-  User({
-    required this.name,
-    required this.userName,
-    required this.emailAdd,
-    required this.password,
-    required this.isAdmin,
-    required this.primaryNumber,
-    required this.secondaryNumber,
-    required this.region
-});
+  User(
+      {required this.name,
+      required this.userName,
+      required this.emailAdd,
+      required this.password,
+      required this.isAdmin,
+      required this.primaryNumber,
+      required this.secondaryNumber,
+      required this.region});
 }
