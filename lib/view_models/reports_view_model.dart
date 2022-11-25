@@ -14,6 +14,12 @@ class ReportsViewModel extends BaseViewModel {
   late List<Report> _userReports;
   final nonImReportFormKey = GlobalKey<FormState>();
   Report? _newReport;
+
+  // Usage of this value is through a database
+  // event thus its null should not occur.
+  Report get newReport => _newReport!;
+  List<Report> get userReports => _userReports;
+
   //Clicked report repository of sort for details page
   Report clickedReport = Report(
       id: '',
@@ -27,6 +33,7 @@ class ReportsViewModel extends BaseViewModel {
       media: [],
       region: Region(name: 'Welkom'),
       isImminent: false);
+
 // Dropdown menu item list for non-imminent report page
   final List<DropdownMenuItem<String>> items = [
     'Welkom',
@@ -58,16 +65,77 @@ class ReportsViewModel extends BaseViewModel {
         ));
   }).toList();
 
-  // Usage of this value is through a database
-  // event thus its null should not occur.
-  Report get newReport => _newReport!;
-  List<Report> get userReports => _userReports;
-
   //selected value for region dropdown on NonImminent report screen
   String _selectedValue = '';
   String get selectedValue => _selectedValue;
   set selectedValue(String param) {
     _selectedValue = param;
+    notifyListeners();
+  }
+
+  // Dropdown menu item list for IMMINENT report page
+  final List<DropdownMenuItem<String>> itemsImminent = [
+    'Welkom',
+    'Riebeeckstad',
+    'Naudeville',
+    'St Helena',
+    'Bedelia',
+    'Reitzpark',
+    'Doorn',
+    'Flamingo Park',
+    'Dagbreek',
+    'Virginia',
+    'Harmony',
+    'Saaiplaas',
+    'Merriespruit',
+    'Panorama',
+    'Kitty',
+    'Meloding',
+    'Thabong'
+        'Jan Cilliers Park',
+    'Seemeeu Park',
+    'Koppie Alleen',
+  ].map<DropdownMenuItem<String>>((item) {
+    return DropdownMenuItem<String>(
+        value: item,
+        child: Text(
+          item,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ));
+  }).toList();
+
+  //selected value for region dropdown on NonImminent report screen
+  String _selectedImmValue = '';
+  String get selectedImmValue => _selectedImmValue;
+  set selectedImmValue(String param) {
+    _selectedImmValue = param;
+    notifyListeners();
+  }
+
+  // Dropdown menu item list for IMMINENT report page
+  final List<DropdownMenuItem<String>> itemsCrime = [
+    'Assault',
+    'Aggravating circumstances',
+    'Breaking and Entering',
+    'Kidnapping',
+    'Arson',
+    'Property Crime',
+    'Weapon discharge',
+    'DUI',
+  ].map<DropdownMenuItem<String>>((item) {
+    return DropdownMenuItem<String>(
+        value: item,
+        child: Text(
+          item,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ));
+  }).toList();
+
+  //selected value for region dropdown on NonImminent report screen
+  String _selectedCrimeValue = '';
+  String get selectedCrimeValue => _selectedCrimeValue;
+  set selectedCrimeValue(String param) {
+    _selectedCrimeValue = param;
     notifyListeners();
   }
 

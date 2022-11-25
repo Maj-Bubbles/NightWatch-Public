@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
-import 'package:nightwatch/models/models.dart';
+import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
 import 'package:nightwatch/view_models/view_models.dart';
@@ -14,65 +14,8 @@ class ImminentReportUser extends StatefulWidget {
 }
 
 class _ImminentReportUserState extends State<ImminentReportUser> {
-  //controller
-  List<String> imminentReportDetails =
-      []; //You can change to map List<Map<String, String>>
-  //Who is in danger?
-  String mySelf = '';
-  bool addedOne = false;
-
-  String mySelfAdded = 'Already Added, move on';
-
-  String someoneElse = '';
-  bool addedTwo = false;
-
-  String someoneElseAdded = 'Already Added, move on';
-
-  //How many individuals are affected?
-  String onePerson = '';
-  bool addedThree = false;
-
-  String onePersonAdded = 'Already Added, move on';
-
-  String multiplePersons = '';
-  bool addedFour = false;
-
-  String multiplePersonsAdded = 'Already Added, move on';
-
-  //What type of assistance will be needed?
-  String medicalAssistance = '';
-  bool addedFive = false;
-
-  String medicalAssistanceAdded = 'Already Added, move on';
-
-  String securityOrSaps = '';
-  bool addedSix = false;
-
-  String securityOrSapsAdded = 'Already Added, move on';
-
-  String fireDepartment = '';
-  bool addedSeven = false;
-
-  String fireDepartmentAdded = 'Already Added, move on';
-
-  //What is the status of the incident?
-  String onGoing = '';
-  bool addedEight = false;
-
-  String onGoingAdded = 'Already Added, move on';
-
-  String notActive = '';
-  bool addedNine = false;
-
-  String notActiveAdded = 'Already Added, move on';
-
   late TextEditingController regionController;
   late TextEditingController crimeController;
-
-  List<String> regions = <String>['Thabong', 'Welkom'];
-  List<String> crimes = <String>['Robbery', 'Rape'];
-  String? dropdownValue;
-  String? dropdownValueTwo;
 
   bool? changed;
   Color onChange = orangePeelForIconsAndButtons;
@@ -110,128 +53,6 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
       ),
       body: ListView(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40.0,
-              right: 40.0,
-              top: 5.0,
-              bottom: 3.0,
-            ),
-            child: Container(
-              color: silverSandForFormsAndOtherStuff,
-              height: 63,
-              child: Center(
-                child: Row(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(9.0),
-                      child: Text(
-                        'Select Region',
-                        style: TextStyle(
-                          color: scaffoldBackgroundColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 26,
-                    ),
-                    DropdownButton<String>(
-                      dropdownColor: Colors.white,
-                      value: dropdownValue,
-                      icon: const Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Icon(Icons.arrow_downward),
-                      ),
-                      elevation: 16,
-                      style: const TextStyle(
-                        color: redButtonColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          dropdownValue = value!;
-                          regionController.text = value;
-                        });
-                        print(regionController.text);
-                      },
-                      items:
-                          regions.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40.0,
-              right: 40.0,
-              top: 5.0,
-              bottom: 3.0,
-            ),
-            child: Container(
-              color: silverSandForFormsAndOtherStuff,
-              height: 63,
-              child: Center(
-                child: Row(
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.all(9.0),
-                      child: Text(
-                        'Select Crime',
-                        style: TextStyle(
-                          color: scaffoldBackgroundColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 26,
-                    ),
-                    DropdownButton<String>(
-                      dropdownColor: Colors.white,
-                      value: dropdownValueTwo,
-                      icon: const Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Icon(Icons.arrow_downward),
-                      ),
-                      elevation: 16,
-                      style: const TextStyle(
-                        color: redButtonColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          dropdownValueTwo = value!;
-                          crimeController.text = value;
-                        });
-                        print(crimeController.text);
-                      },
-                      items:
-                          crimes.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
 /*
 
 
@@ -249,6 +70,13 @@ First button cluster
             ),
             child: Column(
               children: [
+                /*
+
+
+                Button number 1
+
+
+                */
                 MaterialButton(
                   height: 80,
                   color: context.watch<ReportsViewModel>().whoInDangValue ==
@@ -279,6 +107,13 @@ First button cluster
                   ),
                 ),
                 const SizedBox(height: 10),
+                /*
+
+
+                Button number 2
+
+
+                */
                 MaterialButton(
                   height: 80,
                   color: context.watch<ReportsViewModel>().whoInDangValue ==
@@ -329,6 +164,13 @@ Second Button cluster
             ),
             child: Column(
               children: [
+                /*
+
+
+                Button number 1
+
+
+                */
                 MaterialButton(
                   height: 80,
                   color: context.watch<ReportsViewModel>().affectedIndValue ==
@@ -360,6 +202,13 @@ Second Button cluster
                   ),
                 ),
                 const SizedBox(height: 10),
+                /*
+
+
+                Button number 2
+
+
+                */
                 MaterialButton(
                   height: 80,
                   color: context.watch<ReportsViewModel>().affectedIndValue ==
@@ -394,6 +243,284 @@ Second Button cluster
             ),
           ),
 
+/*
+
+
+Third Button cluster
+
+
+ */
+          const ButtonTitle(title: 'What type of assistance do you require?'),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 40,
+              right: 40,
+              top: 10,
+            ),
+            child: Column(
+              children: [
+                /*
+
+
+                Button number 1
+
+
+                */
+                MaterialButton(
+                  height: 80,
+                  color:
+                      context.watch<ReportsViewModel>().assistanceNeedValue ==
+                              'Medical'
+                          ? silverSandForFormsAndOtherStuff
+                          : orangePeelForIconsAndButtons,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  elevation: 5,
+                  onPressed: () {
+                    context.read<ReportsViewModel>().assistanceNeedValue =
+                        'Medical';
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Medical',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                /*
+
+
+                Button number 2
+
+
+                */
+                MaterialButton(
+                  height: 80,
+                  color:
+                      context.watch<ReportsViewModel>().assistanceNeedValue ==
+                              'Security'
+                          ? silverSandForFormsAndOtherStuff
+                          : orangePeelForIconsAndButtons,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  elevation: 5,
+                  onPressed: () {
+                    context.read<ReportsViewModel>().assistanceNeedValue =
+                        'Security';
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Security',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                /*
+
+
+                Button number 3
+
+
+                */
+                MaterialButton(
+                  height: 80,
+                  color:
+                      context.watch<ReportsViewModel>().assistanceNeedValue ==
+                              'Fire Department'
+                          ? silverSandForFormsAndOtherStuff
+                          : orangePeelForIconsAndButtons,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  elevation: 5,
+                  onPressed: () {
+                    context.read<ReportsViewModel>().assistanceNeedValue =
+                        'Fire Department';
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Fire Department',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+/*
+
+
+Fourth button cluster
+
+
+ */
+
+          const ButtonTitle(title: 'What is the status of the incident?'),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 40,
+              right: 40,
+              top: 10,
+            ),
+            child: Column(
+              children: [
+                /*
+
+
+                Button number 1
+
+
+                */
+                MaterialButton(
+                  height: 80,
+                  color: context.watch<ReportsViewModel>().incidentStatValue ==
+                          'Ongoing'
+                      ? silverSandForFormsAndOtherStuff
+                      : orangePeelForIconsAndButtons,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  elevation: 5,
+                  onPressed: () {
+                    context.read<ReportsViewModel>().incidentStatValue =
+                        'Ongoing';
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Ongoing',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+                /*
+
+
+                Button number 2
+
+
+                */
+                MaterialButton(
+                  height: 80,
+                  color: context.watch<ReportsViewModel>().incidentStatValue ==
+                          'Not Active'
+                      ? silverSandForFormsAndOtherStuff
+                      : orangePeelForIconsAndButtons,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                  ),
+                  elevation: 5,
+                  onPressed: () {
+                    context.read<ReportsViewModel>().incidentStatValue =
+                        'Not Active';
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Not Active',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 40.0,
+              right: 40.0,
+              top: 26.0,
+              bottom: 8.0,
+            ),
+            child: Container(
+              color: silverSandForFormsAndOtherStuff,
+              height: 63,
+              child: Consumer<ReportsViewModel>(
+                builder: (context, viewModel, child) {
+                  return RegionDropdownImminent(
+                    items: viewModel.itemsImminent,
+                    text: 'Region',
+                    iconData: const Icon(Icons.map_outlined),
+                    onChanged: (value) {
+                      viewModel.selectedImmValue = value ?? '';
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 40.0,
+              right: 40.0,
+              top: 26.0,
+              bottom: 8.0,
+            ),
+            child: Container(
+              color: silverSandForFormsAndOtherStuff,
+              height: 63,
+              child: Consumer<ReportsViewModel>(
+                builder: (context, viewModel, child) {
+                  return RegionDropdownImminent(
+                    items: viewModel.itemsCrime,
+                    text: 'Type of Crime',
+                    iconData: const Icon(Icons.info),
+                    onChanged: (value) {
+                      viewModel.selectedCrimeValue = value ?? '';
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(
               left: 40,
@@ -432,7 +559,7 @@ Second Button cluster
           ),
           const SizedBox(
             height: 140,
-          ), //add here
+          ),
         ],
       ),
     );
@@ -466,6 +593,34 @@ class ButtonTitle extends StatelessWidget {
   }
 }
 
+class RegionDropdownImminent extends StatelessWidget {
+  const RegionDropdownImminent(
+      {Key? key,
+      required this.items,
+      required this.text,
+      required this.iconData,
+      required this.onChanged})
+      : super(key: key);
+
+  final List<DropdownMenuItem<String>>? items;
+  final String text;
+  final Widget? iconData;
+  final void Function(String?)? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+      items: items,
+      onChanged: onChanged,
+      validator: validateRegion,
+      style: const TextStyle(color: scaffoldBackgroundColor),
+      dropdownColor: Colors.grey,
+      icon: iconData,
+      iconEnabledColor: scaffoldBackgroundColor,
+      decoration: formDecoration(text),
+    );
+  }
+}
 
 
 
