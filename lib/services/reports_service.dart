@@ -1,17 +1,16 @@
 import 'dart:async';
-
 import 'package:nightwatch/models/report.dart';
 import 'package:nightwatch/repositories/apis/backendless_apis.dart';
 import 'package:nightwatch/repositories/reports_repository.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
 
 class ReportsService extends ReportsRepository {
-  late final StreamController<Report> _realTimeReports;
+  late final StreamController<List<Report>> _realTimeReports;
   late final BackendlessDatabaseApi _dataBaseApi;
   late final BackendlessRealTimeAPI _realTimeApi;
 
   @override
-  Stream<Report> get latestReport => _realTimeReports.stream;
+  Stream<List<Report>> get latestReport => _realTimeReports.stream;
 
 
   ReportsService({required BackendlessDatabaseApi databaseApi, required BackendlessRealTimeAPI realTimeAPI}) {
@@ -19,21 +18,34 @@ class ReportsService extends ReportsRepository {
     _realTimeApi = realTimeAPI;
     // Asynchronous data structure to channel streamed
     // latest reports
-    _realTimeReports = StreamController<Report>();
+    _realTimeReports = StreamController<List<Report>>.broadcast();
     // start listening for a New report
     _realTimeApi.reportsEventHandler.addCreateListener(_addLatestReportToController);
   }
 
-  void _addLatestReportToController(Map newReport) =>
-      _realTimeReports.add(Report.fromJson(newReport));
+  void _addLatestReportToController(Map newReport) {
+    print(newReport);
+    List<Report> reports = [];
+    reports.add(Report.fromJson(newReport));
+    _realTimeReports.add(reports);
+  }
+
 
   // Unconditional retrieval of reports
   @override
   Future<List<Report>> getReports() async {
     try {
-      List<Map<dynamic, dynamic>> retrievedReports = await _dataBaseApi.retrieveReports();
+      List<Report> reports = [];
+      var apiResponse = await _dataBaseApi.retrieveReports();
+      print(apiResponse);
 
-      return retrievedReports.map((json) => Report.fromJson(json)).toList();
+      for(var item in apiResponse!) {
+        print(item);
+        reports.add(Report.fromJson(item));
+      }
+
+      return reports;
+      // return retrievedReports.map((json) => Report.fromJson(json)).toList();
     } on DataBaseAPIException catch (_) {
       // To be handled by the ViewModel
         rethrow;

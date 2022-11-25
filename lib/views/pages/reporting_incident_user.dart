@@ -79,7 +79,7 @@ class _ReportingState extends State<Reporting> {
                 ),
                 elevation: 5,
                 onPressed: () {
-                  navigatorService.navigateTo(RouteManager.userReportImminentPage);
+                  navigatorService.navigateTo(RouteManager.userReportiNonImminentPage);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

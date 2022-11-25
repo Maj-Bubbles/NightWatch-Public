@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:nightwatch/repositories/reports_repository.dart';
 import 'package:nightwatch/services/services.dart';
@@ -9,27 +11,33 @@ class ReportsViewModel extends BaseViewModel {
   late ReportsRepository _reportsService;
   late UserViewModel userViewModel;
   late List<Report> _userReports;
-  Report? _newReport;
+  List<Report> reports = [];
+  late StreamSubscription<List<Report>> newReport;
 
   // Usage of this value is through a database
   // event thus its null should not occur.
-  Report get newReport => _newReport!;
+  // Report get newReport => _newReport!;
   List<Report> get userReports => _userReports;
 
   ReportsViewModel(ReportsService reportsService) {
-    _reportsService = _reportsService;
+    _reportsService = reportsService;
     _reportsService.latestReport.listen(_latestUpdate);
+    getReports();
   }
 
-  void _latestUpdate(Report report) {
-    _newReport = report!; // Set the newReport for the UI
+  void _latestUpdate(List<Report> reports) {
+    setState(ViewState.Busy);
+    reports.addAll(reports);
+    print(reports);
+    // _newReport = report!; // Set the newReport for the UI
     setState(ViewState.DataFetched); // Update the View
   }
 
   Future<void> getReports() async {
     try {
       setState(ViewState.Busy);
-      _userReports = await _reportsService.getReports();
+      reports = await _reportsService.getReports();
+      print(reports);
       setState(ViewState.DataFetched);
     } on BackendlessException catch (_) {
       // Error Dialog

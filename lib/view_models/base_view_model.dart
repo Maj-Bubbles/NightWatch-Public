@@ -20,6 +20,8 @@ class BaseViewModel with ChangeNotifier {
 
   void setViewStateToIdle() => _state = ViewState.Idle;
 
+  void setViewStateTo(ViewState viewState) => _state = viewState;
+
   void setErrorDialog(NighWatchException error) {
     _dialog = StatusDialog(title: error.title, message: error.message);
   }

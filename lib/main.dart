@@ -1,3 +1,4 @@
+import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/init.dart';
 import 'package:nightwatch/repositories/apis/backendless_apis.dart';
@@ -24,6 +25,18 @@ class NightWatchApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserViewModel(UserService(BackendlessUserApi())),
         ),
+        ChangeNotifierProvider(
+            lazy: true,
+            create: (context) {
+              return ReportsViewModel(
+                ReportsService(
+                  databaseApi: BackendlessDatabaseApi(),
+                  realTimeAPI: BackendlessRealTimeAPI(
+                    reportsHandler: Backendless.data.of("Report").rt(),
+                  ),
+                ),
+              );
+            }),
         Provider(
           create: (context) => NavigationAndDialogService(),
         )

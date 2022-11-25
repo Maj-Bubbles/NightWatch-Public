@@ -17,7 +17,7 @@ class BackendlessDatabaseApi {
 
   Future<dynamic> retrieveReports() async {
     try {
-      return await Backendless.data.of("Reports").find();
+      return await Backendless.data.of("Report").find();
     } on PlatformException catch (error, stackTrace) {
       _handleError(error, stackTrace, apiName: "retrieveReports");
     }

@@ -31,17 +31,17 @@ class Report {
 
   factory Report.fromJson(Map<dynamic, dynamic> json) {
     return Report(
-        id: json['objectId'] as String,
-        userName: json['Username'] as String,
-        title: json['Title'] as String,
-        description: json['Description'] as String,
+        id: json['objectId'].toString() ?? "",
+        userName: json['Username'].toString() ?? "",
+        title: json['Title'].toString() ?? "",
+        description: json['Description'].toString() ?? "",
         dateTime: json['DateTime'],
         isAlerted: json['Alerted'] as bool,
         isAcknowledged: json['Acknowledged'] as bool,
-        isImminent: json['Imminent'] as bool,
-        locationData: Location(json['LocationData']),
-        media: json['Media'] as List<String>,
-        region: Region(name: json['Region']));
+        isImminent: json['Imminent'] != null ? json['Imminent'] as bool : false,
+        locationData: Location(json['LocationData'].toString() ?? "NotProvided"),
+        media: List<String>.from(json['media'] ?? ['NotProvided']),
+        region: Region(name: json['Region'].toString() ?? ""));
   }
 
   Map<String, dynamic> toJson() {
