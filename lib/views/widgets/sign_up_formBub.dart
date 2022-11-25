@@ -4,6 +4,7 @@ import 'package:nightwatch/miscellaneous/configuration.dart' as configuration;
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/services.dart';
+import 'package:nightwatch/view_models/error_handling.dart';
 import 'package:nightwatch/view_models/view_models.dart';
 import 'package:nightwatch/models/models.dart';
 import 'package:provider/provider.dart';
@@ -173,7 +174,7 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                   height: 63,
                   child: Consumer<UserViewModel>(
                     builder: (context, viewModel, child) {
-                      return RegionDropdown(
+                      return RegionDropdownSignUp(
                         items: viewModel.items,
                         text: 'Region',
                         iconData: Icons.map_outlined,
@@ -360,8 +361,13 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                           viewModel.setViewStateToIdle();
                           WidgetsBinding.instance.addPostFrameCallback(
                             (_) {
-                              context.read<UserViewModel>().confirmTcsCs = false;
+                              context.read<UserViewModel>().confirmTcsCs =
+                                  false;
                               navigatorService.goBack();
+                              navigatorService.showSnackBar(StatusDialog(
+                                  title: 'Account Created Successfully.',
+                                  message:
+                                      'Please verify your email address.'));
                             },
                           );
                           return const Text('Should Navigate to Login Page');
@@ -458,8 +464,8 @@ class TermsAndConsButton extends StatelessWidget {
   }
 }
 
-class RegionDropdown extends StatelessWidget {
-  const RegionDropdown(
+class RegionDropdownSignUp extends StatelessWidget {
+  const RegionDropdownSignUp(
       {Key? key,
       required this.items,
       required this.text,

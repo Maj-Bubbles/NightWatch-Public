@@ -45,6 +45,35 @@ final focussedErrorBorder = OutlineInputBorder(
   borderRadius: BorderRadius.zero,
 );
 
+final enabledBorderUnder = UnderlineInputBorder(
+  borderSide: BorderSide(
+    color: appColors['Silver']!,
+    // color: Color(0xFFC4CCCB),
+    width: 1,
+  ),
+  borderRadius: BorderRadius.zero,
+);
+
+final focussedBorderUnder = UnderlineInputBorder(
+  borderSide: BorderSide(
+      color: appColors['Silver']!, width: 2, style: BorderStyle.solid),
+  borderRadius: BorderRadius.zero,
+);
+
+final errorBorderUnder = UnderlineInputBorder(
+  borderSide:
+      BorderSide(color: appColors['Red']!, width: 1, style: BorderStyle.solid),
+  borderRadius: BorderRadius.zero,
+);
+
+final focussedErrorBorderUnder = UnderlineInputBorder(
+  borderSide: BorderSide(
+    color: appColors['Red']!,
+    width: 2,
+  ),
+  borderRadius: BorderRadius.zero,
+);
+
 InputDecoration formDecoration(String labelText) {
   return InputDecoration(
     filled: true,
@@ -55,7 +84,7 @@ InputDecoration formDecoration(String labelText) {
     focusedErrorBorder: focussedErrorBorder,
     labelText: labelText,
     labelStyle: const TextStyle(
-      color: scaffoldBackgroundColor,
+      color: Colors.white,
       fontWeight: FontWeight.bold,
       // color: Color(0xFF030303),
     ),
@@ -65,6 +94,28 @@ InputDecoration formDecoration(String labelText) {
     ),
     errorMaxLines: 3,
   );
+}
+
+InputDecoration formDecorationUnder(String labelText, Icon icon) {
+  return InputDecoration(
+      filled: false,
+      fillColor: const Color(0xFFC4CCCB),
+      enabledBorder: enabledBorderUnder,
+      focusedBorder: focussedBorderUnder,
+      errorBorder: errorBorderUnder,
+      focusedErrorBorder: focussedErrorBorderUnder,
+      hintText: labelText,
+      hintStyle: const TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        // color: Color(0xFF030303),
+      ),
+      errorStyle: TextStyle(
+        color: appColors['Red'],
+        fontSize: 10,
+      ),
+      errorMaxLines: 3,
+      prefixIcon: icon);
 }
 
 InputDecoration formDropdownDecoration(String labelText) {

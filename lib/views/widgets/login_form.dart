@@ -210,6 +210,55 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 
+
+// \class AppTextField extends StatelessWidget {
+//   const AppTextField({
+//     Key? key,
+//     required this.controller,
+//     required this.validator,
+//     required this.decorationString,
+//     TextInputType ttextInputType = TextInputType.text,
+//   }) : super(key: key);
+
+//   final TextEditingController controller;
+//   final String? Function(String?)? validator;
+//   final String decorationString;
+//   final TextInputType textInputType = ttextInputType;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(
+//         left: 40.0,
+//         right: 40.0,
+//         top: 26.0,
+//         bottom: 8.0,
+//       ),
+//       child: Container(
+//         color: silverSandForFormsAndOtherStuff,
+//         height: 63,
+//         child: Center(
+//           child: TextFormField(
+//             validator: validator,
+//             controller: controller,
+//             keyboardType: textInputType,
+//             cursorColor: scaffoldBackgroundColor,
+//             decoration: formDecoration('Email Address'),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+
+
+
+
+
+
+
+
 // import 'package:flutter/cupertino.dart';
 // import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';

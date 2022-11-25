@@ -1,14 +1,18 @@
 import 'package:backendless_sdk/backendless_sdk.dart';
+import 'package:flutter/material.dart';
 import 'package:nightwatch/repositories/reports_repository.dart';
 import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/view_models/base_view_model.dart';
 import 'package:nightwatch/view_models/user_view_model.dart';
 import 'package:nightwatch/models/models.dart';
 
+import 'error_handling.dart';
+
 class ReportsViewModel extends BaseViewModel {
   late ReportsRepository _reportsService;
   late UserViewModel userViewModel;
   late List<Report> _userReports;
+  final nonImReportFormKey = GlobalKey<FormState>();
   Report? _newReport;
   Report clickedReport = Report(
       id: '',
@@ -23,10 +27,46 @@ class ReportsViewModel extends BaseViewModel {
       region: Region(name: 'Welkom'),
       isImminent: false);
 
+  final List<DropdownMenuItem<String>> items = [
+    'Welkom',
+    'Riebeeckstad',
+    'Naudeville',
+    'St Helena',
+    'Bedelia',
+    'Reitzpark',
+    'Doorn',
+    'Flamingo Park',
+    'Dagbreek',
+    'Virginia',
+    'Harmony',
+    'Saaiplaas',
+    'Merriespruit',
+    'Panorama',
+    'Kitty',
+    'Meloding',
+    'Thabong'
+        'Jan Cilliers Park',
+    'Seemeeu Park',
+    'Koppie Alleen',
+  ].map<DropdownMenuItem<String>>((item) {
+    return DropdownMenuItem<String>(
+        value: item,
+        child: Text(
+          item,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        ));
+  }).toList();
+
   // Usage of this value is through a database
   // event thus its null should not occur.
   Report get newReport => _newReport!;
   List<Report> get userReports => _userReports;
+  String _selectedValue = '';
+  String get selectedValue => _selectedValue;
+  set selectedValue(String param) {
+    _selectedValue = param;
+    notifyListeners();
+  }
 
   ReportsViewModel(ReportsService reportsService) {
     _reportsService = reportsService;
@@ -48,11 +88,44 @@ class ReportsViewModel extends BaseViewModel {
     }
   }
 
+  postReportHelper(
+      {required String username,
+      required String title,
+      required String description,
+      required DateTime dateTime,
+      required String locationString,
+      required String mediaString,
+      required String regionString,
+      required bool isImminent}) async {
+    if (nonImReportFormKey.currentState?.validate() ?? false) {
+      Location locationData = Location(locationString);
+      List<String> media = [mediaString];
+      Region region = Region(name: regionString);
+      Report report = Report(
+          id: '',
+          userName: username,
+          title: title,
+          description: description,
+          dateTime: dateTime,
+          isAlerted: false,
+          isAcknowledged: false,
+          locationData: locationData,
+          media: media,
+          region: region,
+          isImminent: isImminent);
+      await postReport(report);
+    }
+  }
+
   Future<void> postReport(Report report) async {
     try {
+      setState(ViewState.Busy);
       await _reportsService.storeReport(report);
       setState(ViewState.Success);
-    } catch (_) {}
+    } on UserAPIException catch (error) {
+      setErrorDialog(error);
+      setState(ViewState.Error);
+    }
   }
 
   Future<void> getUserReports() async {
