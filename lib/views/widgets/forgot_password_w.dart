@@ -83,11 +83,10 @@ class _ForgotPasswordFormState extends State<ForgotPasswordForm> {
               ),
               child: MaterialButton(
                 onPressed: () {
-                 navigatorService.showSnackBar(StatusDialog(
-                     message:
-                     'check your email address to reset your password.',
-                     title: 'reset password')
-                 );
+                  navigatorService.showSnackBar(StatusDialog(
+                      message:
+                          'Check your email address for further instructions on how to reset your password.',
+                      title: 'Password Reset'));
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),

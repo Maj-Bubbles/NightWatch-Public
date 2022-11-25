@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
-import 'package:nightwatch/views/pages/user_news_feed.dart';
+import 'package:nightwatch/views/pages/main_reports_feed.dart';
 import 'package:nightwatch/views/widgets/numbers_emerg.dart';
 import 'package:nightwatch/views/widgets/user_profile.dart';
 import 'package:provider/provider.dart';
@@ -98,16 +98,21 @@ class _UserReportsFeedState extends State<UserReportsFeed> {
             label: 'Emergency',
           ),
           BottomNavigationBarItem(
-            icon: CircleAvatar(
-              foregroundColor: orangePeelForIconsAndButtons,
-              backgroundColor: scaffoldBackgroundColor,
-              radius: 14,
-              child: Icon(
-                Icons.person,
-              ),
+            icon: Icon(
+              Icons.person,
             ),
             label: 'Profile',
           ),
+          //   CircleAvatar(
+          //     foregroundColor: silverSandForFormsAndOtherStuff,
+          //     backgroundColor: scaffoldBackgroundColor,
+          //     radius: 14,
+          //     child: Icon(
+          //       Icons.person,
+          //     ),
+          //   ),
+          //   label: 'Profile',
+          // ),
         ],
       ),
     );

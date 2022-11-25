@@ -9,6 +9,13 @@ String? validateEmail(String? address) {
   return null;
 }
 
+String? validateRequired(String? field) {
+  if (field == null || field.isEmpty) {
+    return 'Please enter all fields';
+  }
+  return null;
+}
+
 String? validatePassword(String? password) {
   /*  Explanation of Regular Expression used under:
     - should contain at least one upper case, 
@@ -18,7 +25,7 @@ String? validatePassword(String? password) {
   */
   String? result;
   if (password == null || password.isEmpty) {
-    result = 'Please enter your desired password.';
+    result = 'Please enter your password.';
   } else if ((!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')
       .hasMatch(password))) {
     result =
@@ -32,7 +39,7 @@ String? validateNumber(String? number) {
     return 'Please enter your contact number.';
   } else if ((!RegExp(r'^.{10,}$').hasMatch(number))) {
     //tests if the contact number has 10 digits
-    return 'Please enter a valid contact number!';
+    return 'Please enter a valid contact number with 10 digits.';
   }
   return null;
 }

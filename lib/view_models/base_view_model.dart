@@ -26,4 +26,7 @@ class BaseViewModel with ChangeNotifier {
     _dialog = StatusDialog(title: error.title, message: error.message);
   }
 
+  void setCustomDialog({required String title, required String message}) {
+    _dialog = StatusDialog(title: title, message: message);
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/models/admin_user.dart';
 import 'package:nightwatch/models/models.dart';
@@ -31,8 +30,8 @@ class UserViewModel extends BaseViewModel {
     'Panorama',
     'Kitty',
     'Meloding',
-    'Thabong'
-        'Jan Cilliers Park',
+    'Thabong',
+    'Jan Cilliers Park',
     'Seemeeu Park',
     'Koppie Alleen',
   ].map<DropdownMenuItem<String>>((item) {
@@ -73,7 +72,7 @@ class UserViewModel extends BaseViewModel {
     String tellNum = "",
     String adminCellNum = "",
   }) async {
-    if (registerFormKey.currentState?.validate() ?? false) {
+    if ((registerFormKey.currentState?.validate() ?? false) && confirmTcsCs) {
       var user;
       if (!createAdmin) {
         user = PublicUser(
@@ -101,6 +100,12 @@ class UserViewModel extends BaseViewModel {
           primaryNumber: primaryNumber,
           secondaryNumber: secondaryNumber);
       await registerUser(user);
+    } else if (!confirmTcsCs) {
+      setCustomDialog(
+          title: "Confirm Tc's and C's",
+          message:
+              'Please confirm our Terms and Conditions before signing up.');
+      setState(ViewState.Error);
     }
   }
 
@@ -123,21 +128,22 @@ class UserViewModel extends BaseViewModel {
   Future<void> signInUser(
       {required String email, required String password}) async {
     try {
-      setState(ViewState.Busy);
+     if (loginFormKey.currentState?.validate() ?? false) {
+       setState(ViewState.Busy);
 
-      var backendlessUser =
-          await _userService.signInUser(email: email, password: password);
+       var backendlessUser =
+       await _userService.signInUser(email: email, password: password);
 
-      if (backendlessUser.properties["Admin"] as bool) {
-        _currentUser = AdminUser.fromBackendlessUser(backendlessUser);
-      } else {
-        _currentUser = PublicUser.fromBackendlessUser(backendlessUser);
-      }
-
-      setState(ViewState.Success);
+       if (backendlessUser.properties["Admin"] as bool) {
+         _currentUser = AdminUser.fromBackendlessUser(backendlessUser);
+       } else {
+         _currentUser = PublicUser.fromBackendlessUser(backendlessUser);
+       }
+       setState(ViewState.Success);
+     }
     } on UserAPIException catch (error) {
-      setState(ViewState.Error);
       setErrorDialog(error);
+      setState(ViewState.Error);
     }
   }
 
@@ -191,6 +197,7 @@ class UserViewModel extends BaseViewModel {
     }
     return false;
   }
+
 
   void checkCreateAdmin() {
     // if (primaryNumAlloc.contains('Cellphone Number')) {

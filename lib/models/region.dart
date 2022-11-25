@@ -3,8 +3,10 @@
 /// a name but may have location as its developed.
 class Region {
   final String name;
+  Region({required this.name});
 
-  Region({
-    required this.name
-  });
+  @override
+  String toString() {
+    return name;
+  }
 }

@@ -16,7 +16,7 @@ import 'package:nightwatch/views/pages/ts_and_cs.dart';
 import 'package:nightwatch/views/pages/user_edit_cell.dart';
 import 'package:nightwatch/views/pages/user_edit_emergency_contact.dart';
 import 'package:nightwatch/views/pages/user_edit_name.dart';
-import 'package:nightwatch/views/pages/user_news_feed.dart';
+import 'package:nightwatch/views/pages/main_reports_feed.dart';
 import 'package:nightwatch/views/pages/user_reports_feed.dart';
 
 class RouteManager {
@@ -29,7 +29,7 @@ class RouteManager {
   static const String termsAndConditionsPage = '/termsAndConditionsPage';
   static const String emergencyPage = '/emergencyPage';
   static const String userRepotsFeedPage = '/userRepotsFeedPage';
-  static const String newsFeedPage = '/newsFeedPage';
+  static const String newsFeedPage = '/mainReportsFeed';
   static const String repotsByUserPage = '/repotsByUserPage';
   static const String userEditNamePage = '/userEditNamePage';
   static const String userEditEmergencyNumberPage =
