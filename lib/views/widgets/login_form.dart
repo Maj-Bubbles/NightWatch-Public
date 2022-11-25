@@ -24,6 +24,9 @@ class _LoginFormState extends State<LoginForm> {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+    //filled in email and password for faster login on debug runs
+    emailController.text = 'testuser10@mail.com';
+    passwordController.text = 'Testuser#10';
   }
 
   @override

@@ -14,6 +14,7 @@ class ReportsViewModel extends BaseViewModel {
   late List<Report> _userReports;
   final nonImReportFormKey = GlobalKey<FormState>();
   Report? _newReport;
+  //Clicked report repository of sort for details page
   Report clickedReport = Report(
       id: '',
       userName: '',
@@ -26,7 +27,7 @@ class ReportsViewModel extends BaseViewModel {
       media: [],
       region: Region(name: 'Welkom'),
       isImminent: false);
-
+// Dropdown menu item list for non-imminent report page
   final List<DropdownMenuItem<String>> items = [
     'Welkom',
     'Riebeeckstad',
@@ -61,6 +62,8 @@ class ReportsViewModel extends BaseViewModel {
   // event thus its null should not occur.
   Report get newReport => _newReport!;
   List<Report> get userReports => _userReports;
+
+  //selected value for region dropdown on NonImminent report screen
   String _selectedValue = '';
   String get selectedValue => _selectedValue;
   set selectedValue(String param) {
@@ -68,6 +71,36 @@ class ReportsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+//following getters and setters for buttons on imminent reporting screen
+  String _whoInDangValue = '';
+  String get whoInDangValue => _whoInDangValue;
+  set whoInDangValue(String param) {
+    _whoInDangValue = param;
+    notifyListeners();
+  }
+
+  String _affectedIndValue = '';
+  String get affectedIndValue => _affectedIndValue;
+  set affectedIndValue(String param) {
+    _affectedIndValue = param;
+    notifyListeners();
+  }
+
+  String _assistanceNeedValue = '';
+  String get assistanceNeedValue => _assistanceNeedValue;
+  set assistanceNeedValue(String param) {
+    _assistanceNeedValue = param;
+    notifyListeners();
+  }
+
+  String _incidentStatValue = '';
+  String get incidentStatValue => _incidentStatValue;
+  set incidentStatValue(String param) {
+    _incidentStatValue = param;
+    notifyListeners();
+  }
+
+//constructor
   ReportsViewModel(ReportsService reportsService) {
     _reportsService = reportsService;
     _reportsService.latestReport.listen(_latestUpdate);
@@ -88,6 +121,7 @@ class ReportsViewModel extends BaseViewModel {
     }
   }
 
+//helper to initialise a report object for postReport(Report)
   postReportHelper(
       {required String username,
       required String title,
@@ -113,6 +147,7 @@ class ReportsViewModel extends BaseViewModel {
           media: media,
           region: region,
           isImminent: isImminent);
+      //push to postReport
       await postReport(report);
     }
   }
