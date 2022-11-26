@@ -1,3 +1,5 @@
+import 'package:nightwatch/miscellaneous/configuration.dart';
+
 import '../../models/models.dart';
 
 class TestData {
@@ -11,9 +13,10 @@ class TestData {
       isAlerted: false,
       isAcknowledged: true,
       locationData: Location('8010 Constantia Street'),
-      media: [
-        'https://st2.depositphotos.com/2101611/6966/v/450/depositphotos_69669865-stock-illustration-mugshot-of-anonymous-male-silhouette.jpg'
-      ],
+      media: [ImageLibrary.assault],
+      // media: [
+      //   'https://st2.depositphotos.com/2101611/6966/v/450/depositphotos_69669865-stock-illustration-mugshot-of-anonymous-male-silhouette.jpg'
+      // ],
       // media: ['media/Splash_GitHub_Page.png'],
       region: Region(name: 'Welkom'),
       isImminent: false);
@@ -26,9 +29,10 @@ class TestData {
       isAlerted: false,
       isAcknowledged: false,
       locationData: Location('84 Jan Hofmeyer Road'),
-      media: [
-        'https://t3.ftcdn.net/jpg/04/79/14/04/360_F_479140492_IoZVw8cX4ujiQP2ik2hdelZ1nwORkBlF.jpg'
-      ],
+      media: [ImageLibrary.propertyCrime],
+      // media: [
+      //   'https://t3.ftcdn.net/jpg/04/79/14/04/360_F_479140492_IoZVw8cX4ujiQP2ik2hdelZ1nwORkBlF.jpg'
+      // ],
       // media: ['media/Splash_GitHub_Page.png'],
       region: Region(name: 'Welkom'),
       isImminent: true);

@@ -32,7 +32,7 @@ class _NonImminentReportState extends State<NonImminentReport> {
   String imageUrl = "";
   bool? changed;
   Color onChange = constants.orangePeelForIconsAndButtons;
-  
+
   late ReportsViewModel reportsViewModel;
 
   Future getImage() async {
@@ -375,7 +375,6 @@ class _NonImminentReportState extends State<NonImminentReport> {
     );
   }
 }
-
 
 class RegionDropdownSignUp extends StatelessWidget {
   const RegionDropdownSignUp(

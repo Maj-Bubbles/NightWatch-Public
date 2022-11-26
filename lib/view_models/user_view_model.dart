@@ -130,19 +130,19 @@ class UserViewModel extends BaseViewModel {
   Future<void> signInUser(
       {required String email, required String password}) async {
     try {
-     if (loginFormKey.currentState?.validate() ?? false) {
-       setState(ViewState.Busy);
+      if (loginFormKey.currentState?.validate() ?? false) {
+        setState(ViewState.Busy);
 
-       var backendlessUser =
-       await _userService.signInUser(email: email, password: password);
+        var backendlessUser =
+            await _userService.signInUser(email: email, password: password);
 
-       if (backendlessUser.properties["Admin"] as bool) {
-         _currentUser = AdminUser.fromBackendlessUser(backendlessUser);
-       } else {
-         _currentUser = PublicUser.fromBackendlessUser(backendlessUser);
-       }
-       setState(ViewState.Success);
-     }
+        if (backendlessUser.properties["Admin"] as bool) {
+          _currentUser = AdminUser.fromBackendlessUser(backendlessUser);
+        } else {
+          _currentUser = PublicUser.fromBackendlessUser(backendlessUser);
+        }
+        setState(ViewState.Success);
+      }
     } on UserAPIException catch (error) {
       setErrorDialog(error);
       setState(ViewState.Error);
@@ -199,7 +199,6 @@ class UserViewModel extends BaseViewModel {
     }
     return false;
   }
-
 
   void checkCreateAdmin() {
     // if (primaryNumAlloc.contains('Cellphone Number')) {

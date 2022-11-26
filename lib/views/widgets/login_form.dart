@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animations/loading_animations.dart';
-import 'package:nightwatch/miscellaneous/constants.dart';
+import 'package:nightwatch/miscellaneous/configuration.dart' as configuration;
+import 'package:nightwatch/miscellaneous/constants.dart' as constants;
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:provider/provider.dart';
@@ -20,14 +21,11 @@ class _LoginFormState extends State<LoginForm> {
   late TextEditingController emailController;
   late TextEditingController passwordController;
 
-
   @override
   void initState() {
     super.initState();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    emailController.text = "testuser@gmail.com";
-    passwordController.text = "Kamva9697#";
   }
 
   @override
@@ -48,17 +46,18 @@ class _LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.all(8.0),
             child: ListView(
               children: [
-                const SizedBoxH30(),
+                const constants.SizedBoxH30(),
                 const Image(
-                  image: AssetImage('media/Splash_GitHub_Page.png'),
+                  image:
+                      AssetImage(configuration.ImageLibrary.splashGithubPage),
                   height: 150,
                 ),
-                const SizedBoxH10(),
+                const constants.SizedBoxH10(),
                 const Center(
                   child: Text(
                     'Sign in to continue',
                     style: TextStyle(
-                      color: silverSandForFormsAndOtherStuff,
+                      color: constants.silverSandForFormsAndOtherStuff,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
@@ -72,15 +71,15 @@ class _LoginFormState extends State<LoginForm> {
                     bottom: 8.0,
                   ),
                   child: Container(
-                    color: silverSandForFormsAndOtherStuff,
+                    color: constants.silverSandForFormsAndOtherStuff,
                     height: 63,
                     child: Center(
                       child: TextFormField(
                         validator: validateEmail,
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
-                        cursorColor: scaffoldBackgroundColor,
-                        decoration: formDecoration('Email Address'),
+                        cursorColor: constants.scaffoldBackgroundColor,
+                        decoration: constants.formDecoration('Email Address'),
                       ),
                     ),
                   ),
@@ -93,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
                     bottom: 8.0,
                   ),
                   child: Container(
-                    color: silverSandForFormsAndOtherStuff,
+                    color: constants.silverSandForFormsAndOtherStuff,
                     height: 63,
                     child: Center(
                       child: TextFormField(
@@ -101,8 +100,8 @@ class _LoginFormState extends State<LoginForm> {
                         keyboardType: TextInputType.visiblePassword,
                         obscureText: true,
                         controller: passwordController,
-                        cursorColor: scaffoldBackgroundColor,
-                        decoration: formDecoration('Password'),
+                        cursorColor: constants.scaffoldBackgroundColor,
+                        decoration: constants.formDecoration('Password'),
                       ),
                     ),
                   ),
@@ -115,7 +114,7 @@ class _LoginFormState extends State<LoginForm> {
                     child: const Text(
                       'Forgot Password?',
                       style: TextStyle(
-                        color: silverSandForFormsAndOtherStuff,
+                        color: constants.silverSandForFormsAndOtherStuff,
                         fontSize: 14,
                       ),
                     )),
@@ -135,7 +134,7 @@ class _LoginFormState extends State<LoginForm> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      color: orangePeelForIconsAndButtons,
+                      color: constants.orangePeelForIconsAndButtons,
                       textColor: Colors.white,
                       child: const Text(
                         'Sign In',
@@ -148,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: const Text(
                     'Don\'t have an account?',
                     style: TextStyle(
-                      color: silverSandForFormsAndOtherStuff,
+                      color: constants.silverSandForFormsAndOtherStuff,
                       fontSize: 14,
                     ),
                   ),
@@ -172,7 +171,7 @@ class _LoginFormState extends State<LoginForm> {
                           height: 100,
                           width: 300,
                           child: Card(
-                            color: scaffoldBackgroundColor,
+                            color: constants.scaffoldBackgroundColor,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -231,7 +230,11 @@ class LoadingIndicatorV2 extends StatelessWidget {
             height: 175,
             width: 300,
             child: Card(
-              color: scaffoldBackgroundColor,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              color: constants.scaffoldBackgroundColor,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -249,7 +252,7 @@ class LoadingIndicatorV2 extends StatelessWidget {
                         height: 75,
                       ),
                       LoadingBouncingGrid.square(
-                        backgroundColor: orangePeelForIconsAndButtons,
+                        backgroundColor: constants.scaffoldBackgroundColor,
                         size: 75,
                       ),
                     ],
