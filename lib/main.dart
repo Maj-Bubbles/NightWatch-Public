@@ -1,4 +1,6 @@
-import 'package:backendless_sdk/backendless_sdk.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/init.dart';
 import 'package:nightwatch/repositories/apis/backendless_apis.dart';
@@ -7,9 +9,12 @@ import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   InitApp.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     const NightWatchApp(),
   );
@@ -29,16 +34,14 @@ class NightWatchApp extends StatelessWidget {
             lazy: true,
             create: (context) {
               return ReportsViewModel(
-                ReportsService(
-                  databaseApi: BackendlessDatabaseApi(),
-                  realTimeAPI: BackendlessRealTimeAPI(
-                    reportsHandler: Backendless.data.of("Report").rt(),
-                  ),
-                ),
+                FirebaseReportsService(firebaseFirestore: FirebaseFirestore.instance)
               );
             }),
         Provider(
           create: (context) => NavigationAndDialogService(),
+        ),
+        Provider(
+          create: (context) => FirebaseReportsService(firebaseFirestore: FirebaseFirestore.instance),
         )
       ],
       child: MaterialApp(
