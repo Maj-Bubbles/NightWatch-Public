@@ -76,6 +76,7 @@ class UserViewModel extends BaseViewModel {
       var user;
       if (!createAdmin) {
         user = PublicUser(
+          id: "",
           emailAdd: email,
           isAdmin: isAdmin,
           name: name,
@@ -91,6 +92,7 @@ class UserViewModel extends BaseViewModel {
       user = AdminUser(
           tellNum: tellNum,
           adminCellNum: adminCellNum,
+          id: "",
           name: name,
           userName: userName,
           isAdmin: isAdmin,

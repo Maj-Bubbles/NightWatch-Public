@@ -1,4 +1,7 @@
-import 'package:backendless_sdk/backendless_sdk.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/init.dart';
 import 'package:nightwatch/repositories/apis/backendless_apis.dart';
@@ -7,9 +10,13 @@ import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   InitApp.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  Provider.debugCheckInvalidValueType = null;
   runApp(
     const NightWatchApp(),
   );
@@ -25,21 +32,15 @@ class NightWatchApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserViewModel(UserService(BackendlessUserApi())),
         ),
-        ChangeNotifierProvider(
-            lazy: true,
-            create: (context) {
-              return ReportsViewModel(
-                ReportsService(
-                  databaseApi: BackendlessDatabaseApi(),
-                  realTimeAPI: BackendlessRealTimeAPI(
-                    reportsHandler: Backendless.data.of("Report").rt(),
-                  ),
-                ),
-              );
-            }),
+        ProxyProvider<UserViewModel, ReportsViewModel>(
+    update: (context, userViewModel, reportsViewModel) => ReportsViewModel(
+                FirebaseReportsService(firebaseFirestore: FirebaseFirestore.instance, firebaseStorage: FirebaseStorage.instance),
+              userViewModel
+            ),
+        ),
         Provider(
           create: (context) => NavigationAndDialogService(),
-        )
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

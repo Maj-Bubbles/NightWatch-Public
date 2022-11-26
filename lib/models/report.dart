@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'models.dart';
 
 /// This class models input data from the User about
@@ -42,6 +44,23 @@ class Report {
         locationData: Location(json['LocationData'].toString() ?? "NotProvided"),
         media: List<String>.from(json['media'] ?? ['NotProvided']),
         region: Region(name: json['Region'].toString() ?? ""));
+  }
+
+  factory Report.fromDocument(DocumentSnapshot doc) {
+    var media = [];
+    return Report(
+      id: doc.exists ? doc.get("objectId") : "NonExistent",
+      userName: doc.exists ? doc.get("Username") : "NonExistent",
+      title: doc.exists ? doc.get("Title") : "NonExistent",
+      description: doc.exists ? doc.get("Description") : "NonExistent",
+      dateTime: DateTime.now(),
+      isAlerted: doc.exists ? doc.get("Alerted") as bool : false,
+      isAcknowledged: doc.exists ? doc.get("Acknowledged") as bool : false,
+      isImminent: doc.exists ? doc.get("Imminent") as bool : false,
+      locationData: doc.exists ? Location(doc.get("LocationData")) : Location("NonExistent"),
+      region: doc.exists ? Region(name: doc.get("Region")) : Region(name: "NonExistent"),
+      media: <String>["LinkToUrl"],
+    );
   }
 
   Map<String, dynamic> toJson() {

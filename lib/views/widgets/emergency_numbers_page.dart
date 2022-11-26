@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 
-class Numbers extends StatelessWidget {
-  const Numbers({
+class EmergencyNumbersScreen extends StatelessWidget {
+  const EmergencyNumbersScreen({
     Key? key,
   }) : super(key: key);
 

@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:backendless_sdk/backendless_sdk.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:nightwatch/repositories/reports_repository.dart';
+import 'package:nightwatch/services/firebase_reports_service.dart';
 import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/view_models/base_view_model.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
@@ -10,17 +12,14 @@ import 'package:nightwatch/view_models/user_view_model.dart';
 import 'package:nightwatch/models/models.dart';
 
 class ReportsViewModel extends BaseViewModel {
-  late ReportsRepository _reportsService;
-  late UserViewModel userViewModel;
-  late List<Report> _userReports;
+  late FirebaseReportsService _reportsService;
+  late UserViewModel _userViewModel;
   List<Report> reports = [];
   late StreamSubscription<List<Report>> newReport;
   final nonImReportFormKey = GlobalKey<FormState>();
 
-  // Usage of this value is through a database
-  // event thus its null should not occur.
-  // Report get newReport => _newReport!;
-  List<Report> get userReports => _userReports;
+  // The limit of reports to fetch
+  int limit = 20;
 
   //Clicked report repository of sort for details page
   Report clickedReport = Report(
@@ -171,29 +170,13 @@ class ReportsViewModel extends BaseViewModel {
   }
 
 //constructor
-  ReportsViewModel(ReportsService reportsService) {
+  ReportsViewModel(FirebaseReportsService reportsService, UserViewModel userViewModel) {
     _reportsService = reportsService;
-    _reportsService.latestReport.listen(_latestUpdate);
-    getReports();
+    _userViewModel = userViewModel;
   }
 
-  void _latestUpdate(List<Report> reports) {
-    setState(ViewState.Busy);
-    reports.addAll(reports);
-    print(reports);
-    // _newReport = report!; // Set the newReport for the UI
-    setState(ViewState.DataFetched); // Update the View
-  }
-
-  Future<void> getReports() async {
-    try {
-      setState(ViewState.Busy);
-      reports = await _reportsService.getReports();
-      print(reports);
-      setState(ViewState.DataFetched);
-    } on BackendlessException catch (_) {
-      // Error Dialog
-    }
+  Stream<QuerySnapshot> getReports() {
+    return _reportsService.getReportsStream(limit);
   }
 
 //helper to initialise a report object for postReport(Report)
@@ -211,7 +194,7 @@ class ReportsViewModel extends BaseViewModel {
       List<String> media = [mediaString];
       Region region = Region(name: regionString);
       Report report = Report(
-          id: '',
+          id: _userViewModel.currentUser.id,
           userName: username,
           title: title,
           description: description,
@@ -222,15 +205,15 @@ class ReportsViewModel extends BaseViewModel {
           media: media,
           region: region,
           isImminent: isImminent);
-      //push to postReport
-      await postReport(report);
+
+      await postReport(report, report.id);
     }
   }
 
-  Future<void> postReport(Report report) async {
+  Future<void> postReport(Report report, String userId) async {
     try {
       setState(ViewState.Busy);
-      await _reportsService.storeReport(report);
+      await _reportsService.storeReport(report, userId);
       setState(ViewState.Success);
     } on DataBaseAPIException catch (error) {
       setErrorDialog(error);
@@ -238,12 +221,25 @@ class ReportsViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> getUserReports() async {
+  Stream<QuerySnapshot> getUserReports(String userId) {
+      return _reportsService.getUserReports(limit,userId);
+  }
+
+
+  Future<String> uploadFile(File image, String timeStamp) async {
+    String imageUrl = "";
+    timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
+    UploadTask uploadTask = _reportsService.uploadFile(image, timeStamp);
     try {
       setState(ViewState.Busy);
-      _userReports = await _reportsService.getUserReports();
+      TaskSnapshot snapshot = await uploadTask;
+      imageUrl = await snapshot.ref.getDownloadURL();
       setState(ViewState.Success);
-    } on BackendlessException catch (_) {}
+    } on FirebaseException catch (e) {
+      setErrorDialog(NighWatchException(title: e.code, message: e.message!));
+      setState(ViewState.Error);
+    }
+    return imageUrl;
   }
 
   //TODO: Implement Notification View Model
