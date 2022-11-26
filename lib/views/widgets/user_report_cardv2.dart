@@ -190,8 +190,7 @@ class UserReportCardv2 extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
                       decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: Image.asset(reports[index].media[0]),
-                      //Icon made by Rodrigo Guerios from www.flaticon.com
+                      child: Image.asset(reports[index].media.last),
                     ),
                   ),
                 ),

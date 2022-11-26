@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/view_models.dart';
+import 'package:nightwatch/views/widgets/user_report_cardv2.dart';
 import 'package:provider/provider.dart';
 import '../../models/report.dart';
 import '../widgets/user_report_card.dart';
@@ -41,7 +42,7 @@ class _ReportsFeedScreenState extends State<ReportsFeedScreen> {
                   reportsViewModel.reports.add(report);
                   print("Number of Reports: ${snapshot.data?.docs.length}");
                   return GestureDetector(
-                    child: UserReportCard(
+                    child: UserReportCardv2(
                       reports: reportsViewModel.reports,
                       index: index,
                       isAdmin: userViewModel.currentUser.isAdmin,

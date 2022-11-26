@@ -47,7 +47,6 @@ class Report {
   }
 
   factory Report.fromDocument(DocumentSnapshot doc) {
-    var media = [];
     return Report(
       id: doc.exists ? doc.get("objectId") : "NonExistent",
       userName: doc.exists ? doc.get("Username") : "NonExistent",
@@ -59,7 +58,7 @@ class Report {
       isImminent: doc.exists ? doc.get("Imminent") as bool : false,
       locationData: doc.exists ? Location(doc.get("LocationData")) : Location("NonExistent"),
       region: doc.exists ? Region(name: doc.get("Region")) : Region(name: "NonExistent"),
-      media: <String>["LinkToUrl"],
+      media: doc.exists ? List.from(doc.get("Media")): <String>[""],
     );
   }
 
