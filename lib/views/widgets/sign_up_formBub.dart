@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/configuration.dart' as configuration;
+
+import 'package:nightwatch/miscellaneous/constants.dart' as constants;
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/services.dart';
@@ -488,7 +490,7 @@ class RegionDropdownSignUp extends StatelessWidget {
       dropdownColor: Colors.grey,
       icon: const Icon(Icons.map_outlined),
       iconEnabledColor: scaffoldBackgroundColor,
-      decoration: configuration.formDecoration('Region'),
+      decoration: constants.formDecoration('Region'),
     );
   }
 }

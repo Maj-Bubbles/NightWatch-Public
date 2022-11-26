@@ -268,7 +268,8 @@ class _NonImminentReeportUserState extends State<NonImminentReeportUser> {
                           onPressed: () {
                             String currentUsername = context
                                 .read<UserViewModel>()
-                                .currentUser.userName;
+                                .currentUser
+                                .userName;
                             String currentRegionString =
                                 context.read<ReportsViewModel>().selectedValue;
                             context.read<ReportsViewModel>().postReportHelper(

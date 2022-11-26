@@ -44,7 +44,7 @@ class _OnBoardingState extends State<OnBoarding> {
             title: "Emergency",
             description:
                 'A list of emergency numbers can be found by clicking on the Emergency Button on the login page, and on the reports page.',
-            pathImage: 'media/emergency-call-icon.jpg',
+            pathImage: 'media/emergency-call.png',
           )
         ],
         onDonePress: () {

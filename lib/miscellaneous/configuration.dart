@@ -12,6 +12,23 @@ const Map<String, Color> appColors = {
   'Black': Color(0xFF030303)
 };
 
+class ImageLibrary {
+  static const String aggravatedAssault = 'media/aggravated_assault.png';
+  static const String arson = 'media/arson.png';
+  static const String assault = 'media/assault.png';
+  static const String breakingAndEntering = 'media/breaking_and_entering.png';
+  static const String dui = 'media/dui.png';
+  static const String kidnapping = 'media/kidnapping.png';
+  static const String propertyCrime = 'media/property_crime.png';
+  static const String weaponDischarge = 'media/weapon_discharge.png';
+
+  static const String splashGithubPage = 'media/Splash_GitHub_Page.png';
+
+  static const String acknowledged = 'media/acknowledged.png';
+  static const String emergencyCall = 'media/emergency-call.png';
+  static const String report = 'media/report.png';
+}
+
 final enabledBorder = OutlineInputBorder(
   borderSide: BorderSide(
     color: appColors['Silver']!,
