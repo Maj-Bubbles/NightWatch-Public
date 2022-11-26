@@ -17,7 +17,7 @@ class ReportsViewModel extends BaseViewModel {
   final nonImReportFormKey = GlobalKey<FormState>();
 
   // The limit of reports to fetch
-  int limit = 0;
+  int limit = 20;
 
   //Clicked report repository of sort for details page
   Report clickedReport = Report(
