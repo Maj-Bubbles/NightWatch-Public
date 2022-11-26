@@ -13,6 +13,7 @@ class PublicUser extends User {
   PublicUser(
       {required this.cellNum,
       required this.emergencyNum,
+      required super.id,
       required super.name,
       required super.userName,
       required super.isAdmin,
@@ -24,6 +25,7 @@ class PublicUser extends User {
 
   factory PublicUser.fromBackendlessUser(BackendlessUser user) {
     return PublicUser(
+      id: user.properties['objectId'].toString(),
       name: user.properties['Real_Name'].toString(),
       userName: user.properties['Username'].toString(),
       emailAdd: user.properties['email'].toString(),
@@ -41,6 +43,7 @@ class PublicUser extends User {
     return PublicUser(
         cellNum: "",
         emergencyNum: "",
+        id: "",
         name: "",
         userName: "",
         isAdmin: false,

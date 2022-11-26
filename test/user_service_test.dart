@@ -13,6 +13,7 @@ void main() {
   late UserService userService;
   late MockUserServiceAPI mockApi;
   final adminUser = AdminUser(
+    id: "id",
       tellNum: "0180133",
       adminCellNum: "32424234",
       name: "Admin User",
@@ -24,6 +25,7 @@ void main() {
       primaryNumber: "098234242",
       secondaryNumber: "2343243242");
   final publicUser = PublicUser(
+    id: "id",
       cellNum: "234234234",
       emergencyNum: "234324324",
       name: "2343242424",

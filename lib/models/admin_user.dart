@@ -13,6 +13,7 @@ class AdminUser extends User {
   AdminUser({
     required this.tellNum,
     required this.adminCellNum,
+    required super.id,
     required super.name,
     required super.userName,
     required super.isAdmin,
@@ -25,6 +26,7 @@ class AdminUser extends User {
 
   factory AdminUser.fromBackendlessUser(BackendlessUser user) {
     return AdminUser(
+      id: user.properties['objectId'].toString(),
       name: user.properties['Real_Name'].toString(),
       userName: user.properties['Username'].toString(),
       emailAdd: user.properties['email'].toString(),
@@ -42,6 +44,7 @@ class AdminUser extends User {
     return AdminUser(
         tellNum: "",
         adminCellNum: "",
+        id: "",
         name: "",
         userName: "",
         isAdmin: false,

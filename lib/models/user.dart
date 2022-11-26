@@ -5,6 +5,7 @@ import 'package:nightwatch/models/region.dart';
 /// BackendlessUser object is used as
 /// Data transfer Object.
 abstract class User {
+  final String id;
   final String name;
   final String userName;
   final String emailAdd;
@@ -15,7 +16,9 @@ abstract class User {
   final Region region;
 
   User(
-      {required this.name,
+      {
+        required this.id,
+        required this.name,
       required this.userName,
       required this.emailAdd,
       required this.password,
