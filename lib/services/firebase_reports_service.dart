@@ -1,11 +1,21 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:nightwatch/miscellaneous/firebase_constants.dart';
 import 'package:nightwatch/models/models.dart';
 
 class FirebaseReportsService {
   final FirebaseFirestore firebaseFirestore;
+  final FirebaseStorage firebaseStorage;
 
-  FirebaseReportsService({required this.firebaseFirestore});
+  FirebaseReportsService({required this.firebaseFirestore, required this.firebaseStorage});
+
+  UploadTask uploadFile(File image, String fileName) {
+    Reference reference = firebaseStorage.ref().child(fileName);
+    UploadTask uploadTask = reference.putFile(image);
+    return uploadTask;
+  }
 
   Stream<QuerySnapshot> getReportsStream(int limit,
       [String textSearch = ""]) {
@@ -41,7 +51,7 @@ class FirebaseReportsService {
           "Imminent": report.isImminent,
           "Media": report.media,
           "Region": report.region.name,
-          "Location": report.region.name
+          "LocationData": report.locationData.location
         })
         .then((value) => print("Report Id: $userId Added to Firebase"));
   }

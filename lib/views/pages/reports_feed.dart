@@ -7,14 +7,14 @@ import 'package:provider/provider.dart';
 import '../../models/report.dart';
 import '../widgets/user_report_card.dart';
 
-class NewsFeed extends StatefulWidget {
-  const NewsFeed({super.key});
+class ReportsFeedScreen extends StatefulWidget {
+  const ReportsFeedScreen({super.key});
 
   @override
-  State<NewsFeed> createState() => _NewsFeedState();
+  State<ReportsFeedScreen> createState() => _ReportsFeedScreenState();
 }
 
-class _NewsFeedState extends State<NewsFeed> {
+class _ReportsFeedScreenState extends State<ReportsFeedScreen> {
   late ReportsViewModel reportsViewModel;
   late UserViewModel userViewModel;
 

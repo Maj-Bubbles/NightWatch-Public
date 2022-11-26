@@ -16,8 +16,8 @@ import 'package:nightwatch/views/pages/ts_and_cs.dart';
 import 'package:nightwatch/views/pages/user_edit_cell.dart';
 import 'package:nightwatch/views/pages/user_edit_emergency_contact.dart';
 import 'package:nightwatch/views/pages/user_edit_name.dart';
-import 'package:nightwatch/views/pages/main_reports_feed.dart';
-import 'package:nightwatch/views/pages/user_reports_feed.dart';
+import 'package:nightwatch/views/pages/reports_feed.dart';
+import 'package:nightwatch/views/pages/home_page.dart';
 
 class RouteManager {
   static const String splashScreen = '/';
@@ -86,12 +86,12 @@ class RouteManager {
 
       case userRepotsFeedPage:
         return MaterialPageRoute(
-          builder: (context) => const UserReportsFeed(),
+          builder: (context) => const HomePage(),
         );
 
       case newsFeedPage:
         return MaterialPageRoute(
-          builder: (context) => const NewsFeed(),
+          builder: (context) => const ReportsFeedScreen(),
         );
 
       case repotsByUserPage:
@@ -136,7 +136,7 @@ class RouteManager {
 
       case userReportiNonImminentPage:
         return MaterialPageRoute(
-          builder: (context) => const NonImminentReeportUser(),
+          builder: (context) => const NonImminentReport(),
         );
 
       default:

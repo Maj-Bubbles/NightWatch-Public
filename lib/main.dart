@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/init.dart';
@@ -15,6 +16,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Provider.debugCheckInvalidValueType = null;
   runApp(
     const NightWatchApp(),
   );
@@ -30,19 +32,15 @@ class NightWatchApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserViewModel(UserService(BackendlessUserApi())),
         ),
-        ChangeNotifierProvider(
-            lazy: true,
-            create: (context) {
-              return ReportsViewModel(
-                FirebaseReportsService(firebaseFirestore: FirebaseFirestore.instance)
-              );
-            }),
+        ProxyProvider<UserViewModel, ReportsViewModel>(
+    update: (context, userViewModel, reportsViewModel) => ReportsViewModel(
+                FirebaseReportsService(firebaseFirestore: FirebaseFirestore.instance, firebaseStorage: FirebaseStorage.instance),
+              userViewModel
+            ),
+        ),
         Provider(
           create: (context) => NavigationAndDialogService(),
         ),
-        Provider(
-          create: (context) => FirebaseReportsService(firebaseFirestore: FirebaseFirestore.instance),
-        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

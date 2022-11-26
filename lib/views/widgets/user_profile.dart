@@ -4,14 +4,14 @@ import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:provider/provider.dart';
 
-class UserProfile extends StatefulWidget {
-  const UserProfile({super.key});
+class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({super.key});
 
   @override
-  State<UserProfile> createState() => _UserProfileState();
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var navigatorService = context.read<NavigationAndDialogService>();

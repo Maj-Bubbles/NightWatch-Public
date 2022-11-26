@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nightwatch/miscellaneous/constants.dart' as constants;
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
@@ -14,22 +15,36 @@ import 'package:nightwatch/miscellaneous/validators.dart';
 import '../../models/view_state.dart';
 import '../../routes/route_manager.dart';
 
-class NonImminentReeportUser extends StatefulWidget {
-  const NonImminentReeportUser({super.key});
+class NonImminentReport extends StatefulWidget {
+  const NonImminentReport({super.key});
 
   @override
-  State<NonImminentReeportUser> createState() => _NonImminentReeportUserState();
+  State<NonImminentReport> createState() => _NonImminentReportState();
 }
 
-class _NonImminentReeportUserState extends State<NonImminentReeportUser> {
+class _NonImminentReportState extends State<NonImminentReport> {
   late TextEditingController titleController;
   late TextEditingController descriptionController;
   late TextEditingController locationController;
+  late String currentUsername;
   String? dropdownValue;
   String? dropdownValueTwo;
-
+  String imageUrl = "";
   bool? changed;
   Color onChange = constants.orangePeelForIconsAndButtons;
+  
+  late ReportsViewModel reportsViewModel;
+
+  Future getImage() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? pickedFile;
+
+    pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      var imageFile = File(pickedFile.path);
+      imageUrl = await reportsViewModel.uploadFile(imageFile, DateTime.now().toLocal().toString());
+    }
+  }
 
   @override
   void initState() {
@@ -37,6 +52,8 @@ class _NonImminentReeportUserState extends State<NonImminentReeportUser> {
     titleController = TextEditingController();
     descriptionController = TextEditingController();
     locationController = TextEditingController();
+    currentUsername = context.read<UserViewModel>().currentUser.userName;
+    reportsViewModel = context.read<ReportsViewModel>();
   }
 
   @override
@@ -77,12 +94,13 @@ class _NonImminentReeportUserState extends State<NonImminentReeportUser> {
                     splashRadius: 150,
                     highlightColor: constants.redButtonColor,
                     onPressed: () {},
-                    icon: const Center(
-                      child: Icon(
-                        Icons.image,
+                    icon: Center(
+                      child: IconButton(
+                        onPressed: getImage,
+                        icon: const Icon(Icons.image,
                         color: constants.orangePeelForIconsAndButtons,
                         size: 70,
-                      ),
+                      ),),
                     ),
                   ),
                   const SizedBox(
@@ -266,19 +284,17 @@ class _NonImminentReeportUserState extends State<NonImminentReeportUser> {
                         ),
                         MaterialButton(
                           onPressed: () {
-                            String currentUsername = context
-                                .read<UserViewModel>()
-                                .currentUser.userName;
                             String currentRegionString =
                                 context.read<ReportsViewModel>().selectedValue;
+
+
                             context.read<ReportsViewModel>().postReportHelper(
                                 username: currentUsername,
                                 title: titleController.text.trim(),
                                 description: descriptionController.text.trim(),
                                 dateTime: DateTime.now(),
                                 locationString: locationController.text.trim(),
-                                mediaString: '',
-                                //TODO: Integrate media selection
+                                mediaString: imageUrl,
                                 regionString: currentRegionString,
                                 isImminent: false);
                           },
@@ -359,6 +375,7 @@ class _NonImminentReeportUserState extends State<NonImminentReeportUser> {
     );
   }
 }
+
 
 class RegionDropdownSignUp extends StatelessWidget {
   const RegionDropdownSignUp(

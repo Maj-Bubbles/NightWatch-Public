@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/services/firebase_reports_service.dart';
 import 'package:nightwatch/services/services.dart';
@@ -11,7 +13,7 @@ import 'package:nightwatch/models/models.dart';
 
 class ReportsViewModel extends BaseViewModel {
   late FirebaseReportsService _reportsService;
-  late UserViewModel userViewModel;
+  late UserViewModel _userViewModel;
   List<Report> reports = [];
   late StreamSubscription<List<Report>> newReport;
   final nonImReportFormKey = GlobalKey<FormState>();
@@ -168,8 +170,9 @@ class ReportsViewModel extends BaseViewModel {
   }
 
 //constructor
-  ReportsViewModel(FirebaseReportsService reportsService) {
+  ReportsViewModel(FirebaseReportsService reportsService, UserViewModel userViewModel) {
     _reportsService = reportsService;
+    _userViewModel = userViewModel;
   }
 
   Stream<QuerySnapshot> getReports() {
@@ -191,7 +194,7 @@ class ReportsViewModel extends BaseViewModel {
       List<String> media = [mediaString];
       Region region = Region(name: regionString);
       Report report = Report(
-          id: userViewModel.currentUser.id,
+          id: _userViewModel.currentUser.id,
           userName: username,
           title: title,
           description: description,
@@ -220,6 +223,23 @@ class ReportsViewModel extends BaseViewModel {
 
   Stream<QuerySnapshot> getUserReports(String userId) {
       return _reportsService.getUserReports(limit,userId);
+  }
+
+
+  Future<String> uploadFile(File image, String timeStamp) async {
+    String imageUrl = "";
+    timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
+    UploadTask uploadTask = _reportsService.uploadFile(image, timeStamp);
+    try {
+      setState(ViewState.Busy);
+      TaskSnapshot snapshot = await uploadTask;
+      imageUrl = await snapshot.ref.getDownloadURL();
+      setState(ViewState.Success);
+    } on FirebaseException catch (e) {
+      setErrorDialog(NighWatchException(title: e.code, message: e.message!));
+      setState(ViewState.Error);
+    }
+    return imageUrl;
   }
 
   //TODO: Implement Notification View Model
