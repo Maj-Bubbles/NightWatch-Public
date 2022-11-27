@@ -15,7 +15,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  Provider.debugCheckInvalidValueType = null;
   runApp(
     const NightWatchApp(),
   );
@@ -31,14 +30,10 @@ class NightWatchApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => UserViewModel(UserService(BackendlessUserApi())),
         ),
-        ProxyProvider<UserViewModel, ReportsViewModel>(
-          update: (context, userViewModel, reportsViewModel) =>
-              ReportsViewModel(
-                  FirebaseReportsService(
-                      firebaseFirestore: FirebaseFirestore.instance,
-                      firebaseStorage: FirebaseStorage.instance),
-                  userViewModel),
-        ),
+        ChangeNotifierProvider(
+            create: (context) => ReportsViewModel(FirebaseReportsService(
+                firebaseFirestore: FirebaseFirestore.instance,
+                firebaseStorage: FirebaseStorage.instance))),
         Provider(
           create: (context) => NavigationAndDialogService(),
         ),

@@ -144,8 +144,9 @@ class _NonImminentReportState extends State<NonImminentReport> {
                               padding: const EdgeInsets.all(10.0),
                               child: Consumer<ReportsViewModel>(
                                 builder: (context, viewModel, child) {
-                                  context.read<ReportsViewModel>().printUI(
-                                      '************************Icon Image was updated');
+                                  context
+                                      .read<ReportsViewModel>()
+                                      .printUI('toPrint');
                                   return Container(
                                     decoration: const BoxDecoration(
                                         shape: BoxShape.circle),
@@ -357,6 +358,10 @@ class _NonImminentReportState extends State<NonImminentReport> {
 
                             context.read<ReportsViewModel>().postReportHelper(
                                 username: currentUsername,
+                                id: context
+                                    .read<UserViewModel>()
+                                    .currentUser
+                                    .id,
                                 title: titleController.text.trim(),
                                 description: descriptionController.text.trim(),
                                 dateTime: DateTime.now(),
@@ -423,6 +428,8 @@ class _NonImminentReportState extends State<NonImminentReport> {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         navigatorService.goBack();
                         navigatorService.goBack();
+                        context.read<ReportsViewModel>().selecIconCrime =
+                            'media/crime-investigation.png';
                         navigatorService.showSnackBar(StatusDialog(
                             title: 'Successfully created report.',
                             message:

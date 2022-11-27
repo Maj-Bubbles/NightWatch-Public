@@ -13,7 +13,6 @@ import 'package:nightwatch/models/models.dart';
 
 class ReportsViewModel extends BaseViewModel {
   late FirebaseReportsService _reportsService;
-  late UserViewModel _userViewModel;
   List<Report> reports = [];
   late StreamSubscription<List<Report>> newReport;
   final nonImReportFormKey = GlobalKey<FormState>();
@@ -238,10 +237,8 @@ class ReportsViewModel extends BaseViewModel {
   }
 
 //constructor
-  ReportsViewModel(
-      FirebaseReportsService reportsService, UserViewModel userViewModel) {
+  ReportsViewModel(FirebaseReportsService reportsService) {
     _reportsService = reportsService;
-    _userViewModel = userViewModel;
   }
 
   Stream<QuerySnapshot> getReports() {
@@ -251,6 +248,7 @@ class ReportsViewModel extends BaseViewModel {
 //helper to initialise a report object for postReport(Report)
   postReportHelper(
       {required String username,
+      required String id,
       required String title,
       required String description,
       required DateTime dateTime,
@@ -263,7 +261,7 @@ class ReportsViewModel extends BaseViewModel {
       List<String> media = mediaString;
       Region region = Region(name: regionString);
       Report report = Report(
-          id: _userViewModel.currentUser.id,
+          id: id,
           userName: username,
           title: title,
           description: description,

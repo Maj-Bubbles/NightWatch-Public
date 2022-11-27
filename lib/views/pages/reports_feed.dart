@@ -33,37 +33,28 @@ class _ReportsFeedScreenState extends State<ReportsFeedScreen> {
         stream: reportsViewModel.getReports(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
-            if ((snapshot.data?.docs.length ?? 0) > 0) {
-              return ListView.builder(
-                itemCount: snapshot.data?.docs.length,
-                itemBuilder: (context, index) {
-                  print(snapshot.data?.docs[index].data());
-                  var report = Report.fromDocument(snapshot.data!.docs[index]);
-                  reportsViewModel.reports.add(report);
-                  print("Number of Reports: ${snapshot.data?.docs.length}");
-                  return GestureDetector(
-                    child: UserReportCardv2(
-                      reports: reportsViewModel.reports,
-                      index: index,
-                      isAdmin: userViewModel.currentUser.isAdmin,
-                    ),
-                    onTap: () {
-                      context.read<ReportsViewModel>().clickedReport =
-                          reportsViewModel.reports[index];
-                      navigatorService
-                          .navigateTo(RouteManager.moreDetailsNonImmPage);
-                    },
-                  );
-                },
-              );
-            } else {
-              return const Center(
-                child: Text(
-                  "No reports",
-                  style: TextStyle(color: Colors.white),
-                ),
-              );
-            }
+            return ListView.builder(
+              itemCount: snapshot.data?.docs.length,
+              itemBuilder: (context, index) {
+                print(snapshot.data?.docs[index].data());
+                var report = Report.fromDocument(snapshot.data!.docs[index]);
+                reportsViewModel.reports.add(report);
+                print("Number of Reports: ${snapshot.data?.docs.length}");
+                return GestureDetector(
+                  child: UserReportCardv2(
+                    reports: reportsViewModel.reports,
+                    index: index,
+                    isAdmin: userViewModel.currentUser.isAdmin,
+                  ),
+                  onTap: () {
+                    context.read<ReportsViewModel>().clickedReport =
+                        reportsViewModel.reports[index];
+                    navigatorService
+                        .navigateTo(RouteManager.moreDetailsNonImmPage);
+                  },
+                );
+              },
+            );
           } else if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(
