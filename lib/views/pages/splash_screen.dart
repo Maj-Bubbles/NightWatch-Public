@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nightwatch/init.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
 import 'package:nightwatch/services/services.dart';
@@ -13,6 +14,12 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
+  @override
+  void initState() {
+    super.initState();
+    InitApp.initializeApp(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     var navigatorService = context.read<NavigationAndDialogService>();

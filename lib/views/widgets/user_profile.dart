@@ -231,6 +231,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                   onTap: () {
                     context.read<UserViewModel>().logoutUser();
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      navigatorService.popAndNavigateTo(RouteManager.loginPage);
+                      navigatorService.showSnackBar(StatusDialog(
+                          title: 'Logged Out Successfully.',
+                          message:
+                              'Your account was logged out successfully.'));
+                    });
                   },
                   title: const Text(
                     'Logout',
@@ -286,7 +293,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               case ViewState.Success:
                 viewModel.setViewStateToIdle();
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  navigatorService.goBack();
                   navigatorService.showSnackBar(StatusDialog(
                       title: 'Logged Out Successfully.',
                       message: 'Your account was logged out successfully.'));

@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  InitApp.initializeApp();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -33,10 +32,12 @@ class NightWatchApp extends StatelessWidget {
           create: (context) => UserViewModel(UserService(BackendlessUserApi())),
         ),
         ProxyProvider<UserViewModel, ReportsViewModel>(
-    update: (context, userViewModel, reportsViewModel) => ReportsViewModel(
-                FirebaseReportsService(firebaseFirestore: FirebaseFirestore.instance, firebaseStorage: FirebaseStorage.instance),
-              userViewModel
-            ),
+          update: (context, userViewModel, reportsViewModel) =>
+              ReportsViewModel(
+                  FirebaseReportsService(
+                      firebaseFirestore: FirebaseFirestore.instance,
+                      firebaseStorage: FirebaseStorage.instance),
+                  userViewModel),
         ),
         Provider(
           create: (context) => NavigationAndDialogService(),
@@ -46,7 +47,7 @@ class NightWatchApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: navigatorKey,
         onGenerateRoute: RouteManager.onGenerateRoute,
-        initialRoute: RouteManager.loginPage,
+        initialRoute: RouteManager.splashScreen,
       ),
     );
   }

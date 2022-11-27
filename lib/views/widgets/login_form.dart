@@ -193,7 +193,7 @@ class _LoginFormState extends State<LoginForm> {
                   viewModel.setViewStateToIdle();
                   WidgetsBinding.instance.addPostFrameCallback((_) {
                     navigatorService
-                        .navigateTo(RouteManager.userRepotsFeedPage);
+                        .popAndNavigateTo(RouteManager.userRepotsFeedPage);
                   });
                   return Container();
                 case ViewState.Error:

@@ -1,3 +1,4 @@
+import 'package:backendless_sdk/backendless_sdk.dart';
 import 'package:flutter/material.dart';
 import 'package:nightwatch/models/admin_user.dart';
 import 'package:nightwatch/models/models.dart';
@@ -172,7 +173,20 @@ class UserViewModel extends BaseViewModel {
 
   Future<bool> checkIfUserIsLoggedIn() async {
     try {
-      return await _userService.checkIfUserLogged();
+      bool userLoggedIn = false;
+      BackendlessUser? userArg = await _userService.checkIfUserLogged();
+      if (userArg != null) {
+        if (userArg.properties["Admin"] as bool) {
+          _currentUser = AdminUser.fromBackendlessUser(userArg);
+        } else {
+          _currentUser = PublicUser.fromBackendlessUser(userArg);
+        }
+        userLoggedIn = true;
+        notifyListeners();
+        return userLoggedIn;
+      } else {
+        return userLoggedIn;
+      }
     } on UserAPIException catch (error) {
       setState(ViewState.Error);
       setErrorDialog(error);
