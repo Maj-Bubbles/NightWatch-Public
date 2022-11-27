@@ -106,29 +106,37 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
           ),
         ),
       ),
+/////////////////////////////////////////////////////////////////
       body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.only(
-              left: 40.0,
-              right: 40.0,
-              top: 5.0,
+              left: 14.0,
+              right: 14.0,
+              top: 15.0,
               bottom: 3.0,
             ),
-            child: Container(
-              color: silverSandForFormsAndOtherStuff,
-              height: 63,
-              child: Center(
+            child: Center(
+              //added a card /shape/side color
+              child: Card(
+                color: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(
+                    color: orangePeelForIconsAndButtons,
+                  ),
+                ),
                 child: Row(
                   children: [
                     const Padding(
                       padding: EdgeInsets.all(9.0),
+                      //added font from 16 to 19/
                       child: Text(
                         'Select Region',
                         style: TextStyle(
-                          color: scaffoldBackgroundColor,
+                          color: orangePeelForIconsAndButtons,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 19,
                         ),
                       ),
                     ),
@@ -169,17 +177,26 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               ),
             ),
           ),
+
+/////////////////////////////////////////////////////////////////
           Padding(
             padding: const EdgeInsets.only(
-              left: 40.0,
-              right: 40.0,
+              left: 14.0,
+              right: 14.0,
               top: 5.0,
               bottom: 3.0,
             ),
-            child: Container(
-              color: silverSandForFormsAndOtherStuff,
-              height: 63,
-              child: Center(
+            child: Center(
+              //added a card/shape/side
+
+              child: Card(
+                color: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(40),
+                  side: const BorderSide(
+                    color: orangePeelForIconsAndButtons,
+                  ),
+                ),
                 child: Row(
                   children: [
                     const Padding(
@@ -187,9 +204,9 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                       child: Text(
                         'Select Crime',
                         style: TextStyle(
-                          color: scaffoldBackgroundColor,
+                          color: orangePeelForIconsAndButtons,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 19,
                         ),
                       ),
                     ),
@@ -230,6 +247,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               ),
             ),
           ),
+/////////////////////////////////////////////////////////////////
           const Padding(
             padding: EdgeInsets.only(
               left: 40,
@@ -245,6 +263,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               ),
             ),
           ),
+/////////////////////////////////////////////////////////////////
           Padding(
             padding: const EdgeInsets.only(
               left: 40,
@@ -252,13 +271,16 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              //height from 80 to 60
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  //from 20 to 40
+                  Radius.circular(40),
                 ),
               ),
+
               elevation: 5,
               onPressed: () {
                 setState(() {
@@ -272,13 +294,14 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   print(imminentReportDetails);
                 });
               },
+              //added card
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     'Myself',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -308,6 +331,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   ),
                 )
               : Container(),
+/////////////////////////////////////////////////////////////////
           Padding(
             padding: const EdgeInsets.only(
               left: 40,
@@ -315,11 +339,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -341,7 +365,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'Someone Else',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -395,11 +419,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -421,7 +445,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'One Person',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -458,11 +482,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -484,7 +508,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'Multiple Persons',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -538,11 +562,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -564,7 +588,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'Medical Assistance',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -601,11 +625,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -627,7 +651,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'Security Or Saps',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -664,11 +688,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -690,7 +714,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'Fire Department',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -744,11 +768,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -770,7 +794,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'Ongoing',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -807,11 +831,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               top: 10,
             ),
             child: MaterialButton(
-              height: 80,
+              height: 60,
               color: onChange,
               shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(40),
                 ),
               ),
               elevation: 5,
@@ -833,7 +857,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
                   const Text(
                     'Not Active',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 22,
                     ),
@@ -880,8 +904,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
               elevation: 5,
               onPressed: () {
                 navigatorService.showSnackBar(StatusDialog(
-                    message:
-                        'The report has been filed successfully.'
+                    message: 'The report has been filed successfully.'
                         'Please wait for the security or SAPS to help.',
                     title: 'Imminent Report'));
               },
