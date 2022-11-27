@@ -17,7 +17,12 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-    InitApp.initializeApp(context);
+    Future.delayed(
+      const Duration(seconds: 2),
+      (() {
+        InitApp.initializeApp(context);
+      }),
+    );
   }
 
   @override

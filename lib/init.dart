@@ -23,7 +23,6 @@ class InitApp {
     if (userLoggedIn) {
       Navigator.popAndPushNamed(context, RouteManager.userRepotsFeedPage);
     } else {
-      Future.delayed(Duration(seconds: 2));
       Navigator.popAndPushNamed(context, RouteManager.loginPage);
     }
   }
