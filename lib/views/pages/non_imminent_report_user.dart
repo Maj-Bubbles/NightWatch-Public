@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -42,7 +41,8 @@ class _NonImminentReportState extends State<NonImminentReport> {
     pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       var imageFile = File(pickedFile.path);
-      imageUrl = await reportsViewModel.uploadFile(imageFile, DateTime.now().toLocal().toString());
+      imageUrl = await reportsViewModel.uploadFile(
+          imageFile, DateTime.now().toLocal().toString());
     }
   }
 
@@ -97,10 +97,12 @@ class _NonImminentReportState extends State<NonImminentReport> {
                     icon: Center(
                       child: IconButton(
                         onPressed: getImage,
-                        icon: const Icon(Icons.image,
-                        color: constants.orangePeelForIconsAndButtons,
-                        size: 70,
-                      ),),
+                        icon: const Icon(
+                          Icons.image,
+                          color: constants.orangePeelForIconsAndButtons,
+                          size: 70,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -123,6 +125,48 @@ class _NonImminentReportState extends State<NonImminentReport> {
                       top: 26.0,
                       bottom: 8.0,
                     ),
+                    child: Center(
+                      child: Container(
+                        width: 120,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                constants.tropicalForContainerAndButtonColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Container(
+                            width: 80,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.orange,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Consumer<ReportsViewModel>(
+                                builder: (context, viewModel, child) {
+                                  context.read<ReportsViewModel>().printUI(
+                                      '************************Icon Image was updated');
+                                  return Container(
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle),
+                                    child:
+                                        Image.asset(viewModel.selecIconCrime),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 40.0,
+                      right: 40.0,
+                      top: 26.0,
+                      bottom: 8.0,
+                    ),
                     child: Container(
                       color: constants.silverSandForFormsAndOtherStuff,
                       height: 63,
@@ -134,6 +178,30 @@ class _NonImminentReportState extends State<NonImminentReport> {
                           cursorColor: constants.scaffoldBackgroundColor,
                           decoration: constants.formDecoration('Crime Title'),
                         ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 40.0,
+                      right: 40.0,
+                      top: 26.0,
+                      bottom: 8.0,
+                    ),
+                    child: Container(
+                      color: constants.silverSandForFormsAndOtherStuff,
+                      height: 63,
+                      child: Consumer<ReportsViewModel>(
+                        builder: (context, viewModel, child) {
+                          return RegionDropdownIconSelec(
+                            items: viewModel.itemsCrime,
+                            text: 'Crime Icon',
+                            iconData: Icons.adjust,
+                            onChanged: (value) {
+                              viewModel.selecIconCrime = value ?? '';
+                            },
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -287,14 +355,18 @@ class _NonImminentReportState extends State<NonImminentReport> {
                             String currentRegionString =
                                 context.read<ReportsViewModel>().selectedValue;
 
-
                             context.read<ReportsViewModel>().postReportHelper(
                                 username: currentUsername,
                                 title: titleController.text.trim(),
                                 description: descriptionController.text.trim(),
                                 dateTime: DateTime.now(),
                                 locationString: locationController.text.trim(),
-                                mediaString: imageUrl,
+                                mediaString: [
+                                  imageUrl,
+                                  context
+                                      .read<ReportsViewModel>()
+                                      .selecIconCrime
+                                ],
                                 regionString: currentRegionString,
                                 isImminent: false);
                           },
@@ -401,6 +473,35 @@ class RegionDropdownSignUp extends StatelessWidget {
       icon: const Icon(Icons.map_outlined),
       iconEnabledColor: constants.scaffoldBackgroundColor,
       decoration: constants.formDecoration('Region'),
+    );
+  }
+}
+
+class RegionDropdownIconSelec extends StatelessWidget {
+  const RegionDropdownIconSelec(
+      {Key? key,
+      required this.items,
+      required this.text,
+      required this.iconData,
+      required this.onChanged})
+      : super(key: key);
+
+  final List<DropdownMenuItem<String>>? items;
+  final String text;
+  final IconData iconData;
+  final void Function(String?)? onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButtonFormField(
+      items: items,
+      onChanged: onChanged,
+      validator: validateRegion,
+      style: const TextStyle(color: constants.scaffoldBackgroundColor),
+      dropdownColor: Colors.grey,
+      icon: Icon(iconData),
+      iconEnabledColor: constants.scaffoldBackgroundColor,
+      decoration: constants.formDecoration('Select Crime Icon'),
     );
   }
 }

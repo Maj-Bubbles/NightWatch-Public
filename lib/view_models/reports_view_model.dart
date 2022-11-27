@@ -113,7 +113,7 @@ class ReportsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // Dropdown menu item list for IMMINENT report page
+  // Dropdown menu title list for IMMINENT report page - (Title selector)
   final List<DropdownMenuItem<String>> itemsCrime = [
     'Assault',
     'Aggravating circumstances',
@@ -138,6 +138,74 @@ class ReportsViewModel extends BaseViewModel {
   set selectedCrimeValue(String param) {
     _selectedCrimeValue = param;
     notifyListeners();
+  }
+
+  //For Dropdown on NON-Imminent reporting - (Icon Selector)
+  final List<DropdownMenuItem<String>> iconCrime = [
+    'Assault',
+    'Aggravating circumstances',
+    'Breaking and Entering',
+    'Kidnapping',
+    'Arson',
+    'Property Crime',
+    'Weapon discharge',
+    'DUI',
+  ].map<DropdownMenuItem<String>>((item) {
+    return DropdownMenuItem<String>(
+        value: item,
+        child: Text(
+          item,
+          style: const TextStyle(fontSize: 20),
+        ));
+  }).toList();
+
+  //selected value for icon selector dropdown on NonImminent report screen
+  String _selecIconCrime = 'media/crime-investigation.png';
+  String get selecIconCrime => _selecIconCrime;
+  set selecIconCrime(String iconval) {
+    switch (iconval) {
+      case 'Assault':
+        _selecIconCrime = 'media/assault.png';
+        notifyListeners();
+        break;
+      case 'Aggravating circumstances':
+        _selecIconCrime = 'media/aggravated_assault.png';
+        notifyListeners();
+        break;
+      case 'Breaking and Entering':
+        _selecIconCrime = 'media/breaking_and_entering.png';
+        notifyListeners();
+        break;
+      case 'Kidnapping':
+        _selecIconCrime = 'media/kidnapping.png';
+        notifyListeners();
+        break;
+      case 'Arson':
+        _selecIconCrime = 'media/arson.png';
+        notifyListeners();
+        break;
+      case 'Property Crime':
+        _selecIconCrime = 'media/property_crime.png';
+        notifyListeners();
+        break;
+      case 'Weapon discharge':
+        _selecIconCrime = 'media/weapon_discharge.png';
+        notifyListeners();
+        break;
+      case 'DUI':
+        _selecIconCrime = 'media/dui.png';
+        notifyListeners();
+        break;
+      default:
+        _selecIconCrime = 'media/crime-investigation.png';
+        notifyListeners();
+    }
+    print(_selecIconCrime);
+    notifyListeners();
+  }
+
+  printUI(String toPrint) {
+    print(toPrint);
   }
 
 //following getters and setters for buttons on imminent reporting screen
@@ -170,7 +238,8 @@ class ReportsViewModel extends BaseViewModel {
   }
 
 //constructor
-  ReportsViewModel(FirebaseReportsService reportsService, UserViewModel userViewModel) {
+  ReportsViewModel(
+      FirebaseReportsService reportsService, UserViewModel userViewModel) {
     _reportsService = reportsService;
     _userViewModel = userViewModel;
   }
@@ -186,12 +255,12 @@ class ReportsViewModel extends BaseViewModel {
       required String description,
       required DateTime dateTime,
       required String locationString,
-      required String mediaString,
+      required List<String> mediaString,
       required String regionString,
       required bool isImminent}) async {
     if (nonImReportFormKey.currentState?.validate() ?? false) {
       Location locationData = Location(locationString);
-      List<String> media = [mediaString];
+      List<String> media = mediaString;
       Region region = Region(name: regionString);
       Report report = Report(
           id: _userViewModel.currentUser.id,
@@ -222,9 +291,8 @@ class ReportsViewModel extends BaseViewModel {
   }
 
   Stream<QuerySnapshot> getUserReports(String userId) {
-      return _reportsService.getUserReports(limit,userId);
+    return _reportsService.getUserReports(limit, userId);
   }
-
 
   Future<String> uploadFile(File image, String timeStamp) async {
     String imageUrl = "";
