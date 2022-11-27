@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/miscellaneous/validators.dart';
+import 'package:nightwatch/models/view_state.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
 import 'package:nightwatch/view_models/view_models.dart';
@@ -16,6 +17,7 @@ class ImminentReportUser extends StatefulWidget {
 class _ImminentReportUserState extends State<ImminentReportUser> {
   late TextEditingController regionController;
   late TextEditingController crimeController;
+  late String currentUsernameImm;
 
   bool? changed;
   Color onChange = orangePeelForIconsAndButtons;
@@ -25,6 +27,7 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
     super.initState();
     regionController = TextEditingController();
     crimeController = TextEditingController();
+    currentUsernameImm = context.read<UserViewModel>().currentUser.userName;
   }
 
   @override
@@ -51,9 +54,11 @@ class _ImminentReportUserState extends State<ImminentReportUser> {
           ),
         ),
       ),
-      body: ListView(
+      body: Stack(
         children: [
-/*
+          ListView(
+            children: [
+              /*
 
 
 First button cluster
@@ -61,92 +66,93 @@ First button cluster
 
  */
 
-          const ButtonTitle(title: 'Who is in Danger?'),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40,
-              right: 40,
-              top: 10,
-            ),
-            child: Column(
-              children: [
-                /*
+              const ButtonTitle(title: 'Who is in Danger?'),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                  top: 10,
+                ),
+                child: Column(
+                  children: [
+                    /*
 
 
                 Button number 1
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color: context.watch<ReportsViewModel>().whoInDangValue ==
-                          'Myself'
-                      ? silverSandForFormsAndOtherStuff
-                      : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().whoInDangValue = 'Myself';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Myself',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                    MaterialButton(
+                      height: 80,
+                      color: context.watch<ReportsViewModel>().whoInDangValue ==
+                              'Myself'
+                          ? silverSandForFormsAndOtherStuff
+                          : orangePeelForIconsAndButtons,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                /*
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().whoInDangValue =
+                            'Myself';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Myself',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    /*
 
 
                 Button number 2
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color: context.watch<ReportsViewModel>().whoInDangValue ==
-                          'Someone Else'
-                      ? silverSandForFormsAndOtherStuff
-                      : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().whoInDangValue =
-                        'Someone Else';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Someone Else',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                    MaterialButton(
+                      height: 80,
+                      color: context.watch<ReportsViewModel>().whoInDangValue ==
+                              'Someone Else'
+                          ? silverSandForFormsAndOtherStuff
+                          : orangePeelForIconsAndButtons,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().whoInDangValue =
+                            'Someone Else';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Someone Else',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
 
 /*
 
@@ -155,93 +161,95 @@ Second Button cluster
 
 
  */
-          const ButtonTitle(title: 'How many individuals are affected?'),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40,
-              right: 40,
-              top: 10,
-            ),
-            child: Column(
-              children: [
-                /*
+              const ButtonTitle(title: 'How many individuals are affected?'),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                  top: 10,
+                ),
+                child: Column(
+                  children: [
+                    /*
 
 
                 Button number 1
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color: context.watch<ReportsViewModel>().affectedIndValue ==
-                          'One Person'
-                      ? silverSandForFormsAndOtherStuff
-                      : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().affectedIndValue =
-                        'One Person';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'One Person',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                    MaterialButton(
+                      height: 80,
+                      color:
+                          context.watch<ReportsViewModel>().affectedIndValue ==
+                                  'One Person'
+                              ? silverSandForFormsAndOtherStuff
+                              : orangePeelForIconsAndButtons,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                /*
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().affectedIndValue =
+                            'One Person';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'One Person',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    /*
 
 
                 Button number 2
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color: context.watch<ReportsViewModel>().affectedIndValue ==
-                          'Someone Else'
-                      ? silverSandForFormsAndOtherStuff
-                      : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().affectedIndValue =
-                        'Someone Else';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Someone Else',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                    MaterialButton(
+                      height: 80,
+                      color:
+                          context.watch<ReportsViewModel>().affectedIndValue ==
+                                  'Multiple individuals'
+                              ? silverSandForFormsAndOtherStuff
+                              : orangePeelForIconsAndButtons,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().affectedIndValue =
+                            'Multiple individuals';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Multiple individuals',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
 
 /*
 
@@ -250,134 +258,138 @@ Third Button cluster
 
 
  */
-          const ButtonTitle(title: 'What type of assistance do you require?'),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40,
-              right: 40,
-              top: 10,
-            ),
-            child: Column(
-              children: [
-                /*
+              const ButtonTitle(
+                  title: 'What type of assistance do you require?'),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                  top: 10,
+                ),
+                child: Column(
+                  children: [
+                    /*
 
 
                 Button number 1
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color:
-                      context.watch<ReportsViewModel>().assistanceNeedValue ==
+                    MaterialButton(
+                      height: 80,
+                      color: context
+                                  .watch<ReportsViewModel>()
+                                  .assistanceNeedValue ==
                               'Medical'
                           ? silverSandForFormsAndOtherStuff
                           : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().assistanceNeedValue =
-                        'Medical';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Medical',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                /*
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().assistanceNeedValue =
+                            'Medical';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Medical',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    /*
 
 
                 Button number 2
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color:
-                      context.watch<ReportsViewModel>().assistanceNeedValue ==
+                    MaterialButton(
+                      height: 80,
+                      color: context
+                                  .watch<ReportsViewModel>()
+                                  .assistanceNeedValue ==
                               'Security'
                           ? silverSandForFormsAndOtherStuff
                           : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().assistanceNeedValue =
-                        'Security';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Security',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                /*
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().assistanceNeedValue =
+                            'Security';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Security',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    /*
 
 
                 Button number 3
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color:
-                      context.watch<ReportsViewModel>().assistanceNeedValue ==
+                    MaterialButton(
+                      height: 80,
+                      color: context
+                                  .watch<ReportsViewModel>()
+                                  .assistanceNeedValue ==
                               'Fire Department'
                           ? silverSandForFormsAndOtherStuff
                           : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().assistanceNeedValue =
-                        'Fire Department';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Fire Department',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().assistanceNeedValue =
+                            'Fire Department';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Fire Department',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
 /*
 
 
@@ -386,66 +398,152 @@ Fourth button cluster
 
  */
 
-          const ButtonTitle(title: 'What is the status of the incident?'),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40,
-              right: 40,
-              top: 10,
-            ),
-            child: Column(
-              children: [
-                /*
+              const ButtonTitle(title: 'What is the status of the incident?'),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                  top: 10,
+                ),
+                child: Column(
+                  children: [
+                    /*
 
 
                 Button number 1
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color: context.watch<ReportsViewModel>().incidentStatValue ==
-                          'Ongoing'
-                      ? silverSandForFormsAndOtherStuff
-                      : orangePeelForIconsAndButtons,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                  ),
-                  elevation: 5,
-                  onPressed: () {
-                    context.read<ReportsViewModel>().incidentStatValue =
-                        'Ongoing';
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
-                        'Ongoing',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 22,
+                    MaterialButton(
+                      height: 80,
+                      color:
+                          context.watch<ReportsViewModel>().incidentStatValue ==
+                                  'Ongoing'
+                              ? silverSandForFormsAndOtherStuff
+                              : orangePeelForIconsAndButtons,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 10),
-                /*
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().incidentStatValue =
+                            'Ongoing';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Ongoing',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    /*
 
 
                 Button number 2
 
 
                 */
-                MaterialButton(
-                  height: 80,
-                  color: context.watch<ReportsViewModel>().incidentStatValue ==
-                          'Not Active'
-                      ? silverSandForFormsAndOtherStuff
-                      : orangePeelForIconsAndButtons,
+                    MaterialButton(
+                      height: 80,
+                      color:
+                          context.watch<ReportsViewModel>().incidentStatValue ==
+                                  'Not Active'
+                              ? silverSandForFormsAndOtherStuff
+                              : orangePeelForIconsAndButtons,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                      elevation: 5,
+                      onPressed: () {
+                        context.read<ReportsViewModel>().incidentStatValue =
+                            'Not Active';
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            'Not Active',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40.0,
+                  right: 40.0,
+                  top: 26.0,
+                  bottom: 8.0,
+                ),
+                child: Container(
+                  color: silverSandForFormsAndOtherStuff,
+                  height: 63,
+                  child: Consumer<ReportsViewModel>(
+                    builder: (context, viewModel, child) {
+                      return RegionDropdownImminent(
+                        items: viewModel.itemsImminent,
+                        text: 'Region',
+                        iconData: const Icon(Icons.map_outlined),
+                        onChanged: (value) {
+                          viewModel.selectedImmValue = value ?? '';
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40.0,
+                  right: 40.0,
+                  top: 26.0,
+                  bottom: 8.0,
+                ),
+                child: Container(
+                  color: silverSandForFormsAndOtherStuff,
+                  height: 63,
+                  child: Consumer<ReportsViewModel>(
+                    builder: (context, viewModel, child) {
+                      return RegionDropdownImminent(
+                        items: viewModel.itemsCrime,
+                        text: 'Type of Crime',
+                        iconData: const Icon(Icons.info),
+                        onChanged: (value) {
+                          viewModel.selectedCrimeValue = value ?? '';
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 40,
+                  right: 40,
+                  top: 30,
+                ),
+                child: MaterialButton(
+                  height: 40,
+                  color: redButtonColor,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(
                       Radius.circular(20),
@@ -453,14 +551,38 @@ Fourth button cluster
                   ),
                   elevation: 5,
                   onPressed: () {
-                    context.read<ReportsViewModel>().incidentStatValue =
-                        'Not Active';
+                    String testResult =
+                        context.read<ReportsViewModel>().validateImmButtons();
+                    if (testResult.contains('valid')) {
+                      context.read<ReportsViewModel>().setIconFromTitleImminent;
+                      String titleIconConvert =
+                          context.read<ReportsViewModel>().titleIconConvertRepo;
+                      String currentRegionString =
+                          context.read<ReportsViewModel>().selectedImmValue;
+
+                      context.read<ReportsViewModel>().postReportHelper(
+                          username: currentUsernameImm,
+                          id: context.read<UserViewModel>().currentUser.id,
+                          title: context
+                              .read<ReportsViewModel>()
+                              .selectedCrimeValue,
+                          description:
+                              '${context.read<ReportsViewModel>().whoInDangValue}\n${context.read<ReportsViewModel>().affectedIndValue}\n${context.read<ReportsViewModel>().assistanceNeedValue}\n${context.read<ReportsViewModel>().incidentStatValue}',
+                          dateTime: DateTime.now(),
+                          locationString: currentRegionString,
+                          mediaString: ['', titleIconConvert],
+                          regionString: currentRegionString,
+                          isImminent: true);
+                    } else {
+                      navigatorService.showSnackBar(StatusDialog(
+                          title: 'Invalid Submission', message: testResult));
+                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Text(
-                        'Not Active',
+                        'Submit',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -470,95 +592,68 @@ Fourth button cluster
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40.0,
-              right: 40.0,
-              top: 26.0,
-              bottom: 8.0,
-            ),
-            child: Container(
-              color: silverSandForFormsAndOtherStuff,
-              height: 63,
-              child: Consumer<ReportsViewModel>(
-                builder: (context, viewModel, child) {
-                  return RegionDropdownImminent(
-                    items: viewModel.itemsImminent,
-                    text: 'Region',
-                    iconData: const Icon(Icons.map_outlined),
-                    onChanged: (value) {
-                      viewModel.selectedImmValue = value ?? '';
-                    },
-                  );
-                },
               ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40.0,
-              right: 40.0,
-              top: 26.0,
-              bottom: 8.0,
-            ),
-            child: Container(
-              color: silverSandForFormsAndOtherStuff,
-              height: 63,
-              child: Consumer<ReportsViewModel>(
-                builder: (context, viewModel, child) {
-                  return RegionDropdownImminent(
-                    items: viewModel.itemsCrime,
-                    text: 'Type of Crime',
-                    iconData: const Icon(Icons.info),
-                    onChanged: (value) {
-                      viewModel.selectedCrimeValue = value ?? '';
-                    },
-                  );
-                },
+              const SizedBox(
+                height: 140,
               ),
-            ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 40,
-              right: 40,
-              top: 30,
-            ),
-            child: MaterialButton(
-              height: 40,
-              color: redButtonColor,
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
-              ),
-              elevation: 5,
-              onPressed: () {
-                navigatorService.showSnackBar(StatusDialog(
-                    message: 'The report has been filed successfully.'
-                        'Please wait for the security or SAPS to help.',
-                    title: 'Imminent Report'));
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'Submit',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
+          Consumer<ReportsViewModel>(
+            builder: (context, viewModel, _) {
+              switch (viewModel.state) {
+                case ViewState.Idle:
+                  return Container();
+                case ViewState.Busy:
+                  return Center(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.black.withOpacity(0.6),
+                      child: Center(
+                        child: SizedBox(
+                          height: 100,
+                          width: 300,
+                          child: Card(
+                            color: scaffoldBackgroundColor,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: const [
+                                CircularProgressIndicator(),
+                                SizedBox(width: 20),
+                                Text(
+                                  'Logging your report. Please wait.',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 140,
+                  );
+                case ViewState.Success:
+                  viewModel.setViewStateToIdle();
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    navigatorService.goBack();
+                    navigatorService.goBack();
+                    context.read<ReportsViewModel>().clearValuesImm();
+                    navigatorService.showSnackBar(StatusDialog(
+                        title: 'Successfully created report.',
+                        message:
+                            'Your Imminent report has been created. Help is on its way!'));
+                  });
+                  return Container();
+                case ViewState.Error:
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    navigatorService.showSnackBar(viewModel.errorDialog);
+                    viewModel.setState(ViewState.Idle);
+                  });
+                  return Container();
+                default:
+                  return const Text("Something Should Have happened");
+              }
+            },
           ),
         ],
       ),
@@ -621,8 +716,6 @@ class RegionDropdownImminent extends StatelessWidget {
     );
   }
 }
-
-
 
 // const Padding(
 //             padding: EdgeInsets.only(

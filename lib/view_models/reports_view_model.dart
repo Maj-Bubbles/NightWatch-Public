@@ -91,8 +91,8 @@ class ReportsViewModel extends BaseViewModel {
     'Panorama',
     'Kitty',
     'Meloding',
-    'Thabong'
-        'Jan Cilliers Park',
+    'Thabong',
+    'Jan Cilliers Park',
     'Seemeeu Park',
     'Koppie Alleen',
   ].map<DropdownMenuItem<String>>((item) {
@@ -104,7 +104,7 @@ class ReportsViewModel extends BaseViewModel {
         ));
   }).toList();
 
-  //selected value for region dropdown on NonImminent report screen
+  //selected value for region dropdown on Imminent report screen
   String _selectedImmValue = '';
   String get selectedImmValue => _selectedImmValue;
   set selectedImmValue(String param) {
@@ -131,7 +131,7 @@ class ReportsViewModel extends BaseViewModel {
         ));
   }).toList();
 
-  //selected value for region dropdown on NonImminent report screen
+  //selected value for crime title on IMMINENT screen
   String _selectedCrimeValue = '';
   String get selectedCrimeValue => _selectedCrimeValue;
   set selectedCrimeValue(String param) {
@@ -236,6 +236,112 @@ class ReportsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  String validateImmButtons() {
+    String result = 'Please select all fields';
+    if (whoInDangValue.contains('Myself') ||
+        whoInDangValue.contains('Someone Else')) {
+      if (affectedIndValue.contains('One Person') ||
+          affectedIndValue.contains('Multiple individuals')) {
+        if (assistanceNeedValue.contains('Medical') ||
+            assistanceNeedValue.contains('Security') ||
+            assistanceNeedValue.contains('Fire Department')) {
+          if (incidentStatValue.contains('Ongoing') ||
+              incidentStatValue.contains('Not Active')) {
+            if (selectedImmValue.isNotEmpty) {
+              if (selectedCrimeValue.isNotEmpty) {
+                result = 'valid';
+              } else {
+                result = 'Please select a Title.';
+              }
+            } else {
+              result = 'Please select a Region.';
+            }
+          } else {
+            result = 'Please select the status of the incident.';
+          }
+        } else {
+          result = 'Please select the type of assistance required.';
+        }
+      } else {
+        result = 'Please select how many individuals are affected.';
+      }
+    } else {
+      result = 'Please select who is in danger.';
+    }
+
+    return result;
+  }
+
+  String titleIconConvertRepo = 'FINIT media/crime-investigation.png';
+  String setIconFromTitleImminent() {
+    String path = 'PATH media/crime-investigation.png';
+
+    // if (selectedCrimeValue.contains('Assault')) {
+    //   titleIconConvertRepo = 'media/assault.png';
+    // }
+    // if (selectedCrimeValue.contains('Aggravating circumstances')) {
+    //   titleIconConvertRepo = 'media/aggravated_assault.png';
+    // }
+    // if (selectedCrimeValue.contains('Breaking and Entering')) {
+    //   titleIconConvertRepo = 'media/breaking_and_entering.png';
+    // }
+    // if (selectedCrimeValue.contains('Kidnapping')) {
+    //   titleIconConvertRepo = 'media/kidnapping.png';
+    // }
+    // if (selectedCrimeValue.contains('Arson')) {
+    //   titleIconConvertRepo = 'media/arson.png';
+    // }
+    // if (selectedCrimeValue.contains('Property Crime')) {
+    //   titleIconConvertRepo = 'media/property_crime.png';
+    // }
+    // if (selectedCrimeValue.contains('Weapon discharge')) {
+    //   titleIconConvertRepo = 'media/weapon_discharge.png';
+    // }
+    // if (selectedCrimeValue.contains('DUI')) {
+    //   titleIconConvertRepo = 'media/dui.png';
+    // }
+
+    switch (selectedCrimeValue) {
+      case "Assault":
+        titleIconConvertRepo = 'media/assault.png';
+        break;
+      case "Aggravating circumstances":
+        titleIconConvertRepo = 'media/assault.png';
+        break;
+      case "Breaking and Entering":
+        titleIconConvertRepo = 'media/breaking_and_entering.png';
+        break;
+      case "Kidnapping":
+        titleIconConvertRepo = 'media/kidnapping.png';
+        break;
+      case "Arson":
+        titleIconConvertRepo = 'media/arson.png';
+        break;
+      case "Property Crime":
+        titleIconConvertRepo = 'media/property_crime.png';
+        break;
+      case "Weapon discharge":
+        titleIconConvertRepo = 'media/weapon_discharge.png';
+        break;
+      case "DUI":
+        titleIconConvertRepo = 'media/dui.png';
+        break;
+      default:
+        titleIconConvertRepo = 'DEFAULTmedia/crime-investigation.png';
+    }
+    return titleIconConvertRepo;
+  }
+
+  void clearValuesImm() {
+    selectedImmValue = '';
+    selectedCrimeValue = '';
+    whoInDangValue = '';
+    affectedIndValue = '';
+    assistanceNeedValue = '';
+    incidentStatValue = '';
+    titleIconConvertRepo = 'media/crime-investigation.png';
+  }
+
 //constructor
   ReportsViewModel(FirebaseReportsService reportsService) {
     _reportsService = reportsService;
@@ -256,7 +362,28 @@ class ReportsViewModel extends BaseViewModel {
       required List<String> mediaString,
       required String regionString,
       required bool isImminent}) async {
-    if (nonImReportFormKey.currentState?.validate() ?? false) {
+    if (!isImminent) {
+      if (nonImReportFormKey.currentState?.validate() ?? false) {
+        Location locationData = Location(locationString);
+        List<String> media = mediaString;
+        Region region = Region(name: regionString);
+        Report report = Report(
+            id: id,
+            userName: username,
+            title: title,
+            description: description,
+            dateTime: dateTime,
+            isAlerted: false,
+            isAcknowledged: false,
+            locationData: locationData,
+            media: media,
+            region: region,
+            isImminent: isImminent);
+
+        await postReport(report, report.id);
+      }
+    } else if (isImminent) {
+      String convertedIconMedia = setIconFromTitleImminent();
       Location locationData = Location(locationString);
       List<String> media = mediaString;
       Region region = Region(name: regionString);
@@ -269,7 +396,7 @@ class ReportsViewModel extends BaseViewModel {
           isAlerted: false,
           isAcknowledged: false,
           locationData: locationData,
-          media: media,
+          media: [media[0], convertedIconMedia],
           region: region,
           isImminent: isImminent);
 
