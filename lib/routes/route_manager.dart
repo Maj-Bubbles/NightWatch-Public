@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nightwatch/views/pages/language_change.dart';
 import 'package:nightwatch/views/pages/sign_upBub.dart';
 import 'package:nightwatch/views/pages/splash_screen.dart';
 import 'package:nightwatch/views/pages/emergency_numbers.dart';
@@ -41,6 +42,7 @@ class RouteManager {
   static const String userReportImminentPage = '/userReportImminentPage';
   static const String userReportiNonImminentPage =
       '/userReportiNonImminentPage';
+  static const String languageChange = '/languageChange';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -137,6 +139,11 @@ class RouteManager {
       case userReportiNonImminentPage:
         return MaterialPageRoute(
           builder: (context) => const NonImminentReport(),
+        );
+
+      case languageChange:
+        return MaterialPageRoute(
+          builder: (context) => const LanguageChange(),
         );
 
       default:

@@ -36,32 +36,63 @@ class _ReportsFeedScreenState extends State<ReportsFeedScreen> {
         stream: reportsViewModel.getReports(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 400,
-                  childAspectRatio: 0.6,
-                  crossAxisSpacing: 15,
-                  mainAxisSpacing: 1),
-              itemCount: snapshot.data?.docs.length,
-              itemBuilder: (context, index) {
-                print(snapshot.data?.docs[index].data());
-                var report = Report.fromDocument(snapshot.data!.docs[index]);
-                reportsViewModel.reports.add(report);
-                print("Number of Reports: ${snapshot.data?.docs.length}");
-                return GestureDetector(
-                  child: UserReportCardv3LayoutGrid(
-                    report: reportsViewModel.reports[index],
-                    isAdmin: userViewModel.currentUser.isAdmin,
-                  ),
-                  onTap: () {
-                    context.read<ReportsViewModel>().clickedReport =
-                        reportsViewModel.reports[index];
-                    navigatorService
-                        .navigateTo(RouteManager.moreDetailsNonImmPage);
-                  },
-                );
-              },
-            );
+            return context.read<UserViewModel>().currentUser.isAdmin
+                ? GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 400,
+                            childAspectRatio: 0.5,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 1),
+                    itemCount: snapshot.data?.docs.length,
+                    itemBuilder: (context, index) {
+                      print(snapshot.data?.docs[index].data());
+                      var report =
+                          Report.fromDocument(snapshot.data!.docs[index]);
+                      reportsViewModel.reports.add(report);
+                      print("Number of Reports: ${snapshot.data?.docs.length}");
+                      return GestureDetector(
+                        child: UserReportCardv3LayoutGrid(
+                          report: reportsViewModel.reports[index],
+                          isAdmin: userViewModel.currentUser.isAdmin,
+                        ),
+                        onTap: () {
+                          context.read<ReportsViewModel>().clickedReport =
+                              reportsViewModel.reports[index];
+                          navigatorService
+                              .navigateTo(RouteManager.moreDetailsNonImmPage);
+                        },
+                      );
+                    },
+                  )
+                : GridView.builder(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 400,
+                            childAspectRatio: 0.6,
+                            crossAxisSpacing: 15,
+                            mainAxisSpacing: 1),
+                    itemCount: snapshot.data?.docs.length,
+                    itemBuilder: (context, index) {
+                      print(snapshot.data?.docs[index].data());
+                      var report =
+                          Report.fromDocument(snapshot.data!.docs[index]);
+                      reportsViewModel.reports.add(report);
+                      print("Number of Reports: ${snapshot.data?.docs.length}");
+                      return GestureDetector(
+                        child: UserReportCardv3LayoutGrid(
+                          report: reportsViewModel.reports[index],
+                          isAdmin: userViewModel.currentUser.isAdmin,
+                        ),
+                        onTap: () {
+                          context.read<ReportsViewModel>().clickedReport =
+                              reportsViewModel.reports[index];
+                          navigatorService
+                              .navigateTo(RouteManager.moreDetailsNonImmPage);
+                        },
+                      );
+                    },
+                  );
           } else if (!snapshot.hasData) {
             return const Center(
                 child: LoadingIndicatorV2(text: 'Fetching Reports'));

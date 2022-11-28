@@ -17,7 +17,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: scaffoldBackgroundColor,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-         navigatorService.navigateTo(RouteManager.emergencyPage);
+          navigatorService.navigateTo(RouteManager.emergencyPage);
         },
         backgroundColor: orangePeelForIconsAndButtons,
         child: const Icon(

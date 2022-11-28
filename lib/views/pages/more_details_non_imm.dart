@@ -56,6 +56,83 @@ class _MoreDetailsNonImmState extends State<MoreDetailsNonImm> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              DetailedReportCard(
+                  report: context.read<ReportsViewModel>().clickedReport,
+                  index: 0,
+                  isAdmin: context.read<UserViewModel>().currentUser.isAdmin)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
+//
+/*
+import 'package:flutter/material.dart';
+import 'package:nightwatch/miscellaneous/constants.dart';
+import 'package:nightwatch/view_models/reports_view_model.dart';
+import 'package:nightwatch/view_models/view_models.dart';
+import 'package:nightwatch/views/widgets/detailed_report_card.dart';
+import 'package:provider/provider.dart';
+
+class MoreDetailsNonImm extends StatefulWidget {
+  const MoreDetailsNonImm({super.key});
+
+  @override
+  State<MoreDetailsNonImm> createState() => _MoreDetailsNonImmState();
+}
+
+class _MoreDetailsNonImmState extends State<MoreDetailsNonImm> {
+  int year = DateTime.utc(DateTime.now().microsecondsSinceEpoch).year;
+  int month = DateTime.utc(DateTime.now().microsecondsSinceEpoch).month;
+  int day = DateTime.utc(DateTime.now().microsecondsSinceEpoch).day;
+  int hour = DateTime.utc(DateTime.now().microsecondsSinceEpoch).hour;
+  int minutes = DateTime.utc(DateTime.now().microsecondsSinceEpoch).minute;
+
+  String crimeType = 'Armed Robbery';
+  String imminent = 'Imminent';
+  String selfReported = 'Self Reported';
+  String medicAndSecurity = 'Medical and Security';
+  String noOfPeople = 'Single Person';
+  String status = 'Active';
+  String location = 'Welkom';
+  String locationTwo = 'NostalgicHound462';
+  String nonImminent = 'Non-Imminent';
+  String title = 'Possible Arson Lead';
+  String description =
+      'Below the snowline, Caradhras is described as having dull red slopes, "as if stained with blood"...';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: scaffoldBackgroundColor,
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
+        title: const Text(
+          'Details',
+          style: TextStyle(
+            color: appBarTitle,
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        // context.read<ReportsViewModel>().clickedReport
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
               Center(
                 // Display image of clicked item
                 child: Image.network(
@@ -100,6 +177,36 @@ class _MoreDetailsNonImmState extends State<MoreDetailsNonImm> {
     );
   }
 }
+ */
+
+
+
+
+
+
+
+
+
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ListView(
 //         children: [

@@ -24,6 +24,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           margin: const EdgeInsets.all(14.0),
           child: ListView(
             children: [
+              Column(
+                children: [],
+              ),
               const Text(
                 'Profile',
                 style: TextStyle(
@@ -202,7 +205,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     Icons.language,
                     color: orangePeelForIconsAndButtons,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    navigatorService.navigateTo(RouteManager.languageChange);
+                  },
                   title: const Text(
                     'Language Options',
                     style: TextStyle(
