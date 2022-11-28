@@ -9,7 +9,8 @@ class FirebaseReportsService {
   final FirebaseFirestore firebaseFirestore;
   final FirebaseStorage firebaseStorage;
 
-  FirebaseReportsService({required this.firebaseFirestore, required this.firebaseStorage});
+  FirebaseReportsService(
+      {required this.firebaseFirestore, required this.firebaseStorage});
 
   UploadTask uploadFile(File image, String fileName) {
     Reference reference = firebaseStorage.ref().child(fileName);
@@ -17,8 +18,7 @@ class FirebaseReportsService {
     return uploadTask;
   }
 
-  Stream<QuerySnapshot> getReportsStream(int limit,
-      [String textSearch = ""]) {
+  Stream<QuerySnapshot> getReportsStream(int limit, [String textSearch = ""]) {
     if (textSearch.isNotEmpty == true) {
       return firebaseFirestore
           .collection(FirestoreConstants.pathReportsCollection)
@@ -34,25 +34,24 @@ class FirebaseReportsService {
   }
 
   Stream<QuerySnapshot> getUserReports(int limit, String userId) {
-   return getReportsStream(limit, userId);
+    return getReportsStream(limit, userId);
   }
 
   Future<void> storeReport(Report report, String userId) {
     return firebaseFirestore
         .collection(FirestoreConstants.pathReportsCollection)
         .add({
-          "objectId": userId,
-          "Username": report.userName,
-          "Title": report.title,
-          "Description": report.description,
-          "DateTime": report.dateTime,
-          "Alerted": report.isAlerted,
-          "Acknowledged": report.isAcknowledged,
-          "Imminent": report.isImminent,
-          "Media": report.media,
-          "Region": report.region.name,
-          "LocationData": report.locationData.location
-        })
-        .then((value) => print("Report Id: $userId Added to Firebase"));
+      "objectId": userId,
+      "Username": report.userName,
+      "Title": report.title,
+      "Description": report.description,
+      "DateTime": report.dateTime,
+      "Alerted": report.isAlerted,
+      "Acknowledged": report.isAcknowledged,
+      "Imminent": report.isImminent,
+      "Media": report.media,
+      "Region": report.region.name,
+      "LocationData": report.locationData.location
+    }).then((value) => print("Report Id: $userId Added to Firebase"));
   }
 }

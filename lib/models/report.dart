@@ -41,10 +41,18 @@ class Report {
         isAlerted: json['Alerted'] as bool,
         isAcknowledged: json['Acknowledged'] as bool,
         isImminent: json['Imminent'] != null ? json['Imminent'] as bool : false,
-        locationData: Location(json['LocationData'].toString() ?? "NotProvided"),
+        locationData:
+            Location(json['LocationData'].toString() ?? "NotProvided"),
         media: List<String>.from(json['media'] ?? ['NotProvided']),
         region: Region(name: json['Region'].toString() ?? ""));
   }
+
+  DateTime convertTimeStampToDateTime(int timeStamp) {
+    var dateToTimeStamp = DateTime.fromMillisecondsSinceEpoch(timeStamp * 1000);
+    return dateToTimeStamp;
+  }
+
+  DateTime test = Timestamp(5, 5).toDate();
 
   factory Report.fromDocument(DocumentSnapshot doc) {
     return Report(
@@ -52,13 +60,17 @@ class Report {
       userName: doc.exists ? doc.get("Username") : "NonExistent",
       title: doc.exists ? doc.get("Title") : "NonExistent",
       description: doc.exists ? doc.get("Description") : "NonExistent",
-      dateTime: DateTime.now(),
+      dateTime: doc.exists ? conversion(doc.get("DateTime")) : DateTime.now,
       isAlerted: doc.exists ? doc.get("Alerted") as bool : false,
       isAcknowledged: doc.exists ? doc.get("Acknowledged") as bool : false,
       isImminent: doc.exists ? doc.get("Imminent") as bool : false,
-      locationData: doc.exists ? Location(doc.get("LocationData")) : Location("NonExistent"),
-      region: doc.exists ? Region(name: doc.get("Region")) : Region(name: "NonExistent"),
-      media: doc.exists ? List.from(doc.get("Media")): <String>[""],
+      locationData: doc.exists
+          ? Location(doc.get("LocationData"))
+          : Location("NonExistent"),
+      region: doc.exists
+          ? Region(name: doc.get("Region"))
+          : Region(name: "NonExistent"),
+      media: doc.exists ? List.from(doc.get("Media")) : <String>[""],
     );
   }
 
@@ -76,4 +88,10 @@ class Report {
       "Media": media,
     };
   }
+}
+
+conversion<DateTime>(Timestamp stamp) {
+  DateTime converted;
+  converted = stamp.toDate() as DateTime;
+  return converted;
 }

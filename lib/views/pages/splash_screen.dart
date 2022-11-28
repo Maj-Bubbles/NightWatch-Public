@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:nightwatch/init.dart';
 import 'package:nightwatch/miscellaneous/constants.dart';
 import 'package:nightwatch/routes/route_manager.dart';
@@ -60,26 +61,29 @@ class _LoadingPageState extends State<LoadingPage> {
             ),
             const SizedBoxH30(),
             const SizedBoxH30(),
-            const AppProgressIndicator(),
+            LoadingBouncingGrid.square(
+              backgroundColor: orangePeelForIconsAndButtons,
+              size: 150,
+            ),
             const SizedBoxH30(),
             const SizedBoxH30(),
             const Text(
-              'Loading ...',
+              'Loading...',
               style: TextStyle(
                 color: silverSandForFormsAndOtherStuff,
                 fontSize: 14,
               ),
             ),
             const SizedBoxH30(),
-            IconButton(
-              onPressed: () {
-                navigatorService.navigateTo(RouteManager.onBoardingPage);
-              },
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-                color: silverSandForFormsAndOtherStuff,
-              ),
-            ),
+            // IconButton(
+            //   onPressed: () {
+            //     navigatorService.navigateTo(RouteManager.onBoardingPage);
+            //   },
+            //   icon: const Icon(
+            //     Icons.arrow_forward_ios,
+            //     color: silverSandForFormsAndOtherStuff,
+            //   ),
+            // ),
           ],
         ),
       ),

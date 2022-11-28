@@ -5,6 +5,7 @@ import 'package:nightwatch/models/view_state.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
 import 'package:nightwatch/view_models/view_models.dart';
+import 'package:nightwatch/views/widgets/app_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 class ImminentReportUser extends StatefulWidget {
@@ -604,34 +605,7 @@ Fourth button cluster
                 case ViewState.Idle:
                   return Container();
                 case ViewState.Busy:
-                  return Center(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.6),
-                      child: Center(
-                        child: SizedBox(
-                          height: 100,
-                          width: 300,
-                          child: Card(
-                            color: scaffoldBackgroundColor,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                CircularProgressIndicator(),
-                                SizedBox(width: 20),
-                                Text(
-                                  'Logging your report. Please wait.',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                  return const LoadingIndicatorV2(text: 'Notifyng authorities');
                 case ViewState.Success:
                   viewModel.setViewStateToIdle();
                   WidgetsBinding.instance.addPostFrameCallback((_) {

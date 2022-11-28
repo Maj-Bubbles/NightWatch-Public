@@ -18,7 +18,7 @@ class ReportsViewModel extends BaseViewModel {
   final nonImReportFormKey = GlobalKey<FormState>();
 
   // The limit of reports to fetch
-  int limit = 20;
+  int limit = 30;
 
   //Clicked report repository of sort for details page
   Report clickedReport = Report(
@@ -424,7 +424,7 @@ class ReportsViewModel extends BaseViewModel {
     timeStamp = DateTime.now().millisecondsSinceEpoch.toString();
     UploadTask uploadTask = _reportsService.uploadFile(image, timeStamp);
     try {
-      setState(ViewState.Busy);
+      setState(ViewState.DataFetched);
       TaskSnapshot snapshot = await uploadTask;
       imageUrl = await snapshot.ref.getDownloadURL();
       setState(ViewState.Success);

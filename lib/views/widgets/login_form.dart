@@ -4,6 +4,7 @@ import 'package:nightwatch/miscellaneous/configuration.dart' as configuration;
 import 'package:nightwatch/miscellaneous/constants.dart' as constants;
 import 'package:nightwatch/miscellaneous/validators.dart';
 import 'package:nightwatch/routes/route_manager.dart';
+import 'package:nightwatch/views/widgets/app_progress_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 
@@ -161,34 +162,7 @@ class _LoginFormState extends State<LoginForm> {
                 case ViewState.Idle:
                   return Container();
                 case ViewState.Busy:
-                  return Center(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.6),
-                      child: Center(
-                        child: SizedBox(
-                          height: 100,
-                          width: 300,
-                          child: Card(
-                            color: constants.scaffoldBackgroundColor,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                CircularProgressIndicator(),
-                                SizedBox(width: 20),
-                                Text(
-                                  'Logging you in. Please wait',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
+                  return const LoadingIndicatorV2(text: 'Logging you in.');
                 case ViewState.Success:
                   viewModel.setViewStateToIdle();
                   WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -213,67 +187,7 @@ class _LoginFormState extends State<LoginForm> {
   }
 }
 
-class LoadingIndicatorV2 extends StatelessWidget {
-  const LoadingIndicatorV2({
-    Key? key,
-  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Colors.black.withOpacity(0.6),
-        child: Center(
-          child: SizedBox(
-            height: 175,
-            width: 300,
-            child: Card(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              color: constants.scaffoldBackgroundColor,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 10),
-                  const Text(
-                    'Logging you in',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 20),
-                  Stack(
-                    children: [
-                      const Image(
-                        image: AssetImage('media/Splash_GitHub_Page.png'),
-                        height: 75,
-                      ),
-                      LoadingBouncingGrid.square(
-                        backgroundColor: constants.scaffoldBackgroundColor,
-                        size: 75,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const Text(
-                    'Please wait',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  const SizedBox(height: 10),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 
 // \class AppTextField extends StatelessWidget {

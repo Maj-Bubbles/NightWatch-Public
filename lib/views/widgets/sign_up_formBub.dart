@@ -9,6 +9,7 @@ import 'package:nightwatch/services/services.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
 import 'package:nightwatch/view_models/view_models.dart';
 import 'package:nightwatch/models/models.dart';
+import 'package:nightwatch/views/widgets/app_progress_indicator.dart';
 import 'package:provider/provider.dart';
 
 import '../../miscellaneous/constants.dart';
@@ -405,33 +406,8 @@ class _SignUpFormBubState extends State<SignUpFormBub> {
                 case ViewState.Idle:
                   return Container();
                 case ViewState.Busy:
-                  return Center(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      color: Colors.black.withOpacity(0.6),
-                      child: Center(
-                        child: SizedBox(
-                          height: 100,
-                          width: 300,
-                          child: Card(
-                            color: scaffoldBackgroundColor,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: const [
-                                CircularProgressIndicator(),
-                                SizedBox(width: 20),
-                                Text(
-                                  'Signing you up. Please wait',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                  return const Center(
+                    child: LoadingIndicatorV2(text: 'Signing you up.'),
                   );
                 default:
                   return Container();

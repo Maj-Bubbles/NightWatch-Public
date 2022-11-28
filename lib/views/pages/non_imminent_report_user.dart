@@ -7,6 +7,7 @@ import 'package:nightwatch/services/navigation_and_dialog_service.dart';
 import 'package:nightwatch/view_models/error_handling.dart';
 import 'package:nightwatch/view_models/reports_view_model.dart';
 import 'package:nightwatch/view_models/user_view_model.dart';
+import 'package:nightwatch/views/widgets/app_progress_indicator.dart';
 import 'package:provider/provider.dart';
 import '../../miscellaneous/configuration.dart' as configuration;
 import 'package:nightwatch/miscellaneous/validators.dart';
@@ -90,34 +91,6 @@ class _NonImminentReportState extends State<NonImminentReport> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  IconButton(
-                    splashRadius: 150,
-                    highlightColor: constants.redButtonColor,
-                    onPressed: () {},
-                    icon: Center(
-                      child: IconButton(
-                        onPressed: getImage,
-                        icon: const Icon(
-                          Icons.image,
-                          color: constants.orangePeelForIconsAndButtons,
-                          size: 70,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const Center(
-                    child: Text(
-                      'Add Photos of Incident',
-                      style: TextStyle(
-                        color: constants.silverSandForFormsAndOtherStuff,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 40.0,
@@ -225,6 +198,27 @@ class _NonImminentReportState extends State<NonImminentReport> {
                           decoration:
                               constants.formDecoration('Crime Description'),
                         ),
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: getImage,
+                    icon: const Icon(
+                      Icons.image,
+                      color: constants.orangePeelForIconsAndButtons,
+                      size: 70,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Center(
+                    child: Text(
+                      'Add Photos of Incident',
+                      style: TextStyle(
+                        color: constants.silverSandForFormsAndOtherStuff,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -395,34 +389,7 @@ class _NonImminentReportState extends State<NonImminentReport> {
                     case ViewState.Idle:
                       return Container();
                     case ViewState.Busy:
-                      return Center(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height,
-                          width: MediaQuery.of(context).size.width,
-                          color: Colors.black.withOpacity(0.6),
-                          child: Center(
-                            child: SizedBox(
-                              height: 100,
-                              width: 300,
-                              child: Card(
-                                color: constants.scaffoldBackgroundColor,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: const [
-                                    CircularProgressIndicator(),
-                                    SizedBox(width: 20),
-                                    Text(
-                                      'Logging your report. Please wait.',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
+                      return const LoadingIndicatorV2(text: 'Reporting...');
                     case ViewState.Success:
                       viewModel.setViewStateToIdle();
                       WidgetsBinding.instance.addPostFrameCallback((_) {
