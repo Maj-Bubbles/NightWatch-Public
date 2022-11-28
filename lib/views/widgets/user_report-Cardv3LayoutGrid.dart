@@ -202,7 +202,7 @@ class UserReportCardv3LayoutGrid extends StatelessWidget {
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
                       decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: Image.asset(report.media[0]),
+                      child: Image.asset(report.media[1]),
                       //Icon made by Rodrigo Guerios from www.flaticon.com
                     ),
                   ),

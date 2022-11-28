@@ -17,6 +17,29 @@ class ReportsViewModel extends BaseViewModel {
   late StreamSubscription<List<Report>> newReport;
   final nonImReportFormKey = GlobalKey<FormState>();
 
+  sortReports() {
+    print('%%%%%%%%%%%%%%%%%%%%%%%%%%SORTING%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+    reports.sort(((a, b) => b.dateTime.compareTo(a.dateTime)));
+  }
+
+  // //Used to sort list and remove duplicates
+  // List<Report> get reports => _reports;
+  // set reports(List<Report> param) {
+  //   _reports = param;
+  //   _reports.sort(
+  //     (a, b) {
+  //       return a.dateTime.compareTo(b.dateTime);
+  //     },
+  //   );
+  //   notifyListeners();
+  // }
+
+  // addToReports(Report param) {
+  //   _reports.add(param);
+  //   _reports.sort(((a, b) => a.dateTime.compareTo(b.dateTime)));
+  //   notifyListeners();
+  // }
+
   // The limit of reports to fetch
   int limit = 30;
 
