@@ -439,7 +439,7 @@ class ReportsViewModel extends BaseViewModel {
   }
 
   Stream<QuerySnapshot> getUserReports(String userId) {
-    return _reportsService.getUserReports(limit, userId);
+    return _reportsService.getReportsStream(limit, userId);
   }
 
   Future<String> uploadFile(File image, String timeStamp) async {

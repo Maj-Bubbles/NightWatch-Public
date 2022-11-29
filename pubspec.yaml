@@ -49,9 +49,9 @@ dependencies:
   cloud_firestore: ^4.1.0
   firebase_storage: ^11.0.6
   image_picker: ^0.8.6
-
+  flutter_phone_direct_caller: ^2.1.1
   flutter_layout_grid: ^2.0.1
-
+  open_street_map_search_and_pick: ^0.0.15
 
 dev_dependencies:
   flutter_test:
